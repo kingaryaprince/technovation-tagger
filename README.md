@@ -12,6 +12,34 @@ and database smoke/lease/permission checks also pass in an isolated PostgreSQL e
 still need verification with your accounts. No paid model calls have been made during
 preparation. See `docs/VALIDATION.md` for the precise test boundaries.
 
+## How the tagging works
+
+An alum fills out the Google Form. The Apps Script adapter saves their raw answers to
+Supabase as a `pending` row and does nothing else; it never calls OpenAI. Tagging
+happens later, when the Python worker runs:
+
+1. **Claim.** The worker leases one pending row through `claim_alumni_tagging`, so two
+   workers never tag the same response at once.
+2. **Select inputs.** Only the six free-text answers the taxonomy uses (role, project,
+   since Technovation, interests, skills, story) are kept. Name, email, birthdate and
+   structured choices never reach the model. A profile with all six blank skips the API.
+3. **Ask the model.** One OpenAI request sends those answers plus the controlled
+   vocabulary from `data/taxonomy.json`. A strict JSON schema means the model can only
+   pick labels that exist in the taxonomy, and every label must come with the field it
+   came from and an exact quote from that field.
+4. **Validate.** `core.validate` rejects the whole result if any tag is unknown or
+   repeated, cites the wrong field, or has a quote that isn't actually in the answer.
+   Career stage allows at most one label. Nothing is half-saved.
+5. **Write back.** On success the row becomes `completed` with `tags`, `evidence`, model,
+   prompt/taxonomy versions and token usage. On failure it becomes `failed` with only an
+   error class name, and stays failed until someone requeues it.
+
+If the same email submits again, the row's `revision` goes up, its old tags are cleared
+and it goes back to `pending`. A worker still holding the older revision gets its write
+rejected, so stale tags can't overwrite newer answers. The prompt (`core.PROMPT`) also
+tells the model not to infer skills from job titles or identity from names or places;
+story labels like Woman of Color in Tech need explicit self-description.
+
 ## First: run one sample on your computer
 
 1. Extract this ZIP. Open the `technovation-tagger` folder in IntelliJ or any editor.
