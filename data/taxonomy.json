@@ -1,0 +1,210 @@
+{
+  "version": "2026-10-06-draft-v1",
+  "source": "Technovation Questionaire Brainstorming.pdf, pages 3–4. Draft pending team approval; later overlapping lists are not merged.",
+  "categories": {
+    "industry": {
+      "source_fields": [
+        "current_role"
+      ],
+      "tags": [
+        "Student",
+        "Software Engineering",
+        "AI/Machine Learning",
+        "Cybersecurity",
+        "Product Management",
+        "UX/UI",
+        "Hardware/Robotics",
+        "Startup",
+        "Consulting",
+        "Finance",
+        "Marketing",
+        "Media",
+        "EdTech",
+        "Nonprofit",
+        "Healthcare",
+        "Law",
+        "Policy/Government",
+        "Academia/Research",
+        "Climate/Energy",
+        "Other"
+      ]
+    },
+    "career_stage": {
+      "source_fields": [
+        "current_role",
+        "since_technovation"
+      ],
+      "tags": [
+        "Student",
+        "Student + Working",
+        "Early Career (0-4 yrs)",
+        "Experienced (5+ yrs)",
+        "Founder"
+      ]
+    },
+    "project_domain": {
+      "source_fields": [
+        "project"
+      ],
+      "tags": [
+        "Healthcare",
+        "Environment/Sustainability",
+        "Education",
+        "Finance",
+        "Safety & Privacy",
+        "Arts & Culture",
+        "Communications & Media",
+        "Policy",
+        "Research & Discovery",
+        "Legal & Justice",
+        "Manufacturing & Industry",
+        "Agriculture & Food Systems"
+      ]
+    },
+    "project_built_with": {
+      "source_fields": [
+        "project"
+      ],
+      "tags": [
+        "Mobile App",
+        "Web App",
+        "AI/Machine Learning",
+        "Hardware/Sensors",
+        "Data/Maps"
+      ]
+    },
+    "project_approach": {
+      "source_fields": [
+        "project"
+      ],
+      "tags": [
+        "Social Impact",
+        "Accessibility",
+        "Community Partnership",
+        "Business/Pitch",
+        "User Research"
+      ]
+    },
+    "interests": {
+      "source_fields": [
+        "interests"
+      ],
+      "tags": [
+        "AI/Machine Learning",
+        "Cybersecurity",
+        "Hardware/Robotics",
+        "Space/Aerospace",
+        "Mobile Development",
+        "Data & Analytics",
+        "Cloud/Infrastructure",
+        "Gaming",
+        "EdTech",
+        "HealthTech",
+        "BioTech",
+        "FinTech",
+        "Climate Tech",
+        "AgTech",
+        "Media Tech",
+        "Career Development",
+        "Career Transitions",
+        "Networking",
+        "Improving Public Speaking",
+        "Job Searching",
+        "Interview Prep",
+        "Resume Building",
+        "Exploring Undergrad",
+        "Grad School",
+        "Entrepreneurship/Startups",
+        "Leadership",
+        "Mentorship",
+        "Volunteering",
+        "Community Building",
+        "Organizing Events",
+        "Connecting with Alumni",
+        "Judging",
+        "Nonprofit Work",
+        "Women in STEM",
+        "Diversity & Inclusion",
+        "Tech Democratization/Access",
+        "Accessibility",
+        "Digital Rights & Privacy",
+        "Design & Creativity",
+        "Research & Innovation",
+        "Environmental Advocacy",
+        "Global/International Work",
+        "Arts & Culture",
+        "Social Impact"
+      ]
+    },
+    "skills": {
+      "source_fields": [
+        "skills"
+      ],
+      "tags": [
+        "Python",
+        "Java",
+        "Swift",
+        "Kotlin",
+        "JavaScript",
+        "C++",
+        "SQL",
+        "Web Development",
+        "Mobile/App Development",
+        "UX/UI Design",
+        "Data Analysis",
+        "Data Visualization",
+        "AI/Machine Learning",
+        "Cybersecurity",
+        "Hardware/Robotics",
+        "Cloud Computing",
+        "Research Methods",
+        "Product Management",
+        "Project Management",
+        "Business Strategy",
+        "Fundraising/Pitching",
+        "Sales",
+        "Market Research",
+        "Financial Modeling",
+        "Policy Analysis",
+        "Public Speaking",
+        "Technical Communication",
+        "Writing/Content Creation",
+        "Graphic Design",
+        "Branding",
+        "Social Media",
+        "Marketing",
+        "Photography",
+        "Video Production",
+        "Translation/Interpretation",
+        "Leadership",
+        "Mentorship",
+        "Event Planning",
+        "Teamwork/Collaboration",
+        "Problem Solving",
+        "Time Management",
+        "Organization",
+        "Cross-Cultural Communication",
+        "Facilitation"
+      ]
+    },
+    "story_angles": {
+      "source_fields": [
+        "story_angles"
+      ],
+      "tags": [
+        "Navigating Underrepresentation",
+        "Woman of Color in Tech",
+        "Cross-Cultural/International Career",
+        "Immigration & Visa Navigation",
+        "First-Generation Student/Professional",
+        "Imposter Syndrome & Self-Doubt",
+        "Non-Linear Career Path/Pivots",
+        "Depth vs. Breadth Decisions",
+        "Work-Life Balance",
+        "Balancing Multiple Roles",
+        "Building Outside Major Tech Hubs",
+        "Starting Young (built or founded as a teen)"
+      ]
+    }
+  }
+}
