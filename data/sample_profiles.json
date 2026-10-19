@@ -46,6 +46,31 @@
       "project_domain": [
         "Agriculture & Food Systems"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2021",
+      "current_location": "Lagos, Nigeria",
+      "origin_location": "Enugu, Nigeria",
+      "languages": "English, Yoruba, Igbo",
+      "timezone": "UTC+1",
+      "speaking_types": [
+        "Not Interested"
+      ],
+      "audiences": [
+        "Students"
+      ],
+      "expertise_areas": [
+        "Agriculture & Food Systems"
+      ],
+      "topic_familiarity": {},
+      "opportunities": [
+        "Internships",
+        "Mentoring",
+        "Volunteering"
+      ],
+      "interview_experience": "No, and I'd like training/support before starting",
+      "regions": "Open to learning about new regions",
+      "availability": "Interested but uncertain timing - keep me posted"
     }
   },
   {
@@ -89,6 +114,31 @@
         "Education",
         "Arts & Culture"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2025",
+      "current_location": "Mexico City, Mexico",
+      "origin_location": "Puebla, Mexico",
+      "languages": "Spanish, English",
+      "timezone": "UTC-6",
+      "speaking_types": [
+        "Not Interested"
+      ],
+      "audiences": [
+        "Students"
+      ],
+      "expertise_areas": [
+        "Education",
+        "Arts & Culture"
+      ],
+      "topic_familiarity": {},
+      "opportunities": [
+        "Events",
+        "Internships"
+      ],
+      "interview_experience": "No, and I'd like training/support before starting",
+      "regions": "Open to learning about new regions",
+      "availability": "Interested but uncertain timing - keep me posted"
     }
   },
   {
@@ -135,6 +185,34 @@
       "project_domain": [
         "Education"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2019",
+      "current_location": "Atlanta, USA",
+      "origin_location": "Kochi, India",
+      "languages": "English, Hindi, Malayalam",
+      "timezone": "UTC-5",
+      "speaking_types": [
+        "Speak as a panelist",
+        "Virtual Events",
+        "In-Person Events"
+      ],
+      "audiences": [
+        "Students"
+      ],
+      "expertise_areas": [
+        "Education"
+      ],
+      "topic_familiarity": {},
+      "opportunities": [
+        "Internships",
+        "Events",
+        "Speaking",
+        "Mentoring"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "regions": "Prefer regions where I have personal/professional connection",
+      "availability": "Available soon - could start in 1-2 months"
     }
   },
   {
@@ -186,6 +264,35 @@
       "project_domain": [
         "Policy"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2016",
+      "current_location": "Seattle, USA",
+      "origin_location": "Los Angeles, USA",
+      "languages": "English, Korean",
+      "timezone": "UTC-8",
+      "speaking_types": [
+        "Moderate panels and interviews",
+        "Speak as a panelist",
+        "Virtual Events",
+        "In-Person Events"
+      ],
+      "audiences": [
+        "Students",
+        "Industry Professionals"
+      ],
+      "expertise_areas": [],
+      "topic_familiarity": {
+        "Engineering": "Deeply experienced - I work in this area professionally"
+      },
+      "opportunities": [
+        "Mentoring",
+        "Speaking",
+        "Events"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "regions": "Yes, any region",
+      "availability": "Available now - ready to start within 2-4 weeks"
     }
   },
   {
@@ -234,6 +341,37 @@
       "project_domain": [
         "Finance"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2018",
+      "current_location": "Amman, Jordan",
+      "origin_location": "Beirut, Lebanon",
+      "languages": "Arabic, English, French",
+      "timezone": "UTC+3",
+      "speaking_types": [
+        "Speak as a panelist",
+        "News media opportunities",
+        "Virtual Events",
+        "In-Person Events"
+      ],
+      "audiences": [
+        "Industry Professionals",
+        "General Public"
+      ],
+      "expertise_areas": [
+        "Finance"
+      ],
+      "topic_familiarity": {
+        "Entrepreneurship & Startups": "Deeply experienced - I work in this area professionally"
+      },
+      "opportunities": [
+        "Jobs",
+        "Events",
+        "Speaking"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "regions": "Prefer regions where I have personal/professional connection",
+      "availability": "Available soon - could start in 1-2 months"
     }
   },
   {
@@ -285,6 +423,34 @@
         "Environment/Sustainability",
         "Research & Discovery"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2014",
+      "current_location": "Montréal, Canada",
+      "origin_location": "Québec City, Canada",
+      "languages": "French, English",
+      "timezone": "UTC-5",
+      "speaking_types": [
+        "Virtual Events"
+      ],
+      "audiences": [
+        "Students",
+        "Educators"
+      ],
+      "expertise_areas": [
+        "Research & Discovery",
+        "Environment/Sustainability"
+      ],
+      "topic_familiarity": {
+        "AI & Machine Learning (research, applications, ethics)": "Deeply experienced - I work in this area professionally"
+      },
+      "opportunities": [
+        "Events",
+        "Mentoring"
+      ],
+      "interview_experience": "No, but I'm comfortable with public speaking/facilitation",
+      "regions": "Yes, any region",
+      "availability": "Available soon - could start in 1-2 months"
     }
   },
   {
@@ -333,6 +499,40 @@
       "project_domain": [
         "Healthcare"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2015",
+      "current_location": "Chicago, USA",
+      "origin_location": "Edison, USA",
+      "languages": "English, Gujarati",
+      "timezone": "UTC-6",
+      "speaking_types": [
+        "Moderate panels and interviews",
+        "Speak as a panelist",
+        "News media opportunities",
+        "Virtual Events",
+        "In-Person Events"
+      ],
+      "audiences": [
+        "Students",
+        "Industry Professionals",
+        "General Public"
+      ],
+      "expertise_areas": [
+        "Healthcare"
+      ],
+      "topic_familiarity": {
+        "Entrepreneurship & Startups": "Deeply experienced - I work in this area professionally",
+        "Leadership": "Deeply experienced - I work in this area professionally"
+      },
+      "opportunities": [
+        "Speaking",
+        "Mentoring",
+        "Events"
+      ],
+      "interview_experience": "Yes, professionally (podcasts, journalism, content creation)",
+      "regions": "Yes, any region",
+      "availability": "Available now - ready to start within 2-4 weeks"
     }
   },
   {
@@ -382,6 +582,36 @@
       "project_domain": [
         "Education"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2017",
+      "current_location": "Atlanta, USA",
+      "origin_location": "Atlanta, USA",
+      "languages": "English",
+      "timezone": "UTC-5",
+      "speaking_types": [
+        "Speak as a panelist",
+        "Virtual Events",
+        "In-Person Events"
+      ],
+      "audiences": [
+        "Educators",
+        "Parents"
+      ],
+      "expertise_areas": [
+        "Education"
+      ],
+      "topic_familiarity": {
+        "Community Building": "Deeply experienced - I work in this area professionally"
+      },
+      "opportunities": [
+        "Volunteering",
+        "Events",
+        "Speaking"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "regions": "Prefer regions where I have personal/professional connection",
+      "availability": "Available soon - could start in 1-2 months"
     }
   },
   {
@@ -424,6 +654,30 @@
       "project_domain": [
         "Arts & Culture"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2020",
+      "current_location": "Milan, Italy",
+      "origin_location": "Florence, Italy",
+      "languages": "Italian, English",
+      "timezone": "UTC+1",
+      "speaking_types": [
+        "Not Interested"
+      ],
+      "audiences": [
+        "Students"
+      ],
+      "expertise_areas": [
+        "Arts & Culture"
+      ],
+      "topic_familiarity": {},
+      "opportunities": [
+        "Internships",
+        "Events"
+      ],
+      "interview_experience": "No, and I'd like training/support before starting",
+      "regions": "Open to learning about new regions",
+      "availability": "Interested but uncertain timing - keep me posted"
     }
   },
   {
@@ -470,6 +724,34 @@
         "Safety & Privacy",
         "Education"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2013",
+      "current_location": "Dubai, UAE",
+      "origin_location": "Cairo, Egypt",
+      "languages": "Arabic, English",
+      "timezone": "UTC+4",
+      "speaking_types": [
+        "Speak as a panelist",
+        "Virtual Events"
+      ],
+      "audiences": [
+        "Students",
+        "Parents"
+      ],
+      "expertise_areas": [
+        "Safety & Privacy",
+        "Finance"
+      ],
+      "topic_familiarity": {},
+      "opportunities": [
+        "Jobs",
+        "Speaking",
+        "Mentoring"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "regions": "Prefer regions where I have personal/professional connection",
+      "availability": "Interested but uncertain timing - keep me posted"
     }
   },
   {
@@ -519,6 +801,32 @@
       "project_domain": [
         "Environment/Sustainability"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2019",
+      "current_location": "Nairobi, Kenya",
+      "origin_location": "Nyeri, Kenya",
+      "languages": "English, Swahili",
+      "timezone": "UTC+3",
+      "speaking_types": [
+        "Virtual Events",
+        "In-Person Events"
+      ],
+      "audiences": [
+        "Students"
+      ],
+      "expertise_areas": [
+        "Environment/Sustainability"
+      ],
+      "topic_familiarity": {},
+      "opportunities": [
+        "Events",
+        "Speaking",
+        "Mentoring"
+      ],
+      "interview_experience": "No, and I'd like training/support before starting",
+      "regions": "Yes, any region",
+      "availability": "Available soon - could start in 1-2 months"
     }
   },
   {
@@ -567,6 +875,39 @@
       "project_domain": [
         "Education"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2012",
+      "current_location": "San Francisco, USA",
+      "origin_location": "Shanghai, China",
+      "languages": "English, Mandarin",
+      "timezone": "UTC-8",
+      "speaking_types": [
+        "Moderate panels and interviews",
+        "Speak as a panelist",
+        "Virtual Events",
+        "In-Person Events"
+      ],
+      "audiences": [
+        "Students",
+        "Industry Professionals"
+      ],
+      "expertise_areas": [
+        "Education",
+        "Finance"
+      ],
+      "topic_familiarity": {
+        "Leadership": "Deeply experienced - I work in this area professionally",
+        "Career Transitions (academic -> industry, IC -> management, etc.)": "Deeply experienced - I work in this area professionally"
+      },
+      "opportunities": [
+        "Mentoring",
+        "Speaking",
+        "Events"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "regions": "Yes, any region",
+      "availability": "Available soon - could start in 1-2 months"
     }
   },
   {
@@ -617,6 +958,35 @@
         "Legal & Justice",
         "Policy"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2016",
+      "current_location": "Bogotá, Colombia",
+      "origin_location": "Medellín, Colombia",
+      "languages": "Spanish, English, Portuguese",
+      "timezone": "UTC-5",
+      "speaking_types": [
+        "Moderate panels and interviews",
+        "Speak as a panelist",
+        "Virtual Events"
+      ],
+      "audiences": [
+        "Students",
+        "General Public"
+      ],
+      "expertise_areas": [
+        "Legal & Justice",
+        "Policy"
+      ],
+      "topic_familiarity": {},
+      "opportunities": [
+        "Volunteering",
+        "Speaking",
+        "Events"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "regions": "Yes, any region",
+      "availability": "Available now - ready to start within 2-4 weeks"
     }
   },
   {
@@ -658,6 +1028,29 @@
       "project_domain": [
         "Environment/Sustainability"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2022",
+      "current_location": "Dhaka, Bangladesh",
+      "origin_location": "Sylhet, Bangladesh",
+      "languages": "Bengali, English",
+      "timezone": "UTC+6",
+      "speaking_types": [
+        "Not Interested"
+      ],
+      "audiences": [
+        "Students"
+      ],
+      "expertise_areas": [
+        "Environment/Sustainability"
+      ],
+      "topic_familiarity": {},
+      "opportunities": [
+        "Internships"
+      ],
+      "interview_experience": "No, and I'd like training/support before starting",
+      "regions": "Open to learning about new regions",
+      "availability": "Interested but uncertain timing - keep me posted"
     }
   },
   {
@@ -705,6 +1098,33 @@
       "project_domain": [
         "Healthcare"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2014",
+      "current_location": "Houston, USA",
+      "origin_location": "Houston, USA",
+      "languages": "English, Vietnamese",
+      "timezone": "UTC-6",
+      "speaking_types": [
+        "Speak as a panelist",
+        "In-Person Events"
+      ],
+      "audiences": [
+        "Students",
+        "Educators"
+      ],
+      "expertise_areas": [
+        "Healthcare",
+        "Research & Discovery"
+      ],
+      "topic_familiarity": {},
+      "opportunities": [
+        "Events",
+        "Speaking"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "regions": "Prefer regions where I have personal/professional connection",
+      "availability": "Available soon - could start in 1-2 months"
     }
   },
   {
@@ -752,6 +1172,32 @@
       "project_domain": [
         "Communications & Media"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2017",
+      "current_location": "Berlin, Germany",
+      "origin_location": "Hamburg, Germany",
+      "languages": "German, English",
+      "timezone": "UTC+1",
+      "speaking_types": [
+        "Not Interested"
+      ],
+      "audiences": [
+        "Students"
+      ],
+      "expertise_areas": [
+        "Arts & Culture",
+        "Communications & Media"
+      ],
+      "topic_familiarity": {},
+      "opportunities": [
+        "Jobs",
+        "Mentoring",
+        "Volunteering"
+      ],
+      "interview_experience": "No, but I'm comfortable with public speaking/facilitation",
+      "regions": "Open to learning about new regions",
+      "availability": "Available soon - could start in 1-2 months"
     }
   },
   {
@@ -800,6 +1246,40 @@
         "Immigration & Visa Navigation",
         "Navigating Underrepresentation"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2015",
+      "current_location": "London, UK",
+      "origin_location": "Kano, Nigeria",
+      "languages": "English, Hausa, Arabic",
+      "timezone": "UTC+0",
+      "speaking_types": [
+        "Moderate panels and interviews",
+        "Speak as a panelist",
+        "News media opportunities",
+        "Virtual Events",
+        "In-Person Events"
+      ],
+      "audiences": [
+        "Students",
+        "Educators",
+        "Parents"
+      ],
+      "expertise_areas": [
+        "Manufacturing & Industry",
+        "Research & Discovery"
+      ],
+      "topic_familiarity": {
+        "Engineering": "Deeply experienced - I work in this area professionally"
+      },
+      "opportunities": [
+        "Speaking",
+        "Mentoring",
+        "Events"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "regions": "Yes, any region",
+      "availability": "Available now - ready to start within 2-4 weeks"
     }
   },
   {
@@ -848,6 +1328,36 @@
       "project_domain": [
         "Communications & Media"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2018",
+      "current_location": "São Paulo, Brazil",
+      "origin_location": "Salvador, Brazil",
+      "languages": "Portuguese, English, Spanish",
+      "timezone": "UTC-3",
+      "speaking_types": [
+        "Moderate panels and interviews",
+        "Speak as a panelist",
+        "Virtual Events"
+      ],
+      "audiences": [
+        "General Public",
+        "Students"
+      ],
+      "expertise_areas": [
+        "Communications & Media"
+      ],
+      "topic_familiarity": {
+        "Developer Relations & Technical Communication": "Deeply experienced - I work in this area professionally"
+      },
+      "opportunities": [
+        "Jobs",
+        "Speaking",
+        "Events"
+      ],
+      "interview_experience": "Yes, professionally (podcasts, journalism, content creation)",
+      "regions": "Yes, any region",
+      "availability": "Interested but uncertain timing - keep me posted"
     }
   },
   {
@@ -894,6 +1404,30 @@
         "Finance",
         "Education"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2020",
+      "current_location": "New York, USA",
+      "origin_location": "Seoul, South Korea",
+      "languages": "Korean, English",
+      "timezone": "UTC-5",
+      "speaking_types": [
+        "Not Interested"
+      ],
+      "audiences": [
+        "Students"
+      ],
+      "expertise_areas": [
+        "Finance"
+      ],
+      "topic_familiarity": {},
+      "opportunities": [
+        "Jobs",
+        "Mentoring"
+      ],
+      "interview_experience": "No, but I'm comfortable with public speaking/facilitation",
+      "regions": "Open to learning about new regions",
+      "availability": "Interested but uncertain timing - keep me posted"
     }
   },
   {
@@ -940,6 +1474,39 @@
       "project_domain": [
         "Education"
       ]
+    },
+    "speaker_answers": {
+      "participation_years": "2013",
+      "current_location": "Boston, USA",
+      "origin_location": "Baltimore, USA",
+      "languages": "English, Hebrew",
+      "timezone": "UTC-5",
+      "speaking_types": [
+        "Moderate panels and interviews",
+        "Speak as a panelist",
+        "Virtual Events",
+        "In-Person Events"
+      ],
+      "audiences": [
+        "Educators",
+        "Students",
+        "Parents"
+      ],
+      "expertise_areas": [
+        "Education"
+      ],
+      "topic_familiarity": {
+        "Community Building": "Deeply experienced - I work in this area professionally",
+        "Leadership": "Deeply experienced - I work in this area professionally"
+      },
+      "opportunities": [
+        "Speaking",
+        "Mentoring",
+        "Volunteering"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "regions": "Yes, any region",
+      "availability": "Available now - ready to start within 2-4 weeks"
     }
   },
   {

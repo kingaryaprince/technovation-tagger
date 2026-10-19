@@ -10,6 +10,7 @@ from .core import ROOT, PROMPT_VERSION, load_taxonomy, schema, tag_profile
 from .scoring import compare, summarize, markdown
 from .clients import OpenAIClient, SupabaseClient, settings, ServiceError
 from .worker import run_once
+from . import search as speaker_search
 
 
 def write_json(path, value):
@@ -72,7 +73,10 @@ def ingest_samples(db, samples):
     for s in samples:
         if not s.get('email'):
             continue  # edge cases have no identity; they are for `evaluate` only
-        answers = {**s['answers'], 'full_name': s['full_name'], 'email': s['email'], '_sample_id': s['id']}
+        # speaker_answers = the form's checkbox/select answers (availability, audiences, ...).
+        # The tagger never sends them to OpenAI; the speaker search filters on them.
+        answers = {**s['answers'], **s.get('speaker_answers', {}),
+                   'full_name': s['full_name'], 'email': s['email'], '_sample_id': s['id']}
         db.rpc('ingest_alumni_intake', {'p_email': s['email'], 'p_full_name': s['full_name'],
                'p_answers': answers, 'p_response_id': 'sample-' + s['id'], 'p_submitted_at': now})
         loaded += 1
@@ -123,6 +127,14 @@ def main(argv=None):
     commands.add_parser('load-samples', help='Insert the 20 sample profiles into Supabase as pending jobs')
     report_p = commands.add_parser('sample-report', help='Score the sample tags the worker saved in Supabase')
     report_p.add_argument('--out', default='output/supabase-sample-report.json')
+    find = commands.add_parser('search', help='Speaker search: top matches for the picked tags; no OpenAI call')
+    find.add_argument('--tag', action='append', metavar='CATEGORY=TAG',
+                      help='Repeat for each tag, e.g. --tag audiences=Students --tag skills=Python')
+    find.add_argument('--limit', type=int, default=5, help='How many people (default 5)')
+    find.add_argument('--all', action='store_true', help='Include people who did not pick a speaking type')
+    find.add_argument('--json', action='store_true', help='Print the full results as JSON')
+    options = commands.add_parser('filter-options', help='List every tag people have, with head counts')
+    options.add_argument('--category', help='Only this category, e.g. audiences')
     work = commands.add_parser('worker', help='Read pending Supabase jobs, call OpenAI, save tags')
     work.add_argument('--limit', type=int, default=5, help='Max jobs per pass')
     work.add_argument('--watch', action='store_true', help='Keep polling for new form responses until Ctrl+C')
@@ -142,6 +154,15 @@ def main(argv=None):
             return 0
         if args.command == 'sample-report':
             sample_report(SupabaseClient(config), load_samples(), args.out); return 0
+        if args.command == 'search':
+            picks = speaker_search.parse_tags(args.tag)
+            rows = speaker_search.search(SupabaseClient(config), picks, args.limit, not args.all)
+            print(json.dumps(rows, ensure_ascii=False, indent=2) if args.json
+                  else speaker_search.format_results(rows))
+            return 0
+        if args.command == 'filter-options':
+            rows = SupabaseClient(config).rpc('speaker_filter_options', {})
+            print(speaker_search.format_options(rows, args.category)); return 0
         api = OpenAIClient(config)
         model = config['OPENAI_MODEL']
         if args.command in {'demo', 'evaluate'}:

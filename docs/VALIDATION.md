@@ -29,3 +29,17 @@ Python program itself requires only Python 3.10+ and no pip/npm dependencies.
 
 Still not run by me: real OpenAI calls, the user's Supabase project, a real Google Form submission
 through the updated adapter. Those are steps 1-5 in `docs/THIS_WEEK.md`.
+
+## October 18 update: speaker search
+
+| Check | Result | What it establishes |
+| --- | --- | --- |
+| `python3 -m unittest discover -s tests -v` | 61 passed | Adds 18: `search`/`filter-options` commands and tag parsing, every category exists in the taxonomy/form mapping and in the SQL, sample speaker answers use real form keys, never reach the model, and are sent by `load-samples`. |
+| Local PostgreSQL 16 + `001`, `database_smoke.sql`, `005`, `006` (twice) | Passed | Migration and original smoke test unaffected. With 10 samples pre-loaded the old way, `006` merged answers without changing revision/tags and added the other 10; replaying the new `load-samples` payload bumped no revisions. |
+| `tests/speaker_search_smoke.sql` (as postgres and as service_role) | Passed | Ranking, availability tie-break, speakers-only filter, pending tags ignored, blank grid rows ignored, language split, case-insensitive match, limit, missing tags, bad input refused. |
+| `sql/007_speaker_search_examples.sql` | Expected results | All blocks match the expected rankings in the comments; about 13 ms per search. |
+| Role checks | Passed | `anon`/`authenticated` denied on the view and both functions. |
+| `examples/admin_speaker_search_route.ts` | Type-checks | Against @supabase/supabase-js 2.45 and Next.js 14. Not run in a live app. |
+
+Still not run by me: the SQL on the real Supabase project and the route in a live Next.js app.
+
