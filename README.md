@@ -1,4 +1,5 @@
-> **This week (Oct 13):** start with `docs/THIS_WEEK.md`.
+> **Week 7 (Oct 18): Speaker Bureau search** — start with `docs/SPEAKER_SEARCH.md`.
+> Oct 13 tagging steps are still in `docs/THIS_WEEK.md`.
 
 # Technovation: week-three alumni tagging
 
