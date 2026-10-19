@@ -134,13 +134,13 @@ class LoadSamplesTests(unittest.TestCase):
         name, payload = db.calls[0]
         self.assertEqual(name, 'ingest_alumni_intake')
         self.assertEqual(payload['p_email'], 'sample-01@example.com')
-        self.assertEqual(payload['p_answers']['_sample_id'], '01-amara')
+        self.assertEqual(payload['p_answers']['_sample_id'], SAMPLES[0]['id'])
         self.assertIn('current_role', payload['p_answers'])
 
     def test_sample_report_scores_saved_tags(self):
         s = SAMPLES[0]
         rows = [{'email': s['email'], 'tagging_status': 'completed', 'tags': s['expected'],
-                 'prompt_version': 'v2', 'model': 'm'},
+                 'prompt_version': 'v3', 'model': 'm'},
                 {'email': SAMPLES[1]['email'], 'tagging_status': 'pending', 'tags': None,
                  'prompt_version': None, 'model': None}]
         db = FakeDB(rows)
@@ -149,7 +149,7 @@ class LoadSamplesTests(unittest.TestCase):
             report = json.loads((Path(d) / 'r.json').read_text())
         self.assertIn('email=like.sample-*%40example.com', db.query)
         self.assertEqual(report['summary']['overall']['fn'], 0)
-        self.assertEqual(report['not_completed'], ['02-sofia: pending'])
+        self.assertEqual(report['not_completed'], [SAMPLES[1]['id'] + ': pending'])
 
     def test_sample_report_with_nothing_done_explains(self):
         with self.assertRaisesRegex(ValueError, 'load-samples'):

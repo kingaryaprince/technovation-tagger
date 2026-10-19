@@ -116,7 +116,7 @@ def main(argv=None):
     commands.add_parser('check-db', help='Check the Supabase table; does not call OpenAI')
     commands.add_parser('schema', help='Print the structured-output schema; no API calls')
     demo = commands.add_parser('demo', help='Tag one provided sample through OpenAI; no database writes')
-    demo.add_argument('--sample', default='01-amara')
+    demo.add_argument('--sample', default='01-amina')
     demo.add_argument('--out', default='output/demo.json')
     tag = commands.add_parser('tag', help='Tag a JSON answers object through OpenAI; no database writes')
     tag.add_argument('file'); tag.add_argument('--out', default='output/tags.json')

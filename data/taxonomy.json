@@ -1,6 +1,6 @@
 {
-  "version": "2026-10-06-draft-v1",
-  "source": "Technovation Questionaire Brainstorming.pdf, pages 3–4. Draft pending team approval; later overlapping lists are not merged.",
+  "version": "2026-10-18-finalized-v2",
+  "source": "Finalized Tags list agreed by the team (Oct 2026). Replaces the Oct 6 draft from the Questionnaire Brainstorming PDF.",
   "categories": {
     "industry": {
       "source_fields": [
@@ -66,11 +66,11 @@
         "project"
       ],
       "tags": [
-        "Mobile App",
-        "Web App",
+        "App",
         "AI/Machine Learning",
         "Hardware/Sensors",
-        "Data/Maps"
+        "Data/Maps",
+        "SMS/Messaging"
       ]
     },
     "project_approach": {
@@ -78,7 +78,6 @@
         "project"
       ],
       "tags": [
-        "Social Impact",
         "Accessibility",
         "Community Partnership",
         "Business/Pitch",
@@ -133,7 +132,9 @@
         "Environmental Advocacy",
         "Global/International Work",
         "Arts & Culture",
-        "Social Impact"
+        "AI Ethics & Governance",
+        "Mental Health & Wellbeing",
+        "Urban Planning"
       ]
     },
     "skills": {
@@ -158,6 +159,8 @@
         "Hardware/Robotics",
         "Cloud Computing",
         "Research Methods",
+        "R",
+        "Open Source",
         "Product Management",
         "Project Management",
         "Business Strategy",
@@ -184,7 +187,8 @@
         "Time Management",
         "Organization",
         "Cross-Cultural Communication",
-        "Facilitation"
+        "Facilitation",
+        "Teaching/Curriculum Design"
       ]
     },
     "story_angles": {
@@ -203,7 +207,8 @@
         "Work-Life Balance",
         "Balancing Multiple Roles",
         "Building Outside Major Tech Hubs",
-        "Starting Young (built or founded as a teen)"
+        "Starting Young (built or founded as a teen)",
+        "Family & Caregiving Responsibilities"
       ]
     }
   }

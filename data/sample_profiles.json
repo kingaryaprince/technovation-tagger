@@ -1,16 +1,16 @@
 [
   {
-    "id": "01-amara",
-    "full_name": "Amara Okafor",
+    "id": "01-amina",
+    "full_name": "Amina Diallo",
     "email": "sample-01@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 1. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
     "answers": {
-      "current_role": "CS student, University of Lagos",
-      "project": "An app that lets small farmers photograph a diseased crop and get treatment advice, using an AI image model we trained ourselves.",
-      "since_technovation": "I started a CS degree and I'm building a local crop-disease dataset with classmates.",
-      "interests": "Machine learning for farming, getting more girls into STEM, and help landing my first job and polishing my CV.",
-      "skills": "I code mostly in Python, I've built Android apps, I train image classifiers, and I'm good at breaking down messy problems.",
-      "story_angles": "I learned to build tech in Lagos, far from Silicon Valley, and I trained my first AI model at 16."
+      "current_role": "Student, Computer Engineering at a university in Montréal",
+      "project": "Our team built a mobile app that lets market vendors in Dakar log daily sales by speaking in Wolof, then shows simple profit charts. We interviewed 30 vendors, found that most kept no written records, and ran a one-month pilot with 12 of them.",
+      "since_technovation": "I finished high school in Dakar, moved to Montréal on a scholarship, and joined my university’s robotics team. This summer I interned at a fintech doing data cleaning in Python.",
+      "interests": "Financial tools for informal-economy workers, getting more West African students into engineering programs abroad, and learning more about machine learning.",
+      "skills": "Python, some C++ from robotics, and basic SQL. I’ve also translated for my family and at community events.",
+      "story_angles": "Moving from Dakar to Montréal meant switching between French, Wolof, and English in technical settings. I sometimes feel I got here by luck, though building something real for the vendors helps me push back on that."
     },
     "expected": {
       "industry": [
@@ -19,140 +19,103 @@
       "career_stage": [
         "Student"
       ],
+      "project_domain": [
+        "Finance"
+      ],
       "project_built_with": [
-        "AI/Machine Learning",
-        "Mobile App"
+        "App",
+        "AI/Machine Learning"
       ],
       "project_approach": [
-        "Social Impact"
+        "User Research",
+        "Community Partnership"
       ],
       "interests": [
-        "AI/Machine Learning",
-        "AgTech",
-        "Women in STEM",
-        "Job Searching",
-        "Resume Building"
+        "FinTech",
+        "Tech Democratization/Access",
+        "Global/International Work",
+        "AI/Machine Learning"
       ],
       "skills": [
         "Python",
-        "Mobile/App Development",
-        "AI/Machine Learning",
-        "Problem Solving"
-      ],
-      "story_angles": [
-        "Building Outside Major Tech Hubs",
-        "Starting Young (built or founded as a teen)"
-      ],
-      "project_domain": [
-        "Agriculture & Food Systems"
-      ]
-    },
-    "speaker_answers": {
-      "participation_years": "2021",
-      "current_location": "Lagos, Nigeria",
-      "origin_location": "Enugu, Nigeria",
-      "languages": "English, Yoruba, Igbo",
-      "timezone": "UTC+1",
-      "speaking_types": [
-        "Not Interested"
-      ],
-      "audiences": [
-        "Students"
-      ],
-      "expertise_areas": [
-        "Agriculture & Food Systems"
-      ],
-      "topic_familiarity": {},
-      "opportunities": [
-        "Internships",
-        "Mentoring",
-        "Volunteering"
-      ],
-      "interview_experience": "No, and I'd like training/support before starting",
-      "regions": "Open to learning about new regions",
-      "availability": "Interested but uncertain timing - keep me posted"
-    }
-  },
-  {
-    "id": "02-sofia",
-    "full_name": "Sofia Ramirez",
-    "email": "sample-02@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 2. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
-    "answers": {
-      "current_role": "Taking a gap year before college",
-      "project": "A Spanish-language app that teaches kids about constellations with illustrated star maps and short stories.",
-      "since_technovation": "I've been freelancing as an illustrator and applying to design and astronomy programs.",
-      "interests": "Anything to do with space and astronomy, illustration and creative design, and figuring out which college programs fit me.",
-      "skills": "I illustrate and do graphic design, I shoot night-sky photos, and I translate between Spanish and English for my family's business.",
-      "story_angles": "I published my first app when I was 15, before I'd even finished high school."
-    },
-    "expected": {
-      "industry": [
-        "Student"
-      ],
-      "career_stage": [
-        "Student"
-      ],
-      "project_built_with": [
-        "Mobile App"
-      ],
-      "project_approach": [],
-      "interests": [
-        "Space/Aerospace",
-        "Design & Creativity",
-        "Exploring Undergrad"
-      ],
-      "skills": [
-        "Graphic Design",
-        "Photography",
+        "C++",
+        "SQL",
         "Translation/Interpretation"
       ],
       "story_angles": [
-        "Starting Young (built or founded as a teen)"
-      ],
-      "project_domain": [
-        "Education",
-        "Arts & Culture"
+        "Cross-Cultural/International Career",
+        "Imposter Syndrome & Self-Doubt",
+        "Building Outside Major Tech Hubs"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "Hardware/Robotics",
+        "FinTech",
+        "Tech Democratization/Access",
+        "Global/International Work"
       ]
     },
     "speaker_answers": {
-      "participation_years": "2025",
-      "current_location": "Mexico City, Mexico",
-      "origin_location": "Puebla, Mexico",
-      "languages": "Spanish, English",
-      "timezone": "UTC-6",
-      "speaking_types": [
-        "Not Interested"
+      "participation_years": "2020-21",
+      "current_location": "Montréal, Canada",
+      "origin_location": "Dakar, Senegal",
+      "languages": "Wolof, French, English",
+      "impact": "It was the first time I saw that people could build software for problems like my mother’s market stall. It’s why I chose engineering over medicine, which my family expected.",
+      "story_formats": [
+        "Social media spotlight (LinkedIn, Instagram, etc.)",
+        "Video testimonial (short-form, self-recorded or guided)"
       ],
+      "speaking_types": [
+        "Virtual Events"
+      ],
+      "topic_familiarity": {
+        "Engineering": "Moderately experienced - I have some professional/project experience",
+        "Mobile Development": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area",
+        "Regional Tech Ecosystems": "Emerging interest - I'm learning/transitioning into this area",
+        "Tech Democratization": "Emerging interest - I'm learning/transitioning into this area"
+      },
+      "expertise_areas": [
+        "Finance",
+        "Tech & Society"
+      ],
+      "opportunities": [
+        "Internships",
+        "Mentoring",
+        "Events"
+      ],
+      "interview_experience": "No, and I'd like training/support before starting",
+      "interview_formats": [
+        "None yet"
+      ],
+      "interview_comfort": {
+        "Active listening and follow-up questions": "Very Comfortable",
+        "Connecting authentically with strangers": "Very Comfortable",
+        "Recording audio/video conversations": "Need Support",
+        "Light editing or production coordination": "Need Support"
+      },
       "audiences": [
         "Students"
       ],
-      "expertise_areas": [
-        "Education",
-        "Arts & Culture"
-      ],
-      "topic_familiarity": {},
-      "opportunities": [
-        "Events",
-        "Internships"
-      ],
-      "interview_experience": "No, and I'd like training/support before starting",
-      "regions": "Open to learning about new regions",
-      "availability": "Interested but uncertain timing - keep me posted"
+      "availability": "Available soon - could start in 1-2 months",
+      "regions": "Yes, any region",
+      "timezone": "ET",
+      "notes": "I can help with anything in French or on studying abroad from West Africa."
     }
   },
   {
-    "id": "03-priya",
-    "full_name": "Priya Nair",
-    "email": "sample-03@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 3. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
+    "id": "02-camila",
+    "full_name": "Camila Herrera",
+    "email": "sample-02@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
     "answers": {
-      "current_role": "Junior in CS at Georgia Tech, and I work part-time at a campus startup",
-      "project": "An app that matches high school students with peer tutors. We pitched it as a small business and ran a pilot at our school.",
-      "since_technovation": "I'm studying CS and building learning tools for campus orgs.",
-      "interests": "Education technology, starting companies, meeting people in the industry, and mentoring younger girls who are where I was.",
-      "skills": "JavaScript, building websites end to end, and designing interfaces in Figma.",
-      "story_angles": "I grew up between Kochi and Atlanta and my career keeps crossing both worlds. Right now I'm juggling a full course load with a startup job."
+      "current_role": "Student, B.S. Information Systems (senior) at a public university in Texas; part-time IT help desk technician, about 20 hours a week",
+      "project": "We built a web app that maps free after-school meal sites in Austin and shows which are open right now. A local food bank gave us site data, and parents at two schools told us the old PDF list was impossible to read on a phone.",
+      "since_technovation": "I went to a public university on a scholarship, switched from nursing to information systems after my first programming class, and got a campus help desk job. I’m now applying for data and analytics internships.",
+      "interests": "Breaking into tech without connections, getting more first-gen students into data careers, and using data to improve access to food and other basics.",
+      "skills": "SQL, Excel dashboards from my help desk job, JavaScript from the Technovation app, and explaining technical problems to non-technical people. I’m fully bilingual in English and Spanish.",
+      "story_angles": "I’m the first person in my family to go to college, so I’ve figured out recruiting, resumes, and networking mostly on my own. I also help look after my two younger brothers, which shapes how I plan my week."
     },
     "expected": {
       "industry": [
@@ -161,72 +124,210 @@
       "career_stage": [
         "Student + Working"
       ],
+      "project_domain": [
+        "Agriculture & Food Systems"
+      ],
       "project_built_with": [
-        "Web App"
+        "App",
+        "Data/Maps"
       ],
       "project_approach": [
-        "Business/Pitch"
+        "Community Partnership",
+        "User Research"
       ],
       "interests": [
-        "EdTech",
-        "Entrepreneurship/Startups",
+        "Career Development",
         "Networking",
-        "Mentorship"
+        "Tech Democratization/Access",
+        "Data & Analytics"
       ],
       "skills": [
+        "SQL",
         "JavaScript",
-        "Web Development",
-        "UX/UI Design"
+        "Data Visualization",
+        "Technical Communication",
+        "Translation/Interpretation"
       ],
       "story_angles": [
-        "Cross-Cultural/International Career",
-        "Balancing Multiple Roles"
-      ],
-      "project_domain": [
-        "Education"
+        "First-Generation Student/Professional",
+        "Balancing Multiple Roles",
+        "Family & Caregiving Responsibilities"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "Data & Analytics",
+        "Career Transitions",
+        "Job Searching",
+        "Resume Building"
       ]
     },
     "speaker_answers": {
-      "participation_years": "2019",
-      "current_location": "Atlanta, USA",
-      "origin_location": "Kochi, India",
-      "languages": "English, Hindi, Malayalam",
-      "timezone": "UTC-5",
+      "participation_years": "2018-19",
+      "current_location": "Austin, USA",
+      "origin_location": "San Salvador, El Salvador",
+      "languages": "Spanish, English",
+      "impact": "It gave me something to put on my first resume when I had no internships and no one in my family who’d worked in tech.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)",
+        "Social media spotlight (LinkedIn, Instagram, etc.)"
+      ],
       "speaking_types": [
         "Speak as a panelist",
-        "Virtual Events",
-        "In-Person Events"
+        "Virtual Events"
+      ],
+      "topic_familiarity": {
+        "Community Building": "Moderately experienced - I have some professional/project experience",
+        "Tech Democratization": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area",
+        "Career Transitions (academic -> industry, IC -> management, etc.)": "Emerging interest - I'm learning/transitioning into this area"
+      },
+      "expertise_areas": [
+        "Agriculture & Food Systems",
+        "Education",
+        "Tech & Society"
+      ],
+      "opportunities": [
+        "Jobs",
+        "Internships",
+        "Mentoring",
+        "Events"
+      ],
+      "interview_experience": "No, but I'm comfortable with public speaking/facilitation",
+      "interview_formats": [
+        "Written Q&A/profiles"
       ],
       "audiences": [
-        "Students"
+        "Students",
+        "Parents"
       ],
-      "expertise_areas": [
-        "Education"
-      ],
-      "topic_familiarity": {},
-      "opportunities": [
-        "Internships",
-        "Events",
-        "Speaking",
-        "Mentoring"
-      ],
-      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "availability": "Available now - ready to start within 2-4 weeks",
       "regions": "Prefer regions where I have personal/professional connection",
-      "availability": "Available soon - could start in 1-2 months"
+      "timezone": "CT",
+      "notes": "I can speak to Spanish-speaking audiences. As a student I’m limited to evenings and weekends."
     }
   },
   {
-    "id": "04-hannah",
-    "full_name": "Hannah Kim",
-    "email": "sample-04@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 4. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
+    "id": "03-lerato",
+    "full_name": "Lerato Mokoena",
+    "email": "sample-03@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
     "answers": {
-      "current_role": "Senior Software Engineer at a large tech company",
-      "project": "An app for reporting broken sidewalks and ramps so the city could prioritize accessibility fixes.",
-      "since_technovation": "Eight years in cloud infrastructure; I guest lecture and mentor early-career women.",
-      "interests": "Cloud systems at scale, mentoring early-career engineers, getting more women into STEM, reconnecting with other Technovation alumni, and judging hackathons or pitch competitions.",
-      "skills": "Java and C++, designing cloud infrastructure, coaching junior engineers, and giving talks.",
-      "story_angles": "I've wrestled with whether to go deep as a specialist or broaden into management. On top of my engineering job I also lead a mentoring program, so I'm always balancing two roles."
+      "current_role": "Junior Data Analyst at a public health nonprofit; BSc in Statistics",
+      "project": "We built an app that sends appointment and medication reminders by SMS to patients at rural clinics, since most had basic phones with no data. A nurse at our local clinic helped us set the schedule, and missed appointments dropped when we tested it with 40 patients.",
+      "since_technovation": "I started a pre-med track, then switched to statistics after realizing I preferred working with data. I now analyze clinic data for a public health nonprofit and volunteer as a virtual mentor for Technovation teams in Southern Africa.",
+      "interests": "Using data to improve rural health care, mentoring girls in Southern Africa, and building local tech communities.",
+      "skills": "Python and R for analysis, building dashboards, and writing grant reports and plain-language summaries for funders.",
+      "story_angles": "I switched from medicine to statistics, which many people saw as giving up a safe path. Working in Johannesburg, I also see how much strong data and health work happens outside the usual tech hubs and gets overlooked."
+    },
+    "expected": {
+      "industry": [
+        "Healthcare"
+      ],
+      "career_stage": [
+        "Early Career (0-4 yrs)"
+      ],
+      "project_domain": [
+        "Healthcare"
+      ],
+      "project_built_with": [
+        "App",
+        "SMS/Messaging"
+      ],
+      "project_approach": [
+        "Community Partnership",
+        "User Research"
+      ],
+      "interests": [
+        "HealthTech",
+        "Data & Analytics",
+        "Mentorship",
+        "Community Building",
+        "Women in STEM"
+      ],
+      "skills": [
+        "Python",
+        "Data Analysis",
+        "Data Visualization",
+        "Writing/Content Creation",
+        "R"
+      ],
+      "story_angles": [
+        "Non-Linear Career Path/Pivots",
+        "Building Outside Major Tech Hubs"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "HealthTech",
+        "Data & Analytics",
+        "Career Transitions",
+        "Mentorship",
+        "Volunteering"
+      ]
+    },
+    "speaker_answers": {
+      "participation_years": "2017-18",
+      "current_location": "Johannesburg, South Africa",
+      "origin_location": "Polokwane, South Africa",
+      "languages": "English, isiZulu, Sesotho",
+      "impact": "It showed me I could help solve health problems without being a doctor, which my family found hard to picture at first.",
+      "story_formats": [
+        "Podcast or audio interview",
+        "Written profile or Q&A feature (newsletter, website, blog)"
+      ],
+      "speaking_types": [
+        "Speak as a panelist",
+        "Moderate panels and interviews",
+        "Virtual Events",
+        "In-Person Events"
+      ],
+      "topic_familiarity": {
+        "Tech & Society (healthcare, environment, etc.)": "Deeply experienced - I work in this area professionally",
+        "Community Building": "Moderately experienced - I have some professional/project experience",
+        "Regional Tech Ecosystems": "Moderately experienced - I have some professional/project experience",
+        "Career Transitions (academic -> industry, IC -> management, etc.)": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area"
+      },
+      "expertise_areas": [
+        "Healthcare",
+        "Tech & Society",
+        "Research & Discovery"
+      ],
+      "opportunities": [
+        "Jobs",
+        "Mentoring",
+        "Volunteering",
+        "Speaking"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "interview_formats": [
+        "Panel moderation",
+        "Written Q&A/profiles"
+      ],
+      "audiences": [
+        "Students",
+        "Educators",
+        "General Public"
+      ],
+      "availability": "Available soon - could start in 1-2 months",
+      "regions": "Open to learning about new regions",
+      "timezone": "SAST",
+      "notes": "Happy to speak to rural or public health audiences. My Fridays are flexible."
+    }
+  },
+  {
+    "id": "04-mei-ling",
+    "full_name": "Mei-Ling Tan",
+    "email": "sample-04@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
+    "answers": {
+      "current_role": "Staff Software Engineer, cloud infrastructure, at a large cloud provider",
+      "project": "We built an app that teaches basic sign language, using the phone camera to check hand shapes in real time. A local school for the deaf corrected our sign vocabulary and tested early versions with students.",
+      "since_technovation": "I studied computer science, spent nine years in cloud infrastructure, then managed engineers for two years before returning to hands-on work as a staff engineer. I mentor early-career engineers.",
+      "interests": "Careers in infrastructure engineering, the manager-to-IC switch, accessibility, and mentoring women early in their careers.",
+      "skills": "Java, C++, and cloud architecture. I’m good at explaining complex systems to non-experts and have given conference talks. I also contribute to open-source tools.",
+      "story_angles": "I moved from Singapore to the US for college and later navigated work visas, so I know the cross-border path well. Going back and forth between manager and individual contributor taught me that depth and breadth both matter, and that changing direction is okay."
     },
     "expected": {
       "industry": [
@@ -235,157 +336,333 @@
       "career_stage": [
         "Experienced (5+ yrs)"
       ],
+      "project_domain": [
+        "Education"
+      ],
       "project_built_with": [
-        "Mobile App",
-        "Data/Maps"
+        "App",
+        "AI/Machine Learning"
       ],
       "project_approach": [
         "Accessibility",
-        "Social Impact"
+        "Community Partnership",
+        "User Research"
       ],
       "interests": [
         "Cloud/Infrastructure",
+        "Career Transitions",
+        "Accessibility",
         "Mentorship",
-        "Women in STEM",
-        "Connecting with Alumni",
-        "Judging"
+        "Women in STEM"
       ],
       "skills": [
         "Java",
         "C++",
         "Cloud Computing",
-        "Mentorship",
-        "Public Speaking"
+        "Technical Communication",
+        "Public Speaking",
+        "Open Source"
       ],
       "story_angles": [
+        "Cross-Cultural/International Career",
+        "Immigration & Visa Navigation",
         "Depth vs. Breadth Decisions",
-        "Balancing Multiple Roles"
-      ],
-      "project_domain": [
-        "Policy"
+        "Non-Linear Career Path/Pivots"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "Cloud/Infrastructure",
+        "Career Transitions",
+        "Leadership",
+        "Mentorship"
       ]
     },
     "speaker_answers": {
-      "participation_years": "2016",
+      "participation_years": "2014-15",
       "current_location": "Seattle, USA",
-      "origin_location": "Los Angeles, USA",
-      "languages": "English, Korean",
-      "timezone": "UTC-8",
+      "origin_location": "Singapore",
+      "languages": "English, Mandarin",
+      "impact": "Talking to users before writing code is something I learned at Technovation and still use. Mentoring teams since has made me a better manager.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)",
+        "Case study or impact report feature"
+      ],
       "speaking_types": [
         "Moderate panels and interviews",
         "Speak as a panelist",
-        "Virtual Events",
-        "In-Person Events"
+        "In-Person Events",
+        "Virtual Events"
       ],
-      "audiences": [
-        "Students",
-        "Industry Professionals"
-      ],
-      "expertise_areas": [],
       "topic_familiarity": {
-        "Engineering": "Deeply experienced - I work in this area professionally"
+        "Engineering": "Deeply experienced - I work in this area professionally",
+        "Leadership": "Deeply experienced - I work in this area professionally",
+        "Career Transitions (academic -> industry, IC -> management, etc.)": "Deeply experienced - I work in this area professionally",
+        "Developer Relations & Technical Communication": "Deeply experienced - I work in this area professionally",
+        "AI & Machine Learning (research, applications, ethics)": "Moderately experienced - I have some professional/project experience",
+        "Mobile Development": "Moderately experienced - I have some professional/project experience",
+        "Regional Tech Ecosystems": "Emerging interest - I'm learning/transitioning into this area"
       },
+      "expertise_areas": [
+        "Tech & Society",
+        "Education"
+      ],
       "opportunities": [
         "Mentoring",
         "Speaking",
         "Events"
       ],
       "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "interview_formats": [
+        "Panel moderation",
+        "Fireside chats"
+      ],
+      "audiences": [
+        "Students",
+        "Industry Professionals"
+      ],
+      "availability": "Available now - ready to start within 2-4 weeks",
       "regions": "Yes, any region",
-      "availability": "Available now - ready to start within 2-4 weeks"
+      "timezone": "PT",
+      "notes": "I can review talk abstracts or help prepare younger alumni for their first speaking engagement."
     }
   },
   {
-    "id": "05-layla",
-    "full_name": "Layla Haddad",
+    "id": "05-zara",
+    "full_name": "Zara Ahmed",
     "email": "sample-05@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 5. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
     "answers": {
-      "current_role": "Product Manager at a payments startup",
-      "project": "A budgeting app for refugee families that also lists affordable local services. We reached the regional finals.",
-      "since_technovation": "I build payments tools for users across the MENA region.",
-      "interests": "Financial technology, early-stage startups, working across countries, and judging startup competitions.",
-      "skills": "Running product roadmaps, user and market research, business strategy, and working across cultures and languages.",
-      "story_angles": "I moved from Beirut to Amman and have worked across the Middle East my whole career, building products far from the usual tech hubs."
+      "current_role": "Founder & CEO of a climate-tech startup that helps small farms measure and sell carbon credits; previously a consultant at an energy firm",
+      "project": "We built a mobile app and low-cost soil sensor kit so school gardens could track water use and soil moisture. We pitched it to our city’s education office, which later funded sensors for three schools.",
+      "since_technovation": "I studied environmental engineering, spent three years at an energy consultancy, and founded my company in 2024. We raised a pre-seed round and worked with about 200 farms across South Asia.",
+      "interests": "Climate tech, agriculture technology, and helping more women raise capital. I want climate tools in the hands of smallholder farmers, not just large corporations.",
+      "skills": "Fundraising, financial modeling, pitching, and managing a team of eight. I also write a monthly newsletter for farmers.",
+      "story_angles": "As a woman of color founder, I’ve been asked more than once who my ‘real’ technical co-founder is. I moved to the UK for university and went through the Global Talent visa process. I also started building young, so I’ve often been the youngest person in the room."
     },
     "expected": {
       "industry": [
-        "Product Management"
+        "Climate/Energy"
+      ],
+      "career_stage": [
+        "Founder"
+      ],
+      "project_domain": [
+        "Environment/Sustainability",
+        "Education"
+      ],
+      "project_built_with": [
+        "App",
+        "Hardware/Sensors"
+      ],
+      "project_approach": [
+        "Business/Pitch",
+        "Community Partnership"
+      ],
+      "interests": [
+        "Climate Tech",
+        "AgTech",
+        "Entrepreneurship/Startups",
+        "Women in STEM",
+        "Environmental Advocacy",
+        "Tech Democratization/Access"
+      ],
+      "skills": [
+        "Fundraising/Pitching",
+        "Financial Modeling",
+        "Leadership",
+        "Public Speaking",
+        "Writing/Content Creation"
+      ],
+      "story_angles": [
+        "Woman of Color in Tech",
+        "Navigating Underrepresentation",
+        "Immigration & Visa Navigation",
+        "Starting Young (built or founded as a teen)"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "Climate Tech",
+        "AgTech",
+        "Entrepreneurship/Startups",
+        "Leadership"
+      ]
+    },
+    "speaker_answers": {
+      "participation_years": "2015-16",
+      "current_location": "London, UK",
+      "origin_location": "Karachi, Pakistan",
+      "languages": "Urdu, English",
+      "impact": "Pitching to adults at 16 made fundraising less intimidating later. It also taught me to start with the problem and the people living it.",
+      "story_formats": [
+        "Podcast or audio interview",
+        "Video testimonial (short-form, self-recorded or guided)",
+        "Case study or impact report feature"
+      ],
+      "speaking_types": [
+        "Speak as a panelist",
+        "News media opportunities",
+        "In-Person Events",
+        "Virtual Events"
+      ],
+      "topic_familiarity": {
+        "Entrepreneurship & Startups": "Deeply experienced - I work in this area professionally",
+        "Leadership": "Deeply experienced - I work in this area professionally",
+        "Tech & Society (healthcare, environment, etc.)": "Deeply experienced - I work in this area professionally",
+        "Regional Tech Ecosystems": "Moderately experienced - I have some professional/project experience",
+        "Community Building": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area"
+      },
+      "expertise_areas": [
+        "Environment/Sustainability",
+        "Agriculture & Food Systems",
+        "Finance"
+      ],
+      "opportunities": [
+        "Speaking",
+        "Mentoring",
+        "Events"
+      ],
+      "interview_experience": "Yes, professionally (podcasts, journalism, content creation)",
+      "interview_formats": [
+        "Podcast recording",
+        "Fireside chats",
+        "Video interviews (Zoom, etc.)"
+      ],
+      "audiences": [
+        "Students",
+        "Industry Professionals",
+        "General Public"
+      ],
+      "availability": "Available soon - could start in 1-2 months",
+      "regions": "Yes, any region",
+      "timezone": "GMT",
+      "notes": "I travel a lot in spring but am happy to do virtual sessions."
+    }
+  },
+  {
+    "id": "06-tamika",
+    "full_name": "Tamika Brooks",
+    "email": "sample-06@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
+    "answers": {
+      "current_role": "Policy Analyst at a tech policy think tank; B.A. Political Science with a computer science minor",
+      "project": "We built a web app that teaches teens how their data is collected on social media, with short quizzes and a privacy checklist for each app. We interviewed 50 students and presented to our school board, which added a digital literacy lesson.",
+      "since_technovation": "I studied political science with a computer science minor, interned on Capitol Hill, and now research how AI is regulated. I also help run a policy fellowship for first-year undergrads.",
+      "interests": "AI regulation and ethics, children’s online privacy, and getting more technologists into policy jobs.",
+      "skills": "Policy analysis, writing briefs, facilitating workshops with legislative staff, and speaking on panels.",
+      "story_angles": "As a Black woman in tech policy, I’m often the only one in the room. It took me a while to stop second-guessing whether I belonged in technical conversations as a non-engineer."
+    },
+    "expected": {
+      "industry": [
+        "Policy/Government"
       ],
       "career_stage": [
         "Early Career (0-4 yrs)"
       ],
+      "project_domain": [
+        "Safety & Privacy",
+        "Education"
+      ],
       "project_built_with": [
-        "Mobile App"
+        "App"
       ],
       "project_approach": [
-        "Social Impact",
-        "Business/Pitch"
+        "User Research",
+        "Community Partnership"
       ],
       "interests": [
-        "FinTech",
-        "Entrepreneurship/Startups",
-        "Global/International Work",
-        "Judging"
+        "Digital Rights & Privacy",
+        "AI/Machine Learning",
+        "Career Transitions",
+        "AI Ethics & Governance"
       ],
       "skills": [
-        "Product Management",
-        "Market Research",
-        "Business Strategy",
-        "Cross-Cultural Communication"
+        "Policy Analysis",
+        "Writing/Content Creation",
+        "Facilitation",
+        "Public Speaking",
+        "Research Methods"
       ],
       "story_angles": [
-        "Cross-Cultural/International Career",
-        "Building Outside Major Tech Hubs"
-      ],
-      "project_domain": [
-        "Finance"
+        "Woman of Color in Tech",
+        "Navigating Underrepresentation",
+        "Imposter Syndrome & Self-Doubt"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "AI/Machine Learning",
+        "Mentorship",
+        "Digital Rights & Privacy"
       ]
     },
     "speaker_answers": {
-      "participation_years": "2018",
-      "current_location": "Amman, Jordan",
-      "origin_location": "Beirut, Lebanon",
-      "languages": "Arabic, English, French",
-      "timezone": "UTC+3",
+      "participation_years": "2016-17",
+      "current_location": "Washington, D.C., USA",
+      "origin_location": "Atlanta, Georgia, USA",
+      "languages": "English",
+      "impact": "It showed me that technology decisions affect real people, which is why I went into policy rather than engineering. It also gave me early practice explaining technical ideas to decision-makers.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)",
+        "Podcast or audio interview"
+      ],
       "speaking_types": [
+        "Moderate panels and interviews",
         "Speak as a panelist",
         "News media opportunities",
         "Virtual Events",
         "In-Person Events"
       ],
+      "topic_familiarity": {
+        "AI & Machine Learning (research, applications, ethics)": "Deeply experienced - I work in this area professionally",
+        "Tech & Society (healthcare, environment, etc.)": "Deeply experienced - I work in this area professionally",
+        "Community Building": "Moderately experienced - I have some professional/project experience",
+        "Career Transitions (academic -> industry, IC -> management, etc.)": "Moderately experienced - I have some professional/project experience",
+        "Engineering": "Emerging interest - I'm learning/transitioning into this area"
+      },
+      "expertise_areas": [
+        "Policy",
+        "Safety & Privacy",
+        "Legal & Justice",
+        "Tech & Society"
+      ],
+      "opportunities": [
+        "Jobs",
+        "Mentoring",
+        "Speaking",
+        "Events"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "interview_formats": [
+        "Panel moderation",
+        "Written Q&A/profiles"
+      ],
       "audiences": [
+        "Students",
+        "Educators",
         "Industry Professionals",
         "General Public"
       ],
-      "expertise_areas": [
-        "Finance"
-      ],
-      "topic_familiarity": {
-        "Entrepreneurship & Startups": "Deeply experienced - I work in this area professionally"
-      },
-      "opportunities": [
-        "Jobs",
-        "Events",
-        "Speaking"
-      ],
-      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
-      "regions": "Prefer regions where I have personal/professional connection",
-      "availability": "Available soon - could start in 1-2 months"
+      "availability": "Available now - ready to start within 2-4 weeks",
+      "regions": "Yes, any region",
+      "timezone": "ET",
+      "notes": "I’m happy to do media interviews on tech policy. I’ve done two radio segments."
     }
   },
   {
-    "id": "06-chloe",
-    "full_name": "Chloe Dubois",
-    "email": "sample-06@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 6. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
+    "id": "07-ananya",
+    "full_name": "Ananya Iyer",
+    "email": "sample-07@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
     "answers": {
-      "current_role": "PhD student in machine learning, working as a research assistant",
-      "project": "A citizen-science app where people log bird sightings, which we gave to a local ornithology group.",
-      "since_technovation": "I'm doing a PhD applying machine learning to ecological data.",
-      "interests": "Machine learning research, pushing science forward, protecting the environment, supporting women in STEM, judging science fairs, and mentoring students.",
-      "skills": "Python, analyzing large datasets, building ML models, and designing research studies.",
-      "story_angles": "I chose to go deep into research instead of taking a broad industry job, and I still often feel like I don't belong among the other PhD students."
+      "current_role": "PhD student in machine learning at a technical university in Zürich, and research assistant",
+      "project": "We built an app where people record street noise with their phones and see a map of noise levels near schools. We shared the data with our city council, which started a campaign about traffic noise near two schools.",
+      "since_technovation": "I did a B.Tech in computer science in India, then moved to Switzerland for a master’s and PhD on machine learning for climate modeling. I also teach lab sessions for undergraduate courses.",
+      "interests": "Machine learning for climate, research careers, and encouraging more women to pursue PhDs.",
+      "skills": "Python, statistics, scientific writing, and teaching. I’m good at explaining technical ideas to students from different backgrounds.",
+      "story_angles": "Moving from India to Switzerland meant adapting to a different academic culture, and I’ve questioned more than once whether I’m good enough for a top ML program. I also struggle with whether to go deep in one research area or stay broad."
     },
     "expected": {
       "industry": [
@@ -394,8 +671,12 @@
       "career_stage": [
         "Student + Working"
       ],
+      "project_domain": [
+        "Environment/Sustainability",
+        "Research & Discovery"
+      ],
       "project_built_with": [
-        "Mobile App",
+        "App",
         "Data/Maps"
       ],
       "project_approach": [
@@ -403,444 +684,405 @@
       ],
       "interests": [
         "AI/Machine Learning",
+        "Climate Tech",
         "Research & Innovation",
-        "Environmental Advocacy",
-        "Women in STEM",
-        "Judging",
-        "Mentorship"
+        "Grad School",
+        "Women in STEM"
       ],
       "skills": [
         "Python",
-        "Data Analysis",
-        "AI/Machine Learning",
-        "Research Methods"
+        "Research Methods",
+        "Technical Communication",
+        "Writing/Content Creation",
+        "Teaching/Curriculum Design"
       ],
       "story_angles": [
-        "Depth vs. Breadth Decisions",
-        "Imposter Syndrome & Self-Doubt"
-      ],
-      "project_domain": [
-        "Environment/Sustainability",
-        "Research & Discovery"
+        "Cross-Cultural/International Career",
+        "Imposter Syndrome & Self-Doubt",
+        "Depth vs. Breadth Decisions"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "AI/Machine Learning",
+        "Grad School",
+        "Climate Tech",
+        "Research & Innovation"
       ]
     },
     "speaker_answers": {
-      "participation_years": "2014",
-      "current_location": "Montréal, Canada",
-      "origin_location": "Québec City, Canada",
-      "languages": "French, English",
-      "timezone": "UTC-5",
+      "participation_years": "2015-16",
+      "current_location": "Zürich, Switzerland",
+      "origin_location": "Bengaluru, India",
+      "languages": "English, Tamil, Hindi",
+      "impact": "It was my first time collecting real data and seeing it influence a decision, which pushed me toward research.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)"
+      ],
       "speaking_types": [
+        "Speak as a panelist",
         "Virtual Events"
+      ],
+      "topic_familiarity": {
+        "AI & Machine Learning (research, applications, ethics)": "Deeply experienced - I work in this area professionally",
+        "Engineering": "Moderately experienced - I have some professional/project experience",
+        "Tech Democratization": "Emerging interest - I'm learning/transitioning into this area",
+        "Entrepreneurship & Startups": "Emerging interest - I'm learning/transitioning into this area"
+      },
+      "expertise_areas": [
+        "Research & Discovery",
+        "Environment/Sustainability",
+        "Tech & Society"
+      ],
+      "opportunities": [
+        "Events",
+        "Mentoring",
+        "Volunteering"
+      ],
+      "interview_experience": "No, but I'm comfortable with public speaking/facilitation",
+      "interview_formats": [
+        "None yet"
       ],
       "audiences": [
         "Students",
         "Educators"
       ],
-      "expertise_areas": [
-        "Research & Discovery",
-        "Environment/Sustainability"
-      ],
-      "topic_familiarity": {
-        "AI & Machine Learning (research, applications, ethics)": "Deeply experienced - I work in this area professionally"
-      },
-      "opportunities": [
-        "Events",
-        "Mentoring"
-      ],
-      "interview_experience": "No, but I'm comfortable with public speaking/facilitation",
+      "availability": "Interested but uncertain timing - keep me posted",
       "regions": "Yes, any region",
-      "availability": "Available soon - could start in 1-2 months"
+      "timezone": "CET",
+      "notes": "My availability depends on my defense date, which should be in about nine months."
     }
   },
   {
-    "id": "07-maya",
-    "full_name": "Maya Patel",
-    "email": "sample-07@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 7. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
-    "answers": {
-      "current_role": "Co-founder and CEO of a remote patient-monitoring startup",
-      "project": "A medication-reminder app for my grandparents' community. Pitching taught me I wanted to build companies.",
-      "since_technovation": "I founded a health startup after college and raised a seed round.",
-      "interests": "Digital health, biotech, and building startups.",
-      "skills": "Raising money and pitching investors, company strategy, leading a team, and speaking on stage.",
-      "story_angles": "I pitched my first company at 15. As an Indian-American woman founder I'm often the only woman of color in the room, and I'm balancing being a CEO with caring for family."
-    },
-    "expected": {
-      "industry": [
-        "Startup"
-      ],
-      "career_stage": [
-        "Founder"
-      ],
-      "project_built_with": [
-        "Mobile App"
-      ],
-      "project_approach": [
-        "Business/Pitch",
-        "User Research"
-      ],
-      "interests": [
-        "HealthTech",
-        "BioTech",
-        "Entrepreneurship/Startups"
-      ],
-      "skills": [
-        "Fundraising/Pitching",
-        "Business Strategy",
-        "Leadership",
-        "Public Speaking"
-      ],
-      "story_angles": [
-        "Starting Young (built or founded as a teen)",
-        "Woman of Color in Tech",
-        "Balancing Multiple Roles"
-      ],
-      "project_domain": [
-        "Healthcare"
-      ]
-    },
-    "speaker_answers": {
-      "participation_years": "2015",
-      "current_location": "Chicago, USA",
-      "origin_location": "Edison, USA",
-      "languages": "English, Gujarati",
-      "timezone": "UTC-6",
-      "speaking_types": [
-        "Moderate panels and interviews",
-        "Speak as a panelist",
-        "News media opportunities",
-        "Virtual Events",
-        "In-Person Events"
-      ],
-      "audiences": [
-        "Students",
-        "Industry Professionals",
-        "General Public"
-      ],
-      "expertise_areas": [
-        "Healthcare"
-      ],
-      "topic_familiarity": {
-        "Entrepreneurship & Startups": "Deeply experienced - I work in this area professionally",
-        "Leadership": "Deeply experienced - I work in this area professionally"
-      },
-      "opportunities": [
-        "Speaking",
-        "Mentoring",
-        "Events"
-      ],
-      "interview_experience": "Yes, professionally (podcasts, journalism, content creation)",
-      "regions": "Yes, any region",
-      "availability": "Available now - ready to start within 2-4 weeks"
-    }
-  },
-  {
-    "id": "08-nia",
-    "full_name": "Nia Johnson",
+    "id": "08-sofia",
+    "full_name": "Sofia Mendes",
     "email": "sample-08@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 8. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
     "answers": {
-      "current_role": "Program Manager at an education nonprofit",
-      "project": "An app connecting kids in my neighborhood to free after-school programs, which we built with a local community center.",
-      "since_technovation": "I run STEM programs for 2,000+ students a year.",
-      "interests": "Working in the nonprofit sector, making tech more inclusive, doing work that helps communities, and running events.",
-      "skills": "Managing programs and projects, planning events, keeping things organized, and leading workshops.",
-      "story_angles": "As a Black woman in tech I've often been the only one who looks like me, and I was the first in my family to go to college."
+      "current_role": "Freelance brand designer and content creator; BA in Design",
+      "project": "We built a mobile app that maps street murals and public art in our neighborhood and tells each artist’s story. We worked with local artists and a cultural center, and I designed the app’s entire visual identity.",
+      "since_technovation": "I started in computer science, switched to design after my first year, and now freelance for startups on branding and product visuals. I also host a podcast interviewing women in tech and creative fields.",
+      "interests": "Design in tech, creative careers for people with technical backgrounds, and telling stories about women in technology.",
+      "skills": "Brand identity, UI visuals, video editing, photography, and podcast production. I also write and run social media for my own channels.",
+      "story_angles": "I went from computer science to design and now work for myself, so my path hasn’t been straight. I juggle client work, content creation, and my podcast, so I’m always balancing creative and business roles."
     },
     "expected": {
       "industry": [
-        "Nonprofit"
+        "Media"
       ],
       "career_stage": [
         "Early Career (0-4 yrs)"
       ],
-      "project_built_with": [
-        "Mobile App"
-      ],
-      "project_approach": [
-        "Community Partnership",
-        "Social Impact"
-      ],
-      "interests": [
-        "Nonprofit Work",
-        "Diversity & Inclusion",
-        "Social Impact",
-        "Organizing Events"
-      ],
-      "skills": [
-        "Project Management",
-        "Event Planning",
-        "Organization",
-        "Facilitation"
-      ],
-      "story_angles": [
-        "Woman of Color in Tech",
-        "Navigating Underrepresentation",
-        "First-Generation Student/Professional"
-      ],
       "project_domain": [
-        "Education"
-      ]
-    },
-    "speaker_answers": {
-      "participation_years": "2017",
-      "current_location": "Atlanta, USA",
-      "origin_location": "Atlanta, USA",
-      "languages": "English",
-      "timezone": "UTC-5",
-      "speaking_types": [
-        "Speak as a panelist",
-        "Virtual Events",
-        "In-Person Events"
-      ],
-      "audiences": [
-        "Educators",
-        "Parents"
-      ],
-      "expertise_areas": [
-        "Education"
-      ],
-      "topic_familiarity": {
-        "Community Building": "Deeply experienced - I work in this area professionally"
-      },
-      "opportunities": [
-        "Volunteering",
-        "Events",
-        "Speaking"
-      ],
-      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
-      "regions": "Prefer regions where I have personal/professional connection",
-      "availability": "Available soon - could start in 1-2 months"
-    }
-  },
-  {
-    "id": "09-isabella",
-    "full_name": "Isabella Rossi",
-    "email": "sample-09@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 9. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
-    "answers": {
-      "current_role": "Industrial design student",
-      "project": "An app promoting local artisans and Italian cultural heritage. I designed the branding and the interface.",
-      "since_technovation": "I'm studying industrial design and doing freelance branding for local shops.",
-      "interests": "Design, art and culture, and how media and technology come together.",
-      "skills": "Graphic design, product photography, and building brand identities.",
-      "story_angles": "I started out coding but switched to industrial design, so my path hasn't been a straight line."
-    },
-    "expected": {
-      "industry": [
-        "Student"
-      ],
-      "career_stage": [
-        "Student"
-      ],
-      "project_built_with": [
-        "Mobile App"
-      ],
-      "project_approach": [],
-      "interests": [
-        "Design & Creativity",
         "Arts & Culture",
-        "Media Tech"
-      ],
-      "skills": [
-        "Graphic Design",
-        "Photography",
-        "Branding"
-      ],
-      "story_angles": [
-        "Non-Linear Career Path/Pivots"
-      ],
-      "project_domain": [
-        "Arts & Culture"
-      ]
-    },
-    "speaker_answers": {
-      "participation_years": "2020",
-      "current_location": "Milan, Italy",
-      "origin_location": "Florence, Italy",
-      "languages": "Italian, English",
-      "timezone": "UTC+1",
-      "speaking_types": [
-        "Not Interested"
-      ],
-      "audiences": [
-        "Students"
-      ],
-      "expertise_areas": [
-        "Arts & Culture"
-      ],
-      "topic_familiarity": {},
-      "opportunities": [
-        "Internships",
-        "Events"
-      ],
-      "interview_experience": "No, and I'd like training/support before starting",
-      "regions": "Open to learning about new regions",
-      "availability": "Interested but uncertain timing - keep me posted"
-    }
-  },
-  {
-    "id": "10-fatima",
-    "full_name": "Fatima Al-Sayed",
-    "email": "sample-10@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 10. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
-    "answers": {
-      "current_role": "Security Analyst at a bank",
-      "project": "An app teaching teens how to stay safe online, with short quizzes on passwords and scams.",
-      "since_technovation": "I moved into security after university and run awareness sessions at work.",
-      "interests": "Information security, women in STEM, and building my professional network.",
-      "skills": "Threat analysis and security monitoring, scripting in Python, and writing SQL queries.",
-      "story_angles": "I moved from Cairo to Dubai for work, and in security teams I'm usually one of very few women."
-    },
-    "expected": {
-      "industry": [
-        "Cybersecurity"
-      ],
-      "career_stage": [
-        "Experienced (5+ yrs)"
+        "Communications & Media"
       ],
       "project_built_with": [
-        "Mobile App"
-      ],
-      "project_approach": [
-        "Social Impact"
-      ],
-      "interests": [
-        "Cybersecurity",
-        "Women in STEM",
-        "Networking"
-      ],
-      "skills": [
-        "Cybersecurity",
-        "Python",
-        "SQL"
-      ],
-      "story_angles": [
-        "Cross-Cultural/International Career",
-        "Navigating Underrepresentation"
-      ],
-      "project_domain": [
-        "Safety & Privacy",
-        "Education"
-      ]
-    },
-    "speaker_answers": {
-      "participation_years": "2013",
-      "current_location": "Dubai, UAE",
-      "origin_location": "Cairo, Egypt",
-      "languages": "Arabic, English",
-      "timezone": "UTC+4",
-      "speaking_types": [
-        "Speak as a panelist",
-        "Virtual Events"
-      ],
-      "audiences": [
-        "Students",
-        "Parents"
-      ],
-      "expertise_areas": [
-        "Safety & Privacy",
-        "Finance"
-      ],
-      "topic_familiarity": {},
-      "opportunities": [
-        "Jobs",
-        "Speaking",
-        "Mentoring"
-      ],
-      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
-      "regions": "Prefer regions where I have personal/professional connection",
-      "availability": "Interested but uncertain timing - keep me posted"
-    }
-  },
-  {
-    "id": "11-grace",
-    "full_name": "Grace Mwangi",
-    "email": "sample-11@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 11. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
-    "answers": {
-      "current_role": "Data Analyst at a climate tech company",
-      "project": "An app where residents report water shortages so the utility can see patterns, tied to the clean water SDG.",
-      "since_technovation": "I track emissions data for East African companies.",
-      "interests": "Climate technology, environmental causes, working on problems across borders, getting more confident speaking in public, and volunteering.",
-      "skills": "Analyzing data, building dashboards and charts, SQL, and solving problems.",
-      "story_angles": "I've built my whole career in Nairobi rather than a big tech hub, and I still doubt whether I'm good enough to speak on stage."
-    },
-    "expected": {
-      "industry": [
-        "Climate/Energy"
-      ],
-      "career_stage": [
-        "Early Career (0-4 yrs)"
-      ],
-      "project_built_with": [
-        "Mobile App",
+        "App",
         "Data/Maps"
       ],
       "project_approach": [
         "Community Partnership"
       ],
       "interests": [
-        "Climate Tech",
-        "Environmental Advocacy",
-        "Global/International Work",
-        "Improving Public Speaking",
-        "Volunteering"
+        "Design & Creativity",
+        "Media Tech",
+        "Arts & Culture",
+        "Women in STEM",
+        "Career Transitions"
       ],
       "skills": [
-        "Data Analysis",
-        "Data Visualization",
-        "SQL",
-        "Problem Solving"
+        "Graphic Design",
+        "Branding",
+        "UX/UI Design",
+        "Video Production",
+        "Photography",
+        "Social Media",
+        "Writing/Content Creation"
       ],
       "story_angles": [
-        "Building Outside Major Tech Hubs",
-        "Imposter Syndrome & Self-Doubt"
-      ],
-      "project_domain": [
-        "Environment/Sustainability"
+        "Non-Linear Career Path/Pivots",
+        "Balancing Multiple Roles",
+        "Work-Life Balance"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "Career Transitions",
+        "Design & Creativity",
+        "Media Tech",
+        "Entrepreneurship/Startups"
       ]
     },
     "speaker_answers": {
-      "participation_years": "2019",
-      "current_location": "Nairobi, Kenya",
-      "origin_location": "Nyeri, Kenya",
-      "languages": "English, Swahili",
-      "timezone": "UTC+3",
+      "participation_years": "2019-20",
+      "current_location": "Lisbon, Portugal",
+      "origin_location": "São Paulo, Brazil",
+      "languages": "Portuguese, English, Spanish",
+      "impact": "Technovation is where I realized design is as much a part of building technology as code. It also gave me my first project with a real client.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)",
+        "Social media spotlight (LinkedIn, Instagram, etc.)",
+        "Video testimonial (short-form, self-recorded or guided)",
+        "Podcast or audio interview"
+      ],
       "speaking_types": [
-        "Virtual Events",
-        "In-Person Events"
+        "Moderate panels and interviews",
+        "News media opportunities",
+        "Virtual Events"
       ],
-      "audiences": [
-        "Students"
-      ],
+      "topic_familiarity": {
+        "Community Building": "Moderately experienced - I have some professional/project experience",
+        "Career Transitions (academic -> industry, IC -> management, etc.)": "Moderately experienced - I have some professional/project experience",
+        "Mobile Development": "Emerging interest - I'm learning/transitioning into this area",
+        "Tech & Society (healthcare, environment, etc.)": "Emerging interest - I'm learning/transitioning into this area"
+      },
       "expertise_areas": [
-        "Environment/Sustainability"
+        "Arts & Culture",
+        "Communications & Media"
       ],
-      "topic_familiarity": {},
       "opportunities": [
         "Events",
         "Speaking",
         "Mentoring"
       ],
-      "interview_experience": "No, and I'd like training/support before starting",
+      "interview_experience": "Yes, professionally (podcasts, journalism, content creation)",
+      "interview_formats": [
+        "Podcast recording",
+        "Video interviews (Zoom, etc.)",
+        "Written Q&A/profiles"
+      ],
+      "interview_comfort": {
+        "Preparing thoughtful questions": "Very Comfortable",
+        "Active listening and follow-up questions": "Very Comfortable",
+        "Recording audio/video conversations": "Very Comfortable",
+        "Light editing or production coordination": "Very Comfortable",
+        "Connecting authentically with strangers": "Very Comfortable"
+      },
+      "audiences": [
+        "Students",
+        "General Public"
+      ],
+      "availability": "Available now - ready to start within 2-4 weeks",
       "regions": "Yes, any region",
-      "availability": "Available soon - could start in 1-2 months"
+      "timezone": "WET",
+      "notes": "I’d love to co-host or edit an alumni podcast episode and feature Technovation alumni stories on my show."
     }
   },
   {
-    "id": "12-emily",
-    "full_name": "Emily Zhang",
-    "email": "sample-12@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 12. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
+    "id": "09-hana",
+    "full_name": "Hana Sato",
+    "email": "sample-09@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
     "answers": {
-      "current_role": "Senior Consultant at a management consulting firm",
-      "project": "An app helping immigrant parents navigate the school system. I led the team and wrote our business plan.",
-      "since_technovation": "I advise tech and nonprofit clients and coach students on career moves and interviews.",
-      "interests": "Helping people grow their careers, coaching for interviews, mentoring, and judging competitions.",
-      "skills": "Business strategy, building financial models, and presenting to executives.",
-      "story_angles": "I came to the US from Shanghai and went through years of visa paperwork. My career has moved between countries, and I went from engineering into consulting."
+      "current_role": "Student, mechatronics at a university in Tokyo",
+      "project": "We built an app paired with a small temperature sensor so my family’s metal-parts workshop could get a phone alert when a machine ran too hot. We tested it on two machines for a month, and the first alert caught a problem before a shutdown.",
+      "since_technovation": "I chose mechatronics, joined a robotics lab in my second year, and spent this summer as an intern building test rigs at a robotics company. I also help teach a weekend coding class for elementary school kids.",
+      "interests": "Robotics, manufacturing technology for small businesses, and getting more girls into engineering. I’d also like to hear about graduate programs abroad.",
+      "skills": "C++ and Python for robotics, CAD, soldering, and presenting project demos in English and Japanese.",
+      "story_angles": "Being one of a few women in my engineering department sometimes makes me quiet in group projects, and I’m working on speaking up earlier."
+    },
+    "expected": {
+      "industry": [
+        "Student"
+      ],
+      "career_stage": [
+        "Student"
+      ],
+      "project_domain": [
+        "Manufacturing & Industry"
+      ],
+      "project_built_with": [
+        "App",
+        "Hardware/Sensors"
+      ],
+      "project_approach": [
+        "Community Partnership",
+        "User Research"
+      ],
+      "interests": [
+        "Hardware/Robotics",
+        "Women in STEM",
+        "Grad School",
+        "Tech Democratization/Access"
+      ],
+      "skills": [
+        "C++",
+        "Python",
+        "Hardware/Robotics",
+        "Technical Communication"
+      ],
+      "story_angles": [
+        "Navigating Underrepresentation"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "Hardware/Robotics",
+        "Volunteering",
+        "Mentorship"
+      ]
+    },
+    "speaker_answers": {
+      "participation_years": "2021-22",
+      "current_location": "Tokyo, Japan",
+      "origin_location": "Osaka, Japan",
+      "languages": "Japanese, English",
+      "impact": "It showed me that engineering problems can be small and local. I learned I like building things that people near me actually use.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)",
+        "Social media spotlight (LinkedIn, Instagram, etc.)"
+      ],
+      "speaking_types": [
+        "Virtual Events"
+      ],
+      "topic_familiarity": {
+        "Engineering": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area",
+        "Regional Tech Ecosystems": "Emerging interest - I'm learning/transitioning into this area"
+      },
+      "expertise_areas": [
+        "Manufacturing & Industry",
+        "Education"
+      ],
+      "opportunities": [
+        "Internships",
+        "Mentoring",
+        "Events"
+      ],
+      "interview_experience": "No, and I'd like training/support before starting",
+      "interview_formats": [
+        "None yet"
+      ],
+      "audiences": [
+        "Students"
+      ],
+      "availability": "Available soon - could start in 1-2 months",
+      "regions": "Open to learning about new regions",
+      "timezone": "JST",
+      "notes": "I can join early-morning or late-evening calls to match US or European time zones."
+    }
+  },
+  {
+    "id": "10-nneka",
+    "full_name": "Nneka Eze",
+    "email": "sample-10@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
+    "answers": {
+      "current_role": "Senior Product Manager at a large e-commerce company; previously a software engineer",
+      "project": "We built a web app that helps secondary school students in Enugu find and apply for scholarships, with deadline reminders. A teacher gave us a list of 80 scholarships, and about 20 students used the app to apply that year.",
+      "since_technovation": "I studied computer science in Nigeria, moved to Canada for a master’s, worked as a software engineer for four years, then switched to product management. I now manage a team that builds checkout tools.",
+      "interests": "Breaking into product management, building products for emerging markets, and mentoring international students in Canada.",
+      "skills": "Product strategy, roadmapping, SQL for analysis, user interviews, and managing stakeholders. I’ve also run internal workshops on writing product specs.",
+      "story_angles": "I moved countries twice for school and work, and immigration paperwork shaped many of my career choices. I also switched from engineering to product and had to learn to be taken seriously without coding all day. I’m still the only Black woman on most teams I join."
+    },
+    "expected": {
+      "industry": [
+        "Product Management"
+      ],
+      "career_stage": [
+        "Experienced (5+ yrs)"
+      ],
+      "project_domain": [
+        "Education"
+      ],
+      "project_built_with": [
+        "App"
+      ],
+      "project_approach": [
+        "User Research",
+        "Community Partnership"
+      ],
+      "interests": [
+        "Career Transitions",
+        "Career Development",
+        "Mentorship",
+        "Global/International Work"
+      ],
+      "skills": [
+        "Product Management",
+        "Business Strategy",
+        "SQL",
+        "Data Analysis",
+        "Research Methods",
+        "Facilitation"
+      ],
+      "story_angles": [
+        "Immigration & Visa Navigation",
+        "Cross-Cultural/International Career",
+        "Non-Linear Career Path/Pivots",
+        "Woman of Color in Tech",
+        "Navigating Underrepresentation"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "Career Transitions",
+        "Leadership"
+      ]
+    },
+    "speaker_answers": {
+      "participation_years": "2013-14",
+      "current_location": "Toronto, Canada",
+      "origin_location": "Enugu, Nigeria",
+      "languages": "English, Igbo",
+      "impact": "It was the first time I presented to a room of adults, which made it easier to speak up in meetings later. It also showed me that I like deciding what to build, not only building it.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)",
+        "Podcast or audio interview",
+        "Case study or impact report feature"
+      ],
+      "speaking_types": [
+        "Speak as a panelist",
+        "Moderate panels and interviews",
+        "Virtual Events",
+        "In-Person Events"
+      ],
+      "topic_familiarity": {
+        "Leadership": "Deeply experienced - I work in this area professionally",
+        "Career Transitions (academic -> industry, IC -> management, etc.)": "Deeply experienced - I work in this area professionally",
+        "Engineering": "Moderately experienced - I have some professional/project experience",
+        "Entrepreneurship & Startups": "Moderately experienced - I have some professional/project experience",
+        "Regional Tech Ecosystems": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area"
+      },
+      "expertise_areas": [
+        "Tech & Society",
+        "Education",
+        "Finance"
+      ],
+      "opportunities": [
+        "Mentoring",
+        "Speaking",
+        "Events"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "interview_formats": [
+        "Panel moderation",
+        "Fireside chats"
+      ],
+      "audiences": [
+        "Students",
+        "Industry Professionals"
+      ],
+      "availability": "Available soon - could start in 1-2 months",
+      "regions": "Yes, any region",
+      "timezone": "ET",
+      "notes": "Happy to review résumés for alumni looking at product roles."
+    }
+  },
+  {
+    "id": "11-rebecca",
+    "full_name": "Rebecca Castillo",
+    "email": "sample-11@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
+    "answers": {
+      "current_role": "Engagement Manager at a management consulting firm, focused on healthcare and technology clients",
+      "project": "We built a mobile app that helps students at our school find free tutoring from older students. We ran a pilot with 25 students and tracked tutoring hours booked each week for our business plan.",
+      "since_technovation": "I studied economics and computer science, joined a consulting firm after graduation, and was promoted to manager last year. I also coach students applying to consulting and business clubs through a first-gen mentoring program.",
+      "interests": "Case interviews and career paths in consulting, first-gen student success, and healthcare operations.",
+      "skills": "Business strategy, financial modeling in Excel, market research, running workshops, and presenting to executives.",
+      "story_angles": "I’m the first in my family to graduate college and the first to work in an office job, so I learned a lot of unwritten rules from scratch. Long travel weeks make work-life balance an ongoing challenge."
     },
     "expected": {
       "industry": [
@@ -849,529 +1091,608 @@
       "career_stage": [
         "Experienced (5+ yrs)"
       ],
+      "project_domain": [
+        "Education"
+      ],
       "project_built_with": [
-        "Mobile App"
+        "App"
       ],
       "project_approach": [
-        "Social Impact",
-        "Business/Pitch"
+        "Business/Pitch",
+        "User Research"
       ],
       "interests": [
         "Career Development",
         "Interview Prep",
         "Mentorship",
-        "Judging"
+        "Diversity & Inclusion"
       ],
       "skills": [
         "Business Strategy",
         "Financial Modeling",
+        "Market Research",
+        "Facilitation",
         "Public Speaking"
       ],
       "story_angles": [
-        "Immigration & Visa Navigation",
-        "Cross-Cultural/International Career",
-        "Non-Linear Career Path/Pivots"
-      ],
-      "project_domain": [
-        "Education"
+        "First-Generation Student/Professional",
+        "Work-Life Balance"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "Career Development",
+        "Interview Prep",
+        "Mentorship"
       ]
     },
     "speaker_answers": {
-      "participation_years": "2012",
-      "current_location": "San Francisco, USA",
-      "origin_location": "Shanghai, China",
-      "languages": "English, Mandarin",
-      "timezone": "UTC-8",
+      "participation_years": "2012-13",
+      "current_location": "Los Angeles, USA",
+      "origin_location": "Guadalajara, Mexico",
+      "languages": "Spanish, English",
+      "impact": "The business plan unit was my first look at how companies decide what to build, and it’s why I looked at consulting instead of engineering.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)",
+        "Video testimonial (short-form, self-recorded or guided)"
+      ],
       "speaking_types": [
-        "Moderate panels and interviews",
         "Speak as a panelist",
         "Virtual Events",
         "In-Person Events"
+      ],
+      "topic_familiarity": {
+        "Leadership": "Deeply experienced - I work in this area professionally",
+        "Entrepreneurship & Startups": "Moderately experienced - I have some professional/project experience",
+        "Career Transitions (academic -> industry, IC -> management, etc.)": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area"
+      },
+      "expertise_areas": [
+        "Finance",
+        "Healthcare",
+        "Education"
+      ],
+      "opportunities": [
+        "Mentoring",
+        "Events",
+        "Speaking"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "interview_formats": [
+        "Panel moderation",
+        "Fireside chats"
       ],
       "audiences": [
         "Students",
         "Industry Professionals"
       ],
-      "expertise_areas": [
-        "Education",
-        "Finance"
-      ],
-      "topic_familiarity": {
-        "Leadership": "Deeply experienced - I work in this area professionally",
-        "Career Transitions (academic -> industry, IC -> management, etc.)": "Deeply experienced - I work in this area professionally"
-      },
-      "opportunities": [
-        "Mentoring",
-        "Speaking",
-        "Events"
-      ],
-      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "availability": "Available soon - could start in 1-2 months",
       "regions": "Yes, any region",
-      "availability": "Available soon - could start in 1-2 months"
+      "timezone": "PT",
+      "notes": "I travel Monday through Thursday most weeks, so Fridays or weekends work best."
     }
   },
   {
-    "id": "13-valentina",
-    "full_name": "Valentina Cruz",
-    "email": "sample-13@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 13. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
+    "id": "12-dilnoza",
+    "full_name": "Dilnoza Karimova",
+    "email": "sample-12@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
     "answers": {
-      "current_role": "Law student and legal intern at a human rights organization",
-      "project": "An app explaining young people's legal rights in plain language and letting them report community issues.",
-      "since_technovation": "I'm studying law and working on digital rights.",
-      "interests": "Privacy and digital rights, social impact work, inclusion, international issues, and volunteering.",
-      "skills": "Writing, speaking in moot court, analyzing policy, working in teams, and translating between Spanish, Portuguese, and English.",
-      "story_angles": "I'm balancing law school with an internship, and I went from coding apps to studying law."
+      "current_role": "Security Engineer at a software company",
+      "project": "We built a web app where teens can report online harassment and get step-by-step guidance on blocking and documenting it. A school counselor reviewed the advice, and we presented it at our regional showcase.",
+      "since_technovation": "I studied computer science in Tashkent, moved to Germany for a master’s in IT security, and now do application security reviews and run phishing-awareness training for coworkers.",
+      "interests": "Cybersecurity careers, online safety for young people, and privacy rights.",
+      "skills": "Python scripting, application security testing, threat modeling, and writing security guidelines for non-technical colleagues. I speak four languages.",
+      "story_angles": "I learned German while studying and working, and the visa process took longer than my degree plans. Security teams also tend to be very male, which made me hesitant to ask basic questions early on."
     },
     "expected": {
       "industry": [
-        "Law"
-      ],
-      "career_stage": [
-        "Student + Working"
-      ],
-      "project_built_with": [
-        "Mobile App"
-      ],
-      "project_approach": [
-        "Social Impact"
-      ],
-      "interests": [
-        "Digital Rights & Privacy",
-        "Social Impact",
-        "Diversity & Inclusion",
-        "Global/International Work",
-        "Volunteering"
-      ],
-      "skills": [
-        "Writing/Content Creation",
-        "Public Speaking",
-        "Policy Analysis",
-        "Teamwork/Collaboration",
-        "Translation/Interpretation"
-      ],
-      "story_angles": [
-        "Balancing Multiple Roles",
-        "Non-Linear Career Path/Pivots"
-      ],
-      "project_domain": [
-        "Legal & Justice",
-        "Policy"
-      ]
-    },
-    "speaker_answers": {
-      "participation_years": "2016",
-      "current_location": "Bogotá, Colombia",
-      "origin_location": "Medellín, Colombia",
-      "languages": "Spanish, English, Portuguese",
-      "timezone": "UTC-5",
-      "speaking_types": [
-        "Moderate panels and interviews",
-        "Speak as a panelist",
-        "Virtual Events"
-      ],
-      "audiences": [
-        "Students",
-        "General Public"
-      ],
-      "expertise_areas": [
-        "Legal & Justice",
-        "Policy"
-      ],
-      "topic_familiarity": {},
-      "opportunities": [
-        "Volunteering",
-        "Speaking",
-        "Events"
-      ],
-      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
-      "regions": "Yes, any region",
-      "availability": "Available now - ready to start within 2-4 weeks"
-    }
-  },
-  {
-    "id": "14-aisha",
-    "full_name": "Aisha Rahman",
-    "email": "sample-14@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 14. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
-    "answers": {
-      "current_role": "Freshman in electrical engineering",
-      "project": "An app paired with a low-cost sensor that warns villages when river levels rise.",
-      "since_technovation": "I started an EE degree and joined the robotics club.",
-      "interests": "Robots and electronics, and video games.",
-      "skills": "Python and building circuits and robots.",
-      "story_angles": ""
-    },
-    "expected": {
-      "industry": [
-        "Student"
-      ],
-      "career_stage": [
-        "Student"
-      ],
-      "project_built_with": [
-        "Hardware/Sensors",
-        "Mobile App"
-      ],
-      "project_approach": [
-        "Social Impact"
-      ],
-      "interests": [
-        "Hardware/Robotics",
-        "Gaming"
-      ],
-      "skills": [
-        "Python",
-        "Hardware/Robotics"
-      ],
-      "story_angles": [],
-      "project_domain": [
-        "Environment/Sustainability"
-      ]
-    },
-    "speaker_answers": {
-      "participation_years": "2022",
-      "current_location": "Dhaka, Bangladesh",
-      "origin_location": "Sylhet, Bangladesh",
-      "languages": "Bengali, English",
-      "timezone": "UTC+6",
-      "speaking_types": [
-        "Not Interested"
-      ],
-      "audiences": [
-        "Students"
-      ],
-      "expertise_areas": [
-        "Environment/Sustainability"
-      ],
-      "topic_familiarity": {},
-      "opportunities": [
-        "Internships"
-      ],
-      "interview_experience": "No, and I'd like training/support before starting",
-      "regions": "Open to learning about new regions",
-      "availability": "Interested but uncertain timing - keep me posted"
-    }
-  },
-  {
-    "id": "15-jessica",
-    "full_name": "Jessica Tran",
-    "email": "sample-15@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 15. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
-    "answers": {
-      "current_role": "Research Scientist at a hospital research lab",
-      "project": "An app helping families track nutrition and manage chronic conditions, based on interviews with a local clinic.",
-      "since_technovation": "I apply data science to patient outcomes and judge science fairs often.",
-      "interests": "Biotech, health technology, scientific research, and judging science fairs.",
-      "skills": "Data analysis, Python, and designing clinical studies.",
-      "story_angles": "I was the first in my family to finish college, and I chose to specialize deeply in research rather than go broad."
-    },
-    "expected": {
-      "industry": [
-        "Healthcare"
-      ],
-      "career_stage": [
-        "Experienced (5+ yrs)"
-      ],
-      "project_built_with": [
-        "Mobile App"
-      ],
-      "project_approach": [
-        "User Research",
-        "Community Partnership"
-      ],
-      "interests": [
-        "BioTech",
-        "HealthTech",
-        "Research & Innovation",
-        "Judging"
-      ],
-      "skills": [
-        "Data Analysis",
-        "Python",
-        "Research Methods"
-      ],
-      "story_angles": [
-        "First-Generation Student/Professional",
-        "Depth vs. Breadth Decisions"
-      ],
-      "project_domain": [
-        "Healthcare"
-      ]
-    },
-    "speaker_answers": {
-      "participation_years": "2014",
-      "current_location": "Houston, USA",
-      "origin_location": "Houston, USA",
-      "languages": "English, Vietnamese",
-      "timezone": "UTC-6",
-      "speaking_types": [
-        "Speak as a panelist",
-        "In-Person Events"
-      ],
-      "audiences": [
-        "Students",
-        "Educators"
-      ],
-      "expertise_areas": [
-        "Healthcare",
-        "Research & Discovery"
-      ],
-      "topic_familiarity": {},
-      "opportunities": [
-        "Events",
-        "Speaking"
-      ],
-      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
-      "regions": "Prefer regions where I have personal/professional connection",
-      "availability": "Available soon - could start in 1-2 months"
-    }
-  },
-  {
-    "id": "16-olivia",
-    "full_name": "Olivia Schmidt",
-    "email": "sample-16@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 16. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
-    "answers": {
-      "current_role": "UX Designer at a design agency",
-      "project": "A language-exchange app for newcomers and locals. I led the interface design and ran usability tests.",
-      "since_technovation": "I design apps and sites for agency clients.",
-      "interests": "Design, media technology, games, mentoring younger designers, and volunteering.",
-      "skills": "Interaction design, visual design, and running user research.",
-      "story_angles": "I've worked with teams in Germany, France, and the US, so my career has always crossed cultures."
-    },
-    "expected": {
-      "industry": [
-        "UX/UI"
+        "Cybersecurity"
       ],
       "career_stage": [
         "Early Career (0-4 yrs)"
       ],
+      "project_domain": [
+        "Safety & Privacy"
+      ],
       "project_built_with": [
-        "Mobile App"
+        "App"
       ],
       "project_approach": [
-        "User Research",
-        "Social Impact"
+        "Community Partnership",
+        "User Research"
       ],
       "interests": [
-        "Design & Creativity",
-        "Media Tech",
-        "Gaming",
-        "Mentorship",
-        "Volunteering"
+        "Cybersecurity",
+        "Digital Rights & Privacy",
+        "Career Development"
       ],
       "skills": [
-        "UX/UI Design",
-        "Graphic Design",
-        "Research Methods"
+        "Python",
+        "Cybersecurity",
+        "Technical Communication",
+        "Writing/Content Creation",
+        "Cross-Cultural Communication"
       ],
       "story_angles": [
-        "Cross-Cultural/International Career"
-      ],
-      "project_domain": [
-        "Communications & Media"
+        "Immigration & Visa Navigation",
+        "Cross-Cultural/International Career",
+        "Navigating Underrepresentation",
+        "Imposter Syndrome & Self-Doubt"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "Cybersecurity",
+        "Digital Rights & Privacy"
       ]
     },
     "speaker_answers": {
-      "participation_years": "2017",
+      "participation_years": "2017-18",
       "current_location": "Berlin, Germany",
-      "origin_location": "Hamburg, Germany",
-      "languages": "German, English",
-      "timezone": "UTC+1",
+      "origin_location": "Tashkent, Uzbekistan",
+      "languages": "Uzbek, Russian, English, German",
+      "impact": "It’s where I first thought about how people get hurt online, which led me toward security.",
+      "story_formats": [
+        "I do not wish to share my story at this time"
+      ],
       "speaking_types": [
         "Not Interested"
       ],
-      "audiences": [
-        "Students"
-      ],
+      "topic_familiarity": {
+        "Engineering": "Deeply experienced - I work in this area professionally",
+        "Tech & Society (healthcare, environment, etc.)": "Moderately experienced - I have some professional/project experience",
+        "Career Transitions (academic -> industry, IC -> management, etc.)": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area"
+      },
       "expertise_areas": [
-        "Arts & Culture",
-        "Communications & Media"
+        "Safety & Privacy",
+        "Tech & Society"
       ],
-      "topic_familiarity": {},
       "opportunities": [
         "Jobs",
-        "Mentoring",
-        "Volunteering"
+        "Mentoring"
       ],
-      "interview_experience": "No, but I'm comfortable with public speaking/facilitation",
-      "regions": "Open to learning about new regions",
-      "availability": "Available soon - could start in 1-2 months"
+      "availability": "Interested but uncertain timing - keep me posted",
+      "regions": "Prefer regions where I have personal/professional connection",
+      "timezone": "CET",
+      "notes": "I’m happy to answer questions about security careers by email, but I’d prefer not to be featured publicly."
     }
   },
   {
-    "id": "17-zainab",
-    "full_name": "Zainab Yusuf",
-    "email": "sample-17@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 17. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
+    "id": "13-denise",
+    "full_name": "Denise Whitfield",
+    "email": "sample-13@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
     "answers": {
-      "current_role": "Hardware Engineer at an aerospace company",
-      "project": "An app using Bluetooth beacons to guide visually impaired commuters through train stations.",
-      "since_technovation": "I work on satellite hardware and do outreach with girls' schools across the UK.",
-      "interests": "Space and satellites, robotics, encouraging girls into engineering, mentoring, and judging competitions.",
-      "skills": "Hardware design, embedded C++, troubleshooting tough problems, and speaking at schools.",
-      "story_angles": "As a Black Nigerian woman in aerospace I'm often the only one in the room. I moved to the UK and went through the visa process on my own."
+      "current_role": "Program Manager at a youth education nonprofit",
+      "project": "We built a web app that shows live bus arrival times for our neighborhood’s routes using public transit data, since the transit agency’s own app was often wrong. Our computer science teacher helped us present it to a city council member.",
+      "since_technovation": "I studied sociology, started at a youth education nonprofit through AmeriCorps, and now manage its tech programs for about 300 middle school students. I also serve on my neighborhood’s community board.",
+      "interests": "Digital access for families, funding for youth tech programs, and building local alumni networks in cities like Detroit.",
+      "skills": "Grant writing, running programs on a budget, volunteer recruitment, event planning, and facilitating parent workshops.",
+      "story_angles": "I run programs, supervise staff, and sit on a community board, so I’m balancing several roles at once. As a Black woman in nonprofit tech, I often see my ideas dismissed until someone else repeats them."
     },
     "expected": {
       "industry": [
-        "Hardware/Robotics"
+        "Nonprofit"
       ],
       "career_stage": [
         "Experienced (5+ yrs)"
       ],
+      "project_domain": [
+        "Policy"
+      ],
       "project_built_with": [
-        "Hardware/Sensors",
-        "Mobile App"
+        "App",
+        "Data/Maps"
       ],
       "project_approach": [
-        "Accessibility",
-        "Social Impact"
+        "Community Partnership"
       ],
       "interests": [
-        "Space/Aerospace",
-        "Hardware/Robotics",
-        "Women in STEM",
-        "Mentorship",
-        "Judging"
+        "Tech Democratization/Access",
+        "Nonprofit Work",
+        "Community Building",
+        "Connecting with Alumni"
       ],
       "skills": [
-        "Hardware/Robotics",
-        "C++",
-        "Problem Solving",
-        "Public Speaking"
+        "Writing/Content Creation",
+        "Fundraising/Pitching",
+        "Project Management",
+        "Event Planning",
+        "Facilitation"
       ],
       "story_angles": [
+        "Balancing Multiple Roles",
+        "Work-Life Balance",
         "Woman of Color in Tech",
-        "Immigration & Visa Navigation",
         "Navigating Underrepresentation"
       ]
     },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "Nonprofit Work",
+        "Community Building",
+        "Tech Democratization/Access",
+        "Volunteering"
+      ]
+    },
     "speaker_answers": {
-      "participation_years": "2015",
-      "current_location": "London, UK",
-      "origin_location": "Kano, Nigeria",
-      "languages": "English, Hausa, Arabic",
-      "timezone": "UTC+0",
+      "participation_years": "2014-15",
+      "current_location": "Detroit, USA",
+      "origin_location": "Detroit, USA",
+      "languages": "English",
+      "impact": "It showed me that public data can solve problems for people in a city like Detroit, and it led me to nonprofits instead of tech companies.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)",
+        "Podcast or audio interview",
+        "Social media spotlight (LinkedIn, Instagram, etc.)"
+      ],
       "speaking_types": [
         "Moderate panels and interviews",
+        "Speak as a panelist",
+        "In-Person Events"
+      ],
+      "topic_familiarity": {
+        "Community Building": "Deeply experienced - I work in this area professionally",
+        "Leadership": "Moderately experienced - I have some professional/project experience",
+        "Tech Democratization": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area",
+        "Developer Relations & Technical Communication": "Emerging interest - I'm learning/transitioning into this area"
+      },
+      "expertise_areas": [
+        "Education",
+        "Policy",
+        "Tech & Society"
+      ],
+      "opportunities": [
+        "Volunteering",
+        "Mentoring",
+        "Events",
+        "Speaking"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "interview_formats": [
+        "Panel moderation",
+        "Written Q&A/profiles"
+      ],
+      "audiences": [
+        "Students",
+        "Parents",
+        "Educators",
+        "General Public"
+      ],
+      "availability": "Available now - ready to start within 2-4 weeks",
+      "regions": "Prefer regions where I have personal/professional connection",
+      "timezone": "ET",
+      "notes": "I can connect alumni with youth programs in the Midwest, and I can host a session at our center."
+    }
+  },
+  {
+    "id": "14-ingrid",
+    "full_name": "Ingrid Larsen",
+    "email": "sample-14@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
+    "answers": {
+      "current_role": "Machine Learning Engineer at a maritime data startup",
+      "project": "We trained a model that identifies types of plastic waste in beach photos, and built a phone app where volunteers upload pictures so a local cleanup group can count what they find. Our first model confused seaweed with bags, so we spent weeks collecting better examples.",
+      "since_technovation": "I studied computer science and statistics, wrote my thesis on image recognition for ocean data, and joined a small startup in Oslo as a machine learning engineer last year.",
+      "interests": "Machine learning for ocean and climate data, learning how startups grow, and encouraging girls from small towns to try programming.",
+      "skills": "Python, PyTorch, computer vision, SQL, and building simple data dashboards.",
+      "story_angles": "I come from a small town far north of Oslo, so tech felt far away when I was a teen. I also joined a startup straight out of university, so I’m still figuring out whether to go deeper in ML or learn more of the engineering around it."
+    },
+    "expected": {
+      "industry": [
+        "AI/Machine Learning"
+      ],
+      "career_stage": [
+        "Early Career (0-4 yrs)"
+      ],
+      "project_domain": [
+        "Environment/Sustainability"
+      ],
+      "project_built_with": [
+        "App",
+        "AI/Machine Learning"
+      ],
+      "project_approach": [
+        "Community Partnership",
+        "User Research"
+      ],
+      "interests": [
+        "AI/Machine Learning",
+        "Climate Tech",
+        "Entrepreneurship/Startups",
+        "Women in STEM",
+        "Tech Democratization/Access"
+      ],
+      "skills": [
+        "Python",
+        "AI/Machine Learning",
+        "SQL",
+        "Data Visualization"
+      ],
+      "story_angles": [
+        "Building Outside Major Tech Hubs",
+        "Depth vs. Breadth Decisions"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "AI/Machine Learning",
+        "Climate Tech",
+        "Data & Analytics"
+      ]
+    },
+    "speaker_answers": {
+      "participation_years": "2021-22",
+      "current_location": "Oslo, Norway",
+      "origin_location": "Tromsø, Norway",
+      "languages": "Norwegian, English",
+      "impact": "It was the first time I trained a model on data I collected myself, and I saw how much of machine learning is cleaning and checking data.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)",
+        "Video testimonial (short-form, self-recorded or guided)"
+      ],
+      "speaking_types": [
+        "Virtual Events"
+      ],
+      "topic_familiarity": {
+        "AI & Machine Learning (research, applications, ethics)": "Deeply experienced - I work in this area professionally",
+        "Engineering": "Moderately experienced - I have some professional/project experience",
+        "Entrepreneurship & Startups": "Emerging interest - I'm learning/transitioning into this area",
+        "Regional Tech Ecosystems": "Emerging interest - I'm learning/transitioning into this area"
+      },
+      "expertise_areas": [
+        "Environment/Sustainability",
+        "Research & Discovery",
+        "Tech & Society"
+      ],
+      "opportunities": [
+        "Jobs",
+        "Mentoring",
+        "Events"
+      ],
+      "interview_experience": "No, but I'm comfortable with public speaking/facilitation",
+      "interview_formats": [
+        "None yet"
+      ],
+      "audiences": [
+        "Students"
+      ],
+      "availability": "Available soon - could start in 1-2 months",
+      "regions": "Yes, any region",
+      "timezone": "CET",
+      "notes": "I’d be glad to talk to students from small towns about getting started."
+    }
+  },
+  {
+    "id": "15-fatima",
+    "full_name": "Fatima Zahra El Idrissi",
+    "email": "sample-15@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
+    "answers": {
+      "current_role": "Co-founder and CEO of an EdTech startup selling a coding app to private schools",
+      "project": "We built an app that teaches Darija-speaking kids basic coding concepts with spoken instructions, since most coding tutorials assume English or French. We tested it with 15 children at a community center.",
+      "since_technovation": "I studied software engineering, joined a startup accelerator in my second year, and co-founded a company that now sells the app to private schools. We have a team of five.",
+      "interests": "EdTech in Arabic and French, raising early funding outside Silicon Valley, and women founders in North Africa.",
+      "skills": "Mobile development in Kotlin, pitching to investors, hiring and managing a small team, and translating our product between Arabic, French, and English.",
+      "story_angles": "I started building young, and as a 24-year-old founder I’m often the youngest in meetings with school directors and investors. Building in Casablanca means fewer investors and mentors nearby than founders in Europe or the US have."
+    },
+    "expected": {
+      "industry": [
+        "Startup"
+      ],
+      "career_stage": [
+        "Founder"
+      ],
+      "project_domain": [
+        "Education"
+      ],
+      "project_built_with": [
+        "App",
+        "AI/Machine Learning"
+      ],
+      "project_approach": [
+        "User Research",
+        "Community Partnership",
+        "Business/Pitch"
+      ],
+      "interests": [
+        "EdTech",
+        "Entrepreneurship/Startups",
+        "Women in STEM",
+        "Global/International Work"
+      ],
+      "skills": [
+        "Kotlin",
+        "Mobile/App Development",
+        "Fundraising/Pitching",
+        "Leadership",
+        "Translation/Interpretation"
+      ],
+      "story_angles": [
+        "Starting Young (built or founded as a teen)",
+        "Building Outside Major Tech Hubs"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "EdTech",
+        "Entrepreneurship/Startups",
+        "Tech Democratization/Access",
+        "Leadership"
+      ]
+    },
+    "speaker_answers": {
+      "participation_years": "2019-20",
+      "current_location": "Casablanca, Morocco",
+      "origin_location": "Fès, Morocco",
+      "languages": "Arabic (Darija), French, English",
+      "impact": "It taught me that local language and local examples make people feel the technology is for them.",
+      "story_formats": [
+        "Video testimonial (short-form, self-recorded or guided)",
+        "Podcast or audio interview",
+        "Case study or impact report feature"
+      ],
+      "speaking_types": [
         "Speak as a panelist",
         "News media opportunities",
         "Virtual Events",
         "In-Person Events"
       ],
-      "audiences": [
-        "Students",
-        "Educators",
-        "Parents"
-      ],
-      "expertise_areas": [
-        "Manufacturing & Industry",
-        "Research & Discovery"
-      ],
       "topic_familiarity": {
-        "Engineering": "Deeply experienced - I work in this area professionally"
+        "Entrepreneurship & Startups": "Deeply experienced - I work in this area professionally",
+        "Mobile Development": "Moderately experienced - I have some professional/project experience",
+        "Leadership": "Moderately experienced - I have some professional/project experience",
+        "Regional Tech Ecosystems": "Moderately experienced - I have some professional/project experience",
+        "Tech Democratization": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area"
       },
+      "expertise_areas": [
+        "Education",
+        "Tech & Society"
+      ],
       "opportunities": [
+        "Events",
         "Speaking",
-        "Mentoring",
-        "Events"
+        "Mentoring"
       ],
       "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "interview_formats": [
+        "Panel moderation",
+        "Video interviews (Zoom, etc.)"
+      ],
+      "audiences": [
+        "Students",
+        "Industry Professionals",
+        "General Public"
+      ],
+      "availability": "Available soon - could start in 1-2 months",
       "regions": "Yes, any region",
-      "availability": "Available now - ready to start within 2-4 weeks"
+      "timezone": "Morocco (GMT+1)",
+      "notes": "I can do sessions in Arabic or French as well as English."
     }
   },
   {
-    "id": "18-daniela",
-    "full_name": "Daniela Costa",
-    "email": "sample-18@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 18. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
+    "id": "16-jasmine",
+    "full_name": "Jasmine Park",
+    "email": "sample-16@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
     "answers": {
-      "current_role": "Social Media Manager at a media company",
-      "project": "A video app where residents share short stories about their neighborhoods. I produced our demo video.",
-      "since_technovation": "I use short-form video to explain tech to broad audiences.",
-      "interests": "Media and technology, growing my career, becoming a stronger speaker, and organizing events.",
-      "skills": "Running social accounts, marketing campaigns, shooting and editing video, and writing content.",
-      "story_angles": "I studied computer science but ended up in media, and I've built my career in Sao Paulo instead of a major tech hub."
+      "current_role": "Marketing Director at a consumer health brand",
+      "project": "We built a video-sharing app where teens record one-minute messages about managing exam stress and watch others’ responses. A school psychologist reviewed the prompts, and about 100 students used it during finals.",
+      "since_technovation": "I studied communications, started in social media at an agency, and moved into brand marketing. I now lead a team of six, and I work four days a week to spend more time with my kids.",
+      "interests": "Marketing careers for people with technical backgrounds, brand storytelling, and mental health for students.",
+      "skills": "Brand strategy, social media, content planning, running campaigns on a budget, video scripting, and managing creative teams.",
+      "story_angles": "I moved from agency to in-house marketing and then into management, so my path has had a few turns. Working four days a week while leading a team has taught me a lot about setting boundaries."
     },
     "expected": {
       "industry": [
         "Marketing"
       ],
       "career_stage": [
-        "Early Career (0-4 yrs)"
+        "Experienced (5+ yrs)"
+      ],
+      "project_domain": [
+        "Communications & Media",
+        "Healthcare"
       ],
       "project_built_with": [
-        "Mobile App"
+        "App"
       ],
       "project_approach": [
         "Community Partnership",
-        "Social Impact"
+        "User Research"
       ],
       "interests": [
+        "Career Transitions",
         "Media Tech",
         "Career Development",
-        "Improving Public Speaking",
-        "Organizing Events"
+        "Mental Health & Wellbeing"
       ],
       "skills": [
+        "Branding",
         "Social Media",
         "Marketing",
+        "Writing/Content Creation",
         "Video Production",
-        "Writing/Content Creation"
+        "Leadership",
+        "Project Management"
       ],
       "story_angles": [
         "Non-Linear Career Path/Pivots",
-        "Building Outside Major Tech Hubs"
-      ],
-      "project_domain": [
-        "Communications & Media"
+        "Work-Life Balance",
+        "Balancing Multiple Roles"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "Media Tech",
+        "Career Transitions",
+        "Leadership"
       ]
     },
     "speaker_answers": {
-      "participation_years": "2018",
-      "current_location": "São Paulo, Brazil",
-      "origin_location": "Salvador, Brazil",
-      "languages": "Portuguese, English, Spanish",
-      "timezone": "UTC-3",
+      "participation_years": "2014-15",
+      "current_location": "New York, USA",
+      "origin_location": "Seoul, South Korea",
+      "languages": "Korean, English",
+      "impact": "It showed me that how you tell a story changes whether people use a product, which is basically my job now.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)",
+        "Social media spotlight (LinkedIn, Instagram, etc.)"
+      ],
       "speaking_types": [
         "Moderate panels and interviews",
         "Speak as a panelist",
+        "News media opportunities",
         "Virtual Events"
       ],
-      "audiences": [
-        "General Public",
-        "Students"
-      ],
-      "expertise_areas": [
-        "Communications & Media"
-      ],
       "topic_familiarity": {
-        "Developer Relations & Technical Communication": "Deeply experienced - I work in this area professionally"
+        "Leadership": "Deeply experienced - I work in this area professionally",
+        "Community Building": "Moderately experienced - I have some professional/project experience",
+        "Career Transitions (academic -> industry, IC -> management, etc.)": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area"
       },
+      "expertise_areas": [
+        "Communications & Media",
+        "Healthcare"
+      ],
       "opportunities": [
-        "Jobs",
-        "Speaking",
-        "Events"
+        "Events",
+        "Mentoring",
+        "Speaking"
       ],
       "interview_experience": "Yes, professionally (podcasts, journalism, content creation)",
+      "interview_formats": [
+        "Video interviews (Zoom, etc.)",
+        "Panel moderation",
+        "Written Q&A/profiles"
+      ],
+      "audiences": [
+        "Students",
+        "Industry Professionals",
+        "General Public"
+      ],
+      "availability": "Available soon - could start in 1-2 months",
       "regions": "Yes, any region",
-      "availability": "Interested but uncertain timing - keep me posted"
+      "timezone": "ET",
+      "notes": "I’m easiest to reach Tuesday through Thursday."
     }
   },
   {
-    "id": "19-lina",
-    "full_name": "Lina Park",
-    "email": "sample-19@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 19. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
+    "id": "17-aaliyah",
+    "full_name": "Aaliyah Rahman",
+    "email": "sample-17@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
     "answers": {
-      "current_role": "Financial Analyst; teaching myself to code",
-      "project": "A financial literacy app for teens that teaches budgeting through simple games.",
-      "since_technovation": "I work in finance and I'm learning to code to move toward fintech.",
-      "interests": "Fintech, AI, switching careers into tech, finding a new job, and preparing for technical interviews.",
-      "skills": "Building financial models, SQL, and managing my time well.",
-      "story_angles": "I'm moving from finance into tech, and I came to New York from Seoul and dealt with the visa process myself."
+      "current_role": "Analyst at an investment bank",
+      "project": "We built a web app that helps immigrant families in our neighborhood compare remittance fees and send money home at the lowest cost. We interviewed 40 families at a community center and found most didn’t know the fee until after they paid.",
+      "since_technovation": "I studied economics at a public college on a full scholarship, interned at two banks, and now work as an analyst at an investment bank. I volunteer teaching financial literacy at the same community center where we tested our app.",
+      "interests": "Financial access for immigrant families, fintech for remittances, and finance careers for first-gen students.",
+      "skills": "Financial modeling, Excel, SQL, valuation, and presenting analysis to senior bankers. I also teach budgeting workshops.",
+      "story_angles": "I’m the first person in my family to work in finance, and one of few women of color on my team. At first I felt I had to prove I belonged, and I’m still learning to ask for what I need."
     },
     "expected": {
       "industry": [
@@ -1380,133 +1701,398 @@
       "career_stage": [
         "Early Career (0-4 yrs)"
       ],
-      "project_built_with": [
-        "Mobile App"
+      "project_domain": [
+        "Finance"
       ],
-      "project_approach": [],
+      "project_built_with": [
+        "App"
+      ],
+      "project_approach": [
+        "User Research",
+        "Community Partnership"
+      ],
       "interests": [
         "FinTech",
-        "AI/Machine Learning",
-        "Career Transitions",
-        "Job Searching",
-        "Interview Prep"
+        "Tech Democratization/Access",
+        "Career Development",
+        "Diversity & Inclusion"
       ],
       "skills": [
         "Financial Modeling",
         "SQL",
-        "Time Management"
+        "Data Analysis",
+        "Public Speaking",
+        "Facilitation"
       ],
       "story_angles": [
-        "Non-Linear Career Path/Pivots",
-        "Immigration & Visa Navigation"
-      ],
-      "project_domain": [
-        "Finance",
-        "Education"
+        "First-Generation Student/Professional",
+        "Navigating Underrepresentation",
+        "Imposter Syndrome & Self-Doubt"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "FinTech",
+        "Volunteering",
+        "Career Development",
+        "Tech Democratization/Access"
       ]
     },
     "speaker_answers": {
-      "participation_years": "2020",
+      "participation_years": "2016-17",
       "current_location": "New York, USA",
-      "origin_location": "Seoul, South Korea",
-      "languages": "Korean, English",
-      "timezone": "UTC-5",
+      "origin_location": "Queens, New York, USA",
+      "languages": "English, Bengali",
+      "impact": "It showed me that finance and technology shape the lives of families like mine, and it’s why I wanted to work in finance. It also gave me the confidence to speak up in rooms where I was the youngest.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)",
+        "Social media spotlight (LinkedIn, Instagram, etc.)"
+      ],
       "speaking_types": [
-        "Not Interested"
+        "Speak as a panelist",
+        "Virtual Events"
       ],
-      "audiences": [
-        "Students"
-      ],
+      "topic_familiarity": {
+        "Career Transitions (academic -> industry, IC -> management, etc.)": "Moderately experienced - I have some professional/project experience",
+        "Tech Democratization": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area",
+        "Entrepreneurship & Startups": "Emerging interest - I'm learning/transitioning into this area"
+      },
       "expertise_areas": [
-        "Finance"
+        "Finance",
+        "Education"
       ],
-      "topic_familiarity": {},
       "opportunities": [
-        "Jobs",
-        "Mentoring"
+        "Mentoring",
+        "Volunteering",
+        "Events"
       ],
       "interview_experience": "No, but I'm comfortable with public speaking/facilitation",
-      "regions": "Open to learning about new regions",
-      "availability": "Interested but uncertain timing - keep me posted"
+      "interview_formats": [
+        "None yet"
+      ],
+      "audiences": [
+        "Students",
+        "Parents",
+        "General Public"
+      ],
+      "availability": "Interested but uncertain timing - keep me posted",
+      "regions": "Prefer regions where I have personal/professional connection",
+      "timezone": "ET",
+      "notes": "Analyst hours are long, so evenings and weekends work better. I can also speak to Bengali-speaking audiences."
     }
   },
   {
-    "id": "20-rachel",
-    "full_name": "Rachel Goldberg",
-    "email": "sample-20@example.com",
-    "provenance": "Questionnaire Brainstorming PDF, sample profile 20. Now/Project/Since copied from the PDF (Since rewritten in first person); interests/skills/story answers written to paraphrase the PDF tag lists without reusing label wording. Expected tags = PDF tags.",
+    "id": "18-valeria",
+    "full_name": "Valeria Gómez",
+    "email": "sample-18@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
     "answers": {
-      "current_role": "EdTech product lead and part-time adjunct instructor",
-      "project": "An app teaching kids coding basics through puzzles. I later mentored younger teams using the same idea.",
-      "since_technovation": "I build learning products, teach CS part-time, and have run mentor training for local chapters.",
-      "interests": "Education technology, mentoring, organizing events, and staying in touch with other alumni.",
-      "skills": "Building mobile apps, mentoring, planning events, leading teams, and running workshops.",
-      "story_angles": "I hold two jobs and still try to protect time with my kids, so balance is something I think about constantly."
+      "current_role": "Part-time UX designer at a fintech while completing a master’s in human-computer interaction",
+      "project": "We built an app that helps people with low vision read product labels and menus by pointing their phone camera, with large text and spoken output. We tested it with five members of a local association for blind people.",
+      "since_technovation": "I did a design degree, worked as a UX designer for two years, and started a master’s in HCI this year while working part-time. I also lead my university’s design club.",
+      "interests": "Accessible design, research methods for inclusive products, and design careers in Latin America.",
+      "skills": "Figma, user research, prototyping, usability testing, and facilitating design workshops. I’m comfortable presenting to non-designers.",
+      "story_angles": "I’m studying, working, and leading a club at the same time, so I’m often short on time. I’d like to build my career in Colombia, but many of the best design roles are abroad or remote."
     },
     "expected": {
       "industry": [
-        "EdTech"
+        "UX/UI"
+      ],
+      "career_stage": [
+        "Student + Working"
+      ],
+      "project_domain": [
+        "Healthcare"
+      ],
+      "project_built_with": [
+        "App",
+        "AI/Machine Learning"
+      ],
+      "project_approach": [
+        "Accessibility",
+        "User Research",
+        "Community Partnership"
+      ],
+      "interests": [
+        "Accessibility",
+        "Design & Creativity",
+        "Global/International Work",
+        "Career Development"
+      ],
+      "skills": [
+        "UX/UI Design",
+        "Research Methods",
+        "Facilitation",
+        "Public Speaking"
+      ],
+      "story_angles": [
+        "Balancing Multiple Roles",
+        "Building Outside Major Tech Hubs"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "Accessibility",
+        "Design & Creativity",
+        "Grad School"
+      ]
+    },
+    "speaker_answers": {
+      "participation_years": "2018-19",
+      "current_location": "Bogotá, Colombia",
+      "origin_location": "Medellín, Colombia",
+      "languages": "Spanish, English",
+      "impact": "Testing with blind users changed everything we thought we knew about our design, and it’s now the core of my career.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)",
+        "Social media spotlight (LinkedIn, Instagram, etc.)",
+        "Video testimonial (short-form, self-recorded or guided)"
+      ],
+      "speaking_types": [
+        "Speak as a panelist",
+        "Virtual Events"
+      ],
+      "topic_familiarity": {
+        "Mobile Development": "Moderately experienced - I have some professional/project experience",
+        "Tech Democratization": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area",
+        "Entrepreneurship & Startups": "Emerging interest - I'm learning/transitioning into this area",
+        "Career Transitions (academic -> industry, IC -> management, etc.)": "Emerging interest - I'm learning/transitioning into this area"
+      },
+      "expertise_areas": [
+        "Healthcare",
+        "Education",
+        "Tech & Society"
+      ],
+      "opportunities": [
+        "Jobs",
+        "Internships",
+        "Mentoring",
+        "Events"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "interview_formats": [
+        "Video interviews (Zoom, etc.)",
+        "Written Q&A/profiles"
+      ],
+      "audiences": [
+        "Students",
+        "Educators"
+      ],
+      "availability": "Available soon - could start in 1-2 months",
+      "regions": "Yes, any region",
+      "timezone": "Colombia (GMT-5)",
+      "notes": "I can run an accessibility design workshop in English or Spanish."
+    }
+  },
+  {
+    "id": "19-wanjiru",
+    "full_name": "Wanjiru Kamau",
+    "email": "sample-19@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
+    "answers": {
+      "current_role": "Associate attorney at a law firm advising tech companies on data protection",
+      "project": "We built a mobile app that explains land rights in simple Swahili and English for rural women, with short audio explanations. A local legal aid group reviewed the content, and we tested it with 30 women at a women’s cooperative.",
+      "since_technovation": "I studied law and took coding electives, and I now work as an associate advising tech companies on data protection. I also volunteer at a legal aid clinic on weekends.",
+      "interests": "Data protection law, legal rights for rural communities, and bringing more women lawyers into tech policy.",
+      "skills": "Legal research, drafting policies and contracts, explaining legal issues to non-lawyers, and facilitating training for startup teams.",
+      "story_angles": "I’m a lawyer in a field where people expect engineers, so I’ve had to explain my technical background. My path blends law and tech, and I’m still deciding how deep to go in each."
+    },
+    "expected": {
+      "industry": [
+        "Law"
+      ],
+      "career_stage": [
+        "Early Career (0-4 yrs)"
+      ],
+      "project_domain": [
+        "Legal & Justice",
+        "Agriculture & Food Systems"
+      ],
+      "project_built_with": [
+        "App"
+      ],
+      "project_approach": [
+        "Community Partnership",
+        "Accessibility"
+      ],
+      "interests": [
+        "Digital Rights & Privacy",
+        "Women in STEM",
+        "Tech Democratization/Access"
+      ],
+      "skills": [
+        "Research Methods",
+        "Policy Analysis",
+        "Writing/Content Creation",
+        "Facilitation"
+      ],
+      "story_angles": [
+        "Depth vs. Breadth Decisions",
+        "Non-Linear Career Path/Pivots"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "Digital Rights & Privacy",
+        "Volunteering",
+        "Tech Democratization/Access"
+      ]
+    },
+    "speaker_answers": {
+      "participation_years": "2015-16",
+      "current_location": "Nairobi, Kenya",
+      "origin_location": "Nyeri, Kenya",
+      "languages": "English, Swahili, Kikuyu",
+      "impact": "It showed me that people lose rights when they can’t understand the rules, which is why I pursued law. It also made me a lawyer who understands software.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)",
+        "Case study or impact report feature"
+      ],
+      "speaking_types": [
+        "Speak as a panelist",
+        "News media opportunities",
+        "Virtual Events",
+        "In-Person Events"
+      ],
+      "topic_familiarity": {
+        "Tech & Society (healthcare, environment, etc.)": "Deeply experienced - I work in this area professionally",
+        "Community Building": "Moderately experienced - I have some professional/project experience",
+        "Regional Tech Ecosystems": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area"
+      },
+      "expertise_areas": [
+        "Legal & Justice",
+        "Policy",
+        "Safety & Privacy",
+        "Agriculture & Food Systems"
+      ],
+      "opportunities": [
+        "Mentoring",
+        "Volunteering",
+        "Speaking",
+        "Events"
+      ],
+      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
+      "interview_formats": [
+        "Panel moderation",
+        "Written Q&A/profiles"
+      ],
+      "audiences": [
+        "Students",
+        "Parents",
+        "Educators",
+        "General Public"
+      ],
+      "availability": "Available now - ready to start within 2-4 weeks",
+      "regions": "Yes, any region",
+      "timezone": "EAT",
+      "notes": "I can speak in Swahili as well as English."
+    }
+  },
+  {
+    "id": "20-elena",
+    "full_name": "Elena Petrova",
+    "email": "sample-20@example.com",
+    "provenance": "Team sample profiles v2 (Oct 18, 2026). Answers and expected tags written by the team using the finalized tag list. Interests come from the topics/causes answer only; tags the team drew from the since-Technovation and impact answers are kept in context_tags (the tagger does not read those answers).",
+    "answers": {
+      "current_role": "Urban planner at a city council, working on transport projects",
+      "project": "We built a bike-route map for our city that marks dangerous intersections using reports from other cyclists, then shared our data with the city traffic office. They later added a bike lane at one of the intersections we flagged.",
+      "since_technovation": "I studied computer science, switched to geography and urban planning after a GIS course, moved to Australia for a master’s, and now work on transport projects for a city council.",
+      "interests": "Urban planning and transportation, using data and maps to inform public policy, and career changes from tech into public service.",
+      "skills": "GIS and spatial analysis, Python, public consultation, writing reports for councils, and facilitating community meetings.",
+      "story_angles": "I changed fields and countries, so my path is not a straight line. Getting permanent residency in Australia took four years and shaped where I could work."
+    },
+    "expected": {
+      "industry": [
+        "Other"
       ],
       "career_stage": [
         "Experienced (5+ yrs)"
       ],
-      "project_built_with": [
-        "Mobile App"
+      "project_domain": [
+        "Policy",
+        "Environment/Sustainability"
       ],
-      "project_approach": [],
+      "project_built_with": [
+        "App",
+        "Data/Maps"
+      ],
+      "project_approach": [
+        "Community Partnership"
+      ],
       "interests": [
-        "EdTech",
-        "Mentorship",
-        "Organizing Events",
-        "Connecting with Alumni"
+        "Urban Planning",
+        "Data & Analytics",
+        "Career Transitions",
+        "Environmental Advocacy"
       ],
       "skills": [
-        "Mobile/App Development",
-        "Mentorship",
-        "Event Planning",
-        "Leadership",
+        "Python",
+        "Data Analysis",
+        "Data Visualization",
+        "Policy Analysis",
+        "Writing/Content Creation",
         "Facilitation"
       ],
       "story_angles": [
-        "Balancing Multiple Roles",
-        "Work-Life Balance"
-      ],
-      "project_domain": [
-        "Education"
+        "Non-Linear Career Path/Pivots",
+        "Cross-Cultural/International Career",
+        "Immigration & Visa Navigation"
+      ]
+    },
+    "context_tags": {
+      "interests_from_since_and_impact": [
+        "Data & Analytics",
+        "Career Transitions",
+        "Urban Planning"
       ]
     },
     "speaker_answers": {
-      "participation_years": "2013",
-      "current_location": "Boston, USA",
-      "origin_location": "Baltimore, USA",
-      "languages": "English, Hebrew",
-      "timezone": "UTC-5",
+      "participation_years": "2012-13",
+      "current_location": "Sydney, Australia",
+      "origin_location": "Novosibirsk, Russia",
+      "languages": "Russian, English",
+      "impact": "It taught me that maps can change how cities make decisions, which is why I work in urban planning.",
+      "story_formats": [
+        "Written profile or Q&A feature (newsletter, website, blog)",
+        "Podcast or audio interview"
+      ],
       "speaking_types": [
-        "Moderate panels and interviews",
         "Speak as a panelist",
-        "Virtual Events",
-        "In-Person Events"
-      ],
-      "audiences": [
-        "Educators",
-        "Students",
-        "Parents"
-      ],
-      "expertise_areas": [
-        "Education"
+        "Virtual Events"
       ],
       "topic_familiarity": {
-        "Community Building": "Deeply experienced - I work in this area professionally",
-        "Leadership": "Deeply experienced - I work in this area professionally"
+        "Career Transitions (academic -> industry, IC -> management, etc.)": "Deeply experienced - I work in this area professionally",
+        "Regional Tech Ecosystems": "Moderately experienced - I have some professional/project experience",
+        "Tech & Society (healthcare, environment, etc.)": "Moderately experienced - I have some professional/project experience",
+        "AI & Machine Learning (research, applications, ethics)": "Emerging interest - I'm learning/transitioning into this area"
       },
-      "opportunities": [
-        "Speaking",
-        "Mentoring",
-        "Volunteering"
+      "expertise_areas": [
+        "Policy",
+        "Environment/Sustainability",
+        "Research & Discovery",
+        "Tech & Society"
       ],
-      "interview_experience": "Yes, informally (panels, community events, informational interviews)",
-      "regions": "Yes, any region",
-      "availability": "Available now - ready to start within 2-4 weeks"
+      "opportunities": [
+        "Mentoring",
+        "Events",
+        "Speaking"
+      ],
+      "interview_experience": "No, but I'm comfortable with public speaking/facilitation",
+      "interview_formats": [
+        "Panel moderation"
+      ],
+      "audiences": [
+        "Students",
+        "Industry Professionals",
+        "General Public"
+      ],
+      "availability": "Available soon - could start in 1-2 months",
+      "regions": "Open to learning about new regions",
+      "timezone": "AEST",
+      "notes": "I can help alumni thinking about moving from tech into public service or a master’s abroad."
     }
   },
   {
