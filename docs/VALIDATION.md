@@ -43,3 +43,13 @@ through the updated adapter. Those are steps 1-5 in `docs/THIS_WEEK.md`.
 
 Still not run by me: the SQL on the real Supabase project and the route in a live Next.js app.
 
+## October 18 update: finalized tags and new sample profiles
+
+| Check | Result | What it establishes |
+| --- | --- | --- |
+| `data/taxonomy.json` vs the Finalized Tags list | Identical | Same 8 categories and source fields; `App`, `SMS/Messaging`, `R`, `Open Source`, `Teaching/Curriculum Design`, `AI Ethics & Governance`, `Mental Health & Wellbeing`, `Urban Planning`, `Family & Caregiving Responsibilities` added; `Mobile App`, `Web App`, `Social Impact` removed. Prompt v3 wording updated for `App`. |
+| `python3 -m unittest discover -s tests -v` | 63 passed | Adds: the sample file holds exactly the answers and tags `sql/008` loaded into Supabase; every expected tag (samples and edge cases) is in the taxonomy. Old tests now read sample IDs from the data file. |
+| Local PostgreSQL 16: `008`, then the new `load-samples` payloads twice | Passed | All 20 keep identical answers; the first run re-queues them as pending for LLM tagging; the second run changes nothing. |
+
+Not run: the LLM on the new samples (needs the OpenAI key). That is `load-samples` + `worker` + `sample-report`.
+

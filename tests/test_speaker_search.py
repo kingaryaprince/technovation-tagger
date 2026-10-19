@@ -139,7 +139,9 @@ class SampleSpeakerAnswerTests(unittest.TestCase):
             extra = s['speaker_answers']
             for key in extra:
                 self.assertIn(key, FORM_FIELDS, f"{s['id']}: {key}")
-            self.assertTrue(extra['availability'] and extra['audiences'] and extra['speaking_types'])
+            self.assertTrue(extra['availability'] and extra['speaking_types'])
+            if 'Not Interested' not in extra['speaking_types']:
+                self.assertTrue(extra.get('audiences'), s['id'])
 
     def test_speaker_answers_never_reach_the_model(self):
         from alumni_tagger.core import select_inputs
@@ -155,6 +157,40 @@ class SampleSpeakerAnswerTests(unittest.TestCase):
         self.assertEqual(first['availability'], SAMPLES[0]['speaker_answers']['availability'])
         self.assertEqual(first['project'], SAMPLES[0]['answers']['project'])
 
+
+
+class SampleFileMatchesSupabaseTests(unittest.TestCase):
+    """sql/008 loaded the sample profiles into Supabase; data/sample_profiles.json must hold
+    the same answers, so load-samples and sample-report work on the same people."""
+
+    def test_sample_file_matches_sql_008(self):
+        import re
+        sql = (ROOT / 'sql/008_replace_sample_profiles.sql').read_text()
+        rows = re.findall(r"\('(sample-\d\d@example\.com)', '((?:[^']|'')*)', '(?:[^']|'')*',\n"
+                          r"   '((?:[^']|'')*)'::jsonb,\n   '((?:[^']|'')*)'::jsonb\)", sql)
+        self.assertEqual(len(rows), 20)
+        by_email = {s['email']: s for s in SAMPLES if s.get('email')}
+        for email, name, raw, tags in rows:
+            raw, tags = json.loads(raw.replace("''", "'")), json.loads(tags.replace("''", "'"))
+            s = by_email[email]
+            self.assertEqual(name.replace("''", "'"), s['full_name'])
+            sent = {**s['answers'], **s['speaker_answers'], 'full_name': s['full_name'],
+                    'email': s['email'], '_sample_id': s['id']}
+            self.assertEqual(raw, sent, email)
+            for cat, expected in s['expected'].items():
+                if cat == 'interests':  # 008 also holds the since/impact interests
+                    self.assertEqual(set(tags[cat]), set(expected) | set(
+                        s['context_tags']['interests_from_since_and_impact']), email)
+                else:
+                    self.assertEqual(tags[cat], expected, f'{email} {cat}')
+
+    def test_expected_tags_use_the_finalized_taxonomy(self):
+        tax = load_taxonomy()['categories']
+        for s in SAMPLES:
+            for cat, tags in s['expected'].items():
+                self.assertTrue(set(tags) <= set(tax[cat]['tags']), f"{s['id']} {cat}")
+            for tag in s.get('context_tags', {}).get('interests_from_since_and_impact', []):
+                self.assertIn(tag, tax['interests']['tags'], s['id'])
 
 if __name__ == '__main__':
     unittest.main()

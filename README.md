@@ -78,7 +78,7 @@ story labels like Woman of Color in Tech need explicit self-description.
 
    It prints tags and saves `output/demo.json`, including evidence quotes and token
    usage. It makes **no database changes**. Check the tags against
-   `data/sample_profiles.json`, sample `01-amara`.
+   `data/sample_profiles.json`, sample `01-amina`.
 
 5. Evaluate more samples after the first works:
 
@@ -197,11 +197,12 @@ erase the intake. Failed jobs require review and explicit requeue with
 | `skills` | Other skills |
 | `story_angles` | Life/professional experience answer only |
 
-The controlled vocabulary is in `data/taxonomy.json`, based on pages 3–4 of the
-brainstorming PDF. That section is more complete than the later overlapping lists;
-the choice is documented and **still needs team confirmation**. Edit this file and
-increment its version when the team finalizes labels. Changing the file affects
-new work; it does not automatically reprocess completed records.
+The controlled vocabulary is in `data/taxonomy.json`: the team's **Finalized Tags** list
+(version `2026-10-18-finalized-v2`, prompt `v3`). It replaced the Oct 6 draft from the
+brainstorming PDF; `App` and `SMS/Messaging` replaced `Mobile App`/`Web App`, `Social Impact`
+was dropped, and seven labels were added. Edit this file and increment its version when the
+team changes labels. Changing the file affects new work; it does not automatically
+reprocess completed records (block 4 of `sql/004_samples_and_search.sql` re-queues samples).
 
 Only six free-text fields are sent to OpenAI. Names, email, birthdate, addresses,
 language selections and the complete raw response object are excluded. If an alum

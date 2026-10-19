@@ -32,8 +32,12 @@ Matching ignores upper/lower case. LLM tags only count once a row is `completed`
 
 1. Run all of `sql/005_speaker_search.sql`. It creates one view and two functions; it doesn't change any rows. Safe to re-run.
 2. Run all of `sql/008_replace_sample_profiles.sql` (the current 20 sample profiles, tags from the
-   finalized list). It should show `20 | 20` and the new names. **Don't run `load-samples` afterwards:**
-   `data/sample_profiles.json` still holds the first sample set and would overwrite these.
+   finalized list). It should show `20 | 20` and the new names. These are the same people and
+   answers as `data/sample_profiles.json`, tagged with the team's expected tags.
+   - `load-samples` sends the same answers, so it doesn't change anyone's answers. It does
+     re-queue them as `pending` so the LLM worker tags them for real (then `sample-report`
+     compares the LLM's tags with the expected ones). Until the worker runs, those samples
+     have no LLM tags in searches. Run 008 again to put the expected tags back.
    *(Older step, kept for reference)* `sql/006_sample_speaker_answers.sql` The 20 samples only had free-text answers, so this
    gives them availability, audiences, speaking types and the rest. The last line should show `20 | 20 | 20`.
    - Samples already in the table keep their LLM tags (no re-tagging, no OpenAI cost).
@@ -87,6 +91,5 @@ public get "permission denied". The admin UI must call it from server code:
 
 - Admin UI wired to this (the Claude mock-ups are the design; the route example is the glue).
 - Weighting some tags more than others; Week 8 natural-language search.
-- The samples use `taxonomy.json` v1 labels (e.g. `Mobile App`). If the team finalizes the
-  newer labels (`App`), update the taxonomy, re-tag, and the search follows automatically:
-  it has no tag list of its own, only the category names.
+- The search has no tag list of its own, only category names, so it follows
+  `data/taxonomy.json` automatically when labels change.
