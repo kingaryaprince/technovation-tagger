@@ -79,10 +79,15 @@ class SearchCallTests(unittest.TestCase):
 
     def test_format_results(self):
         text = search.format_results(ROWS)
-        self.assertIn('1. Maya Patel  2/2 tags  (Available now)', text)
-        self.assertIn('2. Jessica Tran  1/2 tags  (availability not given)', text)
+        # Availability is no longer shown next to names.
+        self.assertIn('1. Maya Patel  2/2 tags', text)
+        self.assertIn('2. Jessica Tran  1/2 tags', text)
+        self.assertNotIn('Available', text)
         self.assertIn('missing: Parents', text)
         self.assertIn('No one matches', search.format_results([]))
+        # With a travel radius, each person's distance is shown.
+        near = [{**ROWS[0], 'distance_miles': 36}]
+        self.assertIn('1. Maya Patel  2/2 tags  (36 mi away)', search.format_results(near))
 
     def test_format_options(self):
         rows = [{'category': 'audiences', 'tag': 'Students', 'people': 3},
