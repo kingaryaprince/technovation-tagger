@@ -98,8 +98,7 @@ def format_results(rows, strict=False):
     lines = []
     for r in rows:
         missing = ', '.join(t['tag'] for t in r.get('missing_tags') or [])
-        lines.append(f"{r['rank']}. {r['full_name']}  {r['match_count']}/{r['total_selected']} tags"
-                     f"  ({r.get('availability') or 'availability not given'})")
+        lines.append(f"{r['rank']}. {r['full_name']}  {r['match_count']}/{r['total_selected']} tags")
         if missing:
             lines.append(f'   missing: {missing}')
     return '\n'.join(lines)
