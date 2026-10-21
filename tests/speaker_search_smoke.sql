@@ -34,7 +34,8 @@ begin
      '{"speaking_types":["Virtual Events"]}',
      'smoke-d', now(), 'pending', '{"skills":["SmokeSkill"]}');
 
-  -- 1. Most matches first; equal matches -> available soonest first.
+  -- 1. Most matches first; equal matches -> by name. Availability does not affect rank
+  --    (Smoke B is "Available now" and Smoke A "Available soon", yet A still comes first).
   select array_agg(full_name order by rank) into names
   from public.ranked_speakers_search('[{"category":"skills","tag":"SmokeSkill"},
                                 {"category":"interests","tag":"SmokeInterest"},
@@ -46,8 +47,51 @@ begin
   select array_agg(full_name order by rank) into names
   from public.ranked_speakers_search('[{"category":"skills","tag":"SmokeSkill"}]'::jsonb, 50, true)
   where full_name like 'Smoke %';
+  if names is distinct from array['Smoke A', 'Smoke B'] then
+    raise exception 'Tie-break should be by name, not availability: %', names;
+  end if;
+
+  -- 1b. Travel radius. Smoke B is in Ann Arbor (~36 mi from Detroit), Smoke A in Chicago (~240 mi).
+  insert into public.alumni_locations (response_id, location_text, lat, lng)
+  select id, case email when 'speaker-smoke-b@example.invalid' then 'Ann Arbor' else 'Chicago' end,
+         case email when 'speaker-smoke-b@example.invalid' then 42.2808 else 41.8781 end,
+         case email when 'speaker-smoke-b@example.invalid' then -83.7430 else -87.6298 end
+  from public.alumni_intake_responses
+  where email in ('speaker-smoke-a@example.invalid', 'speaker-smoke-b@example.invalid')
+  on conflict (response_id) do update set lat = excluded.lat, lng = excluded.lng;
+
+  --     Inside the radius = one extra match, so B (2/2) now outranks A (1/2), and A is missing it.
+  select array_agg(full_name order by rank) into names
+  from public.ranked_speakers_search('[{"category":"skills","tag":"SmokeSkill"}]'::jsonb, 50, true,
+                                     42.3314, -83.0458, 100, 'Detroit', true)
+  where full_name like 'Smoke %';
   if names is distinct from array['Smoke B', 'Smoke A'] then
-    raise exception 'Tie-break by availability wrong: %', names;
+    raise exception 'Radius should count as an extra match: %', names;
+  end if;
+  select * into r from public.ranked_speakers_search('[{"category":"skills","tag":"SmokeSkill"}]'::jsonb,
+                                     50, true, 42.3314, -83.0458, 100, 'Detroit', true)
+  where full_name = 'Smoke A';
+  if r.match_count <> 1 or r.total_selected <> 2
+     or not (r.missing_tags::text like '%Within 100 mi of Detroit%') then
+    raise exception 'Outside-radius details wrong: % % %', r.match_count, r.total_selected, r.missing_tags;
+  end if;
+
+  --     Same score with a place given -> closer first: with a 500 mi radius both are inside (2/2).
+  select array_agg(full_name order by rank) into names
+  from public.ranked_speakers_search('[{"category":"skills","tag":"SmokeSkill"}]'::jsonb, 50, true,
+                                     42.3314, -83.0458, 500, 'Detroit', true)
+  where full_name like 'Smoke %';
+  if names is distinct from array['Smoke B', 'Smoke A'] then
+    raise exception 'Equal scores should put the closer person first: %', names;
+  end if;
+
+  --     Virtual speakers off -> only people inside the radius.
+  select array_agg(full_name order by rank) into names
+  from public.ranked_speakers_search('[{"category":"skills","tag":"SmokeSkill"}]'::jsonb, 50, true,
+                                     42.3314, -83.0458, 100, 'Detroit', false)
+  where full_name like 'Smoke %';
+  if names is distinct from array['Smoke B'] then
+    raise exception 'Virtual off should drop people outside the radius: %', names;
   end if;
 
   -- 2. "Not Interested" is not a speaker; p_speakers_only=false includes them. Pending tags never count.
