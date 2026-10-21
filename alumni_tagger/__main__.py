@@ -133,7 +133,7 @@ def main(argv=None):
     find.add_argument('--limit', type=int, default=5, help='How many people (default 5)')
     find.add_argument('--all', action='store_true', help='Include people who did not pick a speaking type')
     find.add_argument('--json', action='store_true', help='Print the full results as JSON')
-        speaker_search.add_filter_arguments(find)
+    speaker_search.add_filter_arguments(find)
     options = commands.add_parser('filter-options', help='List every tag people have, with head counts')
     options.add_argument('--category', help='Only this category, e.g. audiences')
     work = commands.add_parser('worker', help='Read pending Supabase jobs, call OpenAI, save tags')
