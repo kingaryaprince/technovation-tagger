@@ -160,7 +160,7 @@ def main(argv=None):
             picks = speaker_search.picks_from_args(args)
             near = speaker_search.near_from_args(args)
             rows = speaker_search.search(SupabaseClient(config), picks, args.limit, not args.all,
-                                         strict=args.strict)
+                                         strict=args.strict, near=near)
             print(json.dumps(rows, ensure_ascii=False, indent=2) if args.json
                   else speaker_search.format_results(rows, strict=args.strict))
             return 0
