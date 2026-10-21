@@ -3,7 +3,7 @@
 -- Does not change alumni_intake_responses or any data.
 --
 -- An admin picks tags; ranked_speakers_search returns the top 5 respondents ranked by how many
--- of the picked tags they match (most first). Ties: available soonest, then name.
+-- of the picked tags they match (most first). Ties: by name. Availability does not affect rank.
 --
 -- Tags come from two places on each alumni_intake_responses row:
 --   * tags        (the LLM worker): industry, career_stage, project_domain,
@@ -182,8 +182,6 @@ begin
   ranked as (
     select p.*,
       row_number() over (order by p.match_count desc,
-        case p.availability when 'Available now' then 0 when 'Available soon' then 1
-                            when 'Uncertain timing' then 2 else 3 end,
         lower(p.full_name), p.response_id)::integer as rank
     from people p
   )
