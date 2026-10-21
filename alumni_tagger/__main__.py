@@ -133,6 +133,7 @@ def main(argv=None):
     find.add_argument('--limit', type=int, default=5, help='How many people (default 5)')
     find.add_argument('--all', action='store_true', help='Include people who did not pick a speaking type')
     find.add_argument('--json', action='store_true', help='Print the full results as JSON')
+        speaker_search.add_filter_arguments(find)
     options = commands.add_parser('filter-options', help='List every tag people have, with head counts')
     options.add_argument('--category', help='Only this category, e.g. audiences')
     work = commands.add_parser('worker', help='Read pending Supabase jobs, call OpenAI, save tags')
@@ -155,10 +156,11 @@ def main(argv=None):
         if args.command == 'sample-report':
             sample_report(SupabaseClient(config), load_samples(), args.out); return 0
         if args.command == 'search':
-            picks = speaker_search.parse_tags(args.tag)
-            rows = speaker_search.search(SupabaseClient(config), picks, args.limit, not args.all)
+            picks = speaker_search.picks_from_args(args)
+            rows = speaker_search.search(SupabaseClient(config), picks, args.limit, not args.all,
+                                         strict=args.strict)
             print(json.dumps(rows, ensure_ascii=False, indent=2) if args.json
-                  else speaker_search.format_results(rows))
+                  else speaker_search.format_results(rows, strict=args.strict))
             return 0
         if args.command == 'filter-options':
             rows = SupabaseClient(config).rpc('speaker_filter_options', {})
