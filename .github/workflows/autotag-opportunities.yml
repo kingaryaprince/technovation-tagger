@@ -1,0 +1,35 @@
+# Tags new or edited opportunities automatically, once an hour.
+# To run it right away: open the repo's Actions tab, pick "Autotag opportunities",
+# click "Run workflow".
+name: Autotag opportunities
+
+on:
+  schedule:
+    - cron: '17 * * * *'   # every hour, at 17 minutes past (UTC)
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Most opportunities to tag in this run'
+        required: false
+        default: '25'
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Keys come from the repository secrets (Settings > Secrets and variables > Actions)
+      # and only exist for the length of this run.
+      - name: Tag opportunities
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+          LIMIT: ${{ inputs.limit || '25' }}
+        run: python3 -m alumni_tagger.opportunities --limit "$LIMIT"
