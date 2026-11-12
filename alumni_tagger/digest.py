@@ -151,7 +151,7 @@ def render_item(n, opp, today):
         title = f'<a href="{escape(url)}" style="color:{NAVY};text-decoration:none;">{title}</a>'
     label = type_label(opp)
     meta = ' · '.join(escape(b) for b in [label, where_text(opp)] if b)
-    when_html = (f'<span style="background:{LIME};color:{NAVY};padding:1px 5px;">{escape(when)}</span>'
+    when_html = (f'<span style="background:{PURPLE};color:#ffffff;padding:1px 6px;">{escape(when)}</span>'
                  if urgent else escape(when))
     link = (f'''
         <p style="margin:10px 0 0 0;font-size:15px;">
