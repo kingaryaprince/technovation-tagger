@@ -1,4 +1,8 @@
-# Tags new or edited opportunities automatically, once an hour.
+# Tags opportunities whose tags are still empty, once an hour, using Claude.
+# Needs repository secrets (Settings > Secrets and variables > Actions):
+#   SUPABASE_URL, SUPABASE_KEY, ANTHROPIC_API_KEY
+#   ANTHROPIC_WORKSPACE_ID  only if the key is a user-level key (starts sk-ant-usr-)
+#   ANTHROPIC_MODEL         optional, default claude-opus-5-5
 # To run it right away: open the repo's Actions tab, pick "Autotag opportunities",
 # click "Run workflow".
 name: Autotag opportunities
@@ -23,13 +27,16 @@ jobs:
         with:
           python-version: '3.12'
 
-      # Keys come from the repository secrets (Settings > Secrets and variables > Actions)
-      # and only exist for the length of this run.
+      - name: Install the Claude SDK
+        run: pip install anthropic
+
+      # Keys come from the repository secrets and only exist for the length of this run.
       - name: Tag opportunities
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_WORKSPACE_ID: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
+          ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL }}
           LIMIT: ${{ inputs.limit || '25' }}
         run: python3 -m alumni_tagger.opportunities --limit "$LIMIT"

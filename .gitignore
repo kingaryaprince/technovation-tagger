@@ -6,3 +6,5 @@ output/
 .idea/
 *.pyc
 node_modules/
+.env.local
+.env.*.local
