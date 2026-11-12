@@ -1,0 +1,28 @@
+# Builds the opportunity digest emails from the made-up sample data, so you can look at them.
+# Nothing is sent. To use it: open the repo's Actions tab, pick "Preview digests",
+# click "Run workflow". When the run finishes, download "digest-preview" from the bottom
+# of the run's page, unzip it, and open index.html.
+name: Preview digests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build sample digests
+        run: python3 -m alumni_tagger.digest --sample
+
+      - name: Save them for download
+        uses: actions/upload-artifact@v4
+        with:
+          name: digest-preview
+          path: digest_preview/
+          retention-days: 7
