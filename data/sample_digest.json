@@ -1,0 +1,106 @@
+{
+  "_note": "Made-up people and opportunities for previewing the digest. deadline_in_days is counted from the day you run it, so the sample never goes stale. Tags use the finalized taxonomy.",
+  "alumni": [
+    {
+      "id": "sample-1",
+      "full_name": "Maya Okafor",
+      "email": "maya.sample@example.com",
+      "tags": {
+        "interests": ["Job Searching", "Resume Building", "Interview Prep", "EdTech", "AI/Machine Learning"],
+        "skills": ["Python", "SQL", "Data Analysis"],
+        "industry": ["Student"],
+        "career_stage": ["Student"],
+        "project_built_with": ["App", "AI/Machine Learning"]
+      }
+    },
+    {
+      "id": "sample-2",
+      "full_name": "Priya Raman",
+      "email": "priya.sample@example.com",
+      "tags": {
+        "interests": ["Career Transitions", "Leadership", "Career Development", "Mentorship", "Global/International Work"],
+        "skills": ["Product Management", "Business Strategy", "SQL", "Data Analysis", "Research Methods", "Facilitation"],
+        "industry": ["Product Management"],
+        "career_stage": ["Experienced (5+ yrs)"],
+        "project_domain": ["Education"]
+      }
+    },
+    {
+      "id": "sample-3",
+      "full_name": "Lucía Fernández",
+      "email": "lucia.sample@example.com",
+      "tags": {
+        "interests": ["Climate Tech", "Judging", "Volunteering"],
+        "skills": ["Public Speaking"],
+        "industry": ["Climate/Energy"],
+        "career_stage": ["Early Career (0-4 yrs)"]
+      }
+    },
+    {
+      "id": "sample-4",
+      "full_name": "Sam Lee",
+      "email": "sam.sample@example.com",
+      "tags": {
+        "interests": ["Gaming", "Space/Aerospace"],
+        "skills": ["C++"],
+        "industry": ["Other"]
+      }
+    }
+  ],
+  "opportunities": [
+    {
+      "id": "opp-1", "type": "internship", "title": "Summer data science internship",
+      "organization": "Sample EdTech Co", "url": "https://example.com/internship",
+      "deadline_in_days": 21, "rolling": false, "remote": true, "location": null,
+      "tags": ["Job Searching", "EdTech", "Python", "SQL", "Data Analysis"]
+    },
+    {
+      "id": "opp-2", "type": "workshop", "title": "Resume & interview prep night",
+      "organization": "Sample Career Center", "url": "https://example.com/resume-night",
+      "deadline_in_days": 4, "rolling": false, "remote": false, "location": "Oakland, CA",
+      "tags": ["Resume Building", "Interview Prep", "Job Searching"]
+    },
+    {
+      "id": "opp-3", "type": "volunteer", "title": "Judges needed for a youth climate hackathon",
+      "organization": "Sample Hackathon Org", "url": "https://example.com/judges",
+      "deadline_in_days": null, "rolling": true, "remote": true, "location": null,
+      "tags": ["Judging", "Volunteering", "Climate Tech", "Mentorship"]
+    },
+    {
+      "id": "opp-4", "type": "fellowship", "title": "Product leadership fellowship",
+      "organization": "Sample Fellowship Fund", "url": "https://example.com/fellowship",
+      "deadline_in_days": 35, "rolling": false, "remote": true, "location": null,
+      "tags": ["Leadership", "Career Development", "Product Management", "Business Strategy"]
+    },
+    {
+      "id": "opp-5", "type": "mentorship", "title": "Become a mentor for Technovation teams",
+      "organization": "Technovation", "url": "https://example.com/mentor",
+      "deadline_in_days": 14, "rolling": false, "remote": true, "location": null,
+      "tags": ["Mentorship", "Leadership", "Facilitation"]
+    },
+    {
+      "id": "opp-6", "type": "event", "title": "Career pivots panel: from engineering to product",
+      "organization": "Sample Women in Tech Network", "url": "https://example.com/panel",
+      "deadline_in_days": 9, "rolling": false, "remote": false, "location": "San Francisco, CA",
+      "tags": ["Career Transitions", "Product Management", "Networking"]
+    },
+    {
+      "id": "opp-7", "type": "scholarship", "title": "AI research scholarship for undergrads",
+      "organization": "Sample AI Institute", "url": "https://example.com/scholarship",
+      "deadline_in_days": 28, "rolling": false, "remote": true, "location": null,
+      "tags": ["AI/Machine Learning", "Research & Innovation", "Python"]
+    },
+    {
+      "id": "opp-8", "type": "event", "title": "Global product meetup (already happened)",
+      "organization": "Sample Meetup", "url": "https://example.com/past",
+      "deadline_in_days": -3, "rolling": false, "remote": true, "location": null,
+      "tags": ["Product Management", "Global/International Work", "Leadership"]
+    },
+    {
+      "id": "opp-9", "type": "job", "title": "Junior analyst, global education nonprofit",
+      "organization": "Sample Nonprofit", "url": "https://example.com/analyst",
+      "deadline_in_days": 18, "rolling": false, "remote": false, "location": "New York, NY",
+      "tags": ["Job Searching", "SQL", "Data Analysis", "Global/International Work"]
+    }
+  ]
+}
