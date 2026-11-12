@@ -6,3 +6,4 @@ output/
 .idea/
 *.pyc
 node_modules/
+digest_preview/
