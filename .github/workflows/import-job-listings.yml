@@ -1,0 +1,57 @@
+# Adds listings from a GitHub job-list repo (default SimplifyJobs/Summer2027-Internships)
+# to the opportunities table. Reads the repo's listings.json if it has one, else the job
+# table in its README. Re-running never duplicates rows; closed listings are set to expired.
+#   Daily (scheduled): adds every listing not imported yet, as pending.
+#   Manual: Actions tab > "Import job listings" > "Run workflow" (default 50).
+#
+# Settings (Settings > Secrets and variables > Actions > Variables tab):
+#   JOB_IMPORT_ENABLED = false   turns the daily run off (manual runs still work).
+#                                Set to true or delete it to turn it back on.
+#   JOB_LIST_REPO = owner/name   which repo the daily run imports,
+#                                e.g. vanshb03/Summer2027-Internships
+name: Import job listings
+
+on:
+  schedule:
+    - cron: '5 13 * * *'   # daily at 13:05 UTC, ahead of the hourly autotag run
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: 'GitHub repo, owner/name (blank = JOB_LIST_REPO variable, else SimplifyJobs/Summer2027-Internships)'
+        required: false
+        default: ''
+      limit:
+        description: 'Most new listings to add (blank = all)'
+        required: false
+        default: '50'
+      status:
+        description: 'Status for new rows'
+        type: choice
+        options: [pending, active]
+        default: pending
+
+jobs:
+  import:
+    # Scheduled runs are skipped while the JOB_IMPORT_ENABLED variable is 'false'.
+    if: github.event_name != 'schedule' || vars.JOB_IMPORT_ENABLED != 'false'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Import listings
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          REPO: ${{ inputs.repo || vars.JOB_LIST_REPO || 'SimplifyJobs/Summer2027-Internships' }}
+          LIMIT: ${{ inputs.limit }}          # empty on scheduled runs
+          STATUS: ${{ inputs.status || 'pending' }}
+        run: |
+          if [ -n "$LIMIT" ]; then
+            python3 -m alumni_tagger.job_import --repo "$REPO" --limit "$LIMIT" --status "$STATUS"
+          else
+            python3 -m alumni_tagger.job_import --repo "$REPO" --status "$STATUS"
+          fi

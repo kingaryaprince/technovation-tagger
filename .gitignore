@@ -7,3 +7,5 @@ output/
 *.pyc
 node_modules/
 digest_preview/
+.env.local
+.env.*.local

@@ -46,19 +46,35 @@ def json_request(url, headers, payload=None, method='POST', service='API', retri
             raise ServiceError(service, 'invalid JSON') from None
 
 
+def read_env_file(path):
+    """NAME=value lines from a .env-style file; other lines are ignored, never executed."""
+    values = {}
+    if path.exists():
+        for line in path.read_text(encoding='utf-8').splitlines():
+            name, sep, value = line.strip().partition('=')
+            if sep and name and not name.startswith('#'):
+                values[name.strip().removeprefix('export ').strip()] = value.strip().strip('"\'')
+    return values
+
+
 def settings():
+    """Environment variables win, then .env.local, then config.local.json."""
     path = ROOT / 'config.local.json'
     local = json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}
-    names = ['OPENAI_API_KEY', 'OPENAI_MODEL', 'SUPABASE_URL', 'SUPABASE_KEY']
+    local.update(read_env_file(ROOT / '.env.local'))
+    names = ['OPENAI_API_KEY', 'OPENAI_MODEL', 'SUPABASE_URL', 'SUPABASE_KEY',
+             'ANTHROPIC_API_KEY', 'ANTHROPIC_MODEL', 'ANTHROPIC_WORKSPACE_ID']
     values = {k: os.environ.get(k, local.get(k, '')).strip() for k in names}
     values['OPENAI_MODEL'] = values['OPENAI_MODEL'] or 'gpt-4.1-mini'
+    values['ANTHROPIC_MODEL'] = values['ANTHROPIC_MODEL'] or 'claude-opus-5-5'
     return values
 
 
 def require(config, *names):
     missing = [k for k in names if not config.get(k)]
     if missing:
-        raise ValueError('Missing ' + ', '.join(missing) + '. Run: python3 -m alumni_tagger configure')
+        raise ValueError('Missing ' + ', '.join(missing)
+                         + '. Add it to .env.local or run: python3 -m alumni_tagger configure')
 
 
 class OpenAIClient:

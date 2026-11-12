@@ -1,3 +1,6 @@
+> **Job listings (Nov 2026):** importing internships from GitHub job lists and tagging
+> them is under [Import job listings and tag opportunities](#import-job-listings-and-tag-opportunities).
+>
 > **Week 7 (Oct 18): Speaker Bureau search** — start with `docs/SPEAKER_SEARCH.md`.
 > Oct 13 tagging steps are still in `docs/THIS_WEEK.md`.
 
@@ -229,6 +232,120 @@ origin, languages or participation in Technovation.
 6. Confirm the final tag vocabulary with Kayden/Pragya and agree how to merge the
    staging intake into the existing profile schema with Junnie.
 
+## Import job listings and tag opportunities
+
+Two tools fill the Supabase `opportunities` table with internships and keep it current:
+
+- `job_import` copies listings from a GitHub job-list repo (default
+  [SimplifyJobs/Summer2027-Internships](https://github.com/SimplifyJobs/Summer2027-Internships)).
+  Every saved `url` is the employer's own posting, never a link through Simplify or
+  another list's site.
+- `opportunities` tags opportunities whose `tags` are still empty, using Claude.
+
+### One-time setup
+
+1. Put the keys in `.env.local` in this folder (Git ignores it), one `NAME=value` per line:
+
+   ```
+   SUPABASE_URL=https://YOUR-PROJECT.supabase.co
+   SUPABASE_KEY=sb_secret_...
+   ANTHROPIC_API_KEY=sk-ant-...
+   ANTHROPIC_WORKSPACE_ID=wrkspc_...   # only for a user-level key (starts sk-ant-usr-)
+   ANTHROPIC_MODEL=claude-opus-5-5     # optional; claude-haiku-5-5 is much cheaper
+   ```
+
+   The commands read `.env.local` themselves; there's nothing to `source` or `export`.
+2. Install the Claude SDK (only the tagger needs it): `pip3 install anthropic`
+3. On a Mac with Python from python.org, if you see `CERTIFICATE_VERIFY_FAILED`, run
+   `open "/Applications/Python 3.11/Install Certificates.command"` once (use your Python
+   version), or `export SSL_CERT_FILE=/etc/ssl/cert.pem` in each terminal.
+4. Run `sql/009_internship_type.sql` once in the Supabase SQL editor. It adds
+   `internship` to the table's allowed `type` values without dropping existing ones.
+
+### Import listings
+
+```bash
+python3 -m alumni_tagger.job_import --dry-run            # preview counts and 5 rows; writes nothing
+python3 -m alumni_tagger.job_import --limit 50           # add the 50 newest listings not imported yet
+python3 -m alumni_tagger.job_import                      # add every open listing
+python3 -m alumni_tagger.job_import --status active      # new rows go live without review
+python3 -m alumni_tagger.job_import --max-age-days 60    # only what Simplify's README shows
+```
+
+Re-running is safe. Each run adds only listings not imported before, refreshes the text of
+ones the list edited, and sets `status = 'expired'` on ones the list closed. Existing rows
+keep their `status` and `tags`. New rows are `pending` unless you pass `--status active`.
+To make pending imports live, run in the Supabase SQL editor (change the source to match):
+
+```sql
+update opportunities set status = 'active'
+where source = 'simplify_summer2027' and status = 'pending';
+```
+
+### Switch to a different job list
+
+Pass `--repo owner/name` for any public GitHub repo:
+
+```bash
+python3 -m alumni_tagger.job_import --repo SimplifyJobs/Summer2028-Internships --dry-run
+python3 -m alumni_tagger.job_import --repo vanshb03/Summer2027-Internships --limit 50
+python3 -m alumni_tagger.job_import --repo negarprh/Canadian-Tech-Internships-2027
+python3 -m alumni_tagger.job_import --repo SimplifyJobs/New-Grad-Positions
+```
+
+Always start with `--dry-run`: it shows how many listings were found and how many were
+skipped. The rest is worked out from the repo:
+
+| What | How |
+| --- | --- |
+| Format | `.github/scripts/listings.json` if the repo has one (Simplify's format, also used by vanshb03); otherwise the README table with Company, Role, Location and an apply link. A 🔒 row counts as closed and `↳` repeats the company above. Force one with `--format listings` or `--format readme`. |
+| Term | From the repo name: `Summer2028-Internships` keeps only "Summer 2028" listings. A name without a season and year keeps everything. Override with `--term "Fall 2026"`, or `--term ""` for all. Data-file repos only; README tables aren't filtered by term. |
+| `type` | `internship` if the repo name contains "Intern", otherwise `job`. |
+| `source` | `simplify_<term>` for SimplifyJobs repos, otherwise `<owner>_<term or repo name>`, e.g. `vanshb03_summer2027`. Each repo's rows are tracked and expired separately, so lists never overwrite each other. The same job on two lists appears twice. |
+| Links | Tracking parameters are removed. Links through a shortener (`go.vansh.nyc`, `bit.ly`, ...) are followed to the employer's page when the listing is first added. Links that only lead to a list's own site are skipped. |
+
+Lists checked in November 2026:
+
+| Repo | Works? |
+| --- | --- |
+| SimplifyJobs/Summer2027-Internships, SimplifyJobs/New-Grad-Positions | Yes (data file) |
+| vanshb03/Summer2027-Internships, vanshb03/New-Grad-2027 | Yes (data file; links resolved through go.vansh.nyc) |
+| negarprh/Canadian-Tech-Internships-2027 | Yes (README table) |
+| zshah101/Automated-List-Of-Summer-2027-and-Fall-2026-Tech-Internships | Yes (README table) |
+| zapplyjobs/* | No: every link goes through zapply.jobs, which hides the employer's link |
+| northwesternfintech/2027QuantInternships | No: not a Company/Role table; the run stops without changing anything |
+
+### Tag opportunities
+
+```bash
+python3 -m alumni_tagger.opportunities --limit 3    # small test first
+python3 -m alumni_tagger.opportunities --limit 50
+```
+
+It tags rows whose `tags` are empty and whose `status` isn't `expired`, newest first.
+Tags must come from `data/taxonomy.json` and quote the listing word for word; a row that
+fails stays untagged and is retried on the next run. Alumni tagging still uses OpenAI.
+
+### Run it automatically on GitHub
+
+Two workflows in `.github/workflows/` run from the `main` branch once merged:
+
+| Workflow | When | Needs these repository secrets |
+| --- | --- | --- |
+| Import job listings (`import-job-listings.yml`) | Daily at 13:05 UTC, adding every new listing as `pending`. Also manual: Actions → Run workflow (default 50, with repo and status options). | `SUPABASE_URL`, `SUPABASE_KEY` |
+| Autotag opportunities (`autotag-opportunities.yml`) | Hourly, 25 rows per run | `SUPABASE_URL`, `SUPABASE_KEY`, `ANTHROPIC_API_KEY`, plus `ANTHROPIC_WORKSPACE_ID` for a user-level key; optional `ANTHROPIC_MODEL` |
+
+Daily import settings are repository **variables** (Settings → Secrets and variables →
+Actions → Variables tab). None exist by default, and none are needed:
+
+| Variable | Effect |
+| --- | --- |
+| `JOB_IMPORT_ENABLED` | `false` skips the daily run; manual runs still work. Set `true` or delete it to turn it back on. CLI: `gh variable set JOB_IMPORT_ENABLED --body false` |
+| `JOB_LIST_REPO` | Which repo the daily run imports, e.g. `SimplifyJobs/Summer2028-Internships`. Default `SimplifyJobs/Summer2027-Internships`. CLI: `gh variable set JOB_LIST_REPO --body owner/name` |
+
+The daily run imports one repo. GitHub pauses scheduled workflows after 60 days with no
+commits to a public repo; turn it back on from the Actions tab.
+
 ## Troubleshooting
 
 | Symptom | Next action |
@@ -239,6 +356,10 @@ origin, languages or participation in Technovation.
 | HTTP 404 | Check migration/table/RPC existence, project URL or OpenAI model availability. |
 | OpenAI 429 | Check API billing/quota/rate limit. Fix it, then requeue the failed test row. |
 | `failed`, `ValidationError` | Review the input and run a local `tag` command to reproduce without changing the DB. Review any mismatched quote or unsupported output. |
+| Claude 400 "not scoped to a workspace" | The key is user-level (`sk-ant-usr-`). Add `ANTHROPIC_WORKSPACE_ID=wrkspc_...` to `.env.local`, or use a workspace key (`sk-ant-api03-`). |
+| Import says "No job table found" | That repo's README has no table with Company and Role columns. It isn't supported; nothing was changed. |
+| Import finds 0 open, all skipped | The list's links all go through its own site (like zapply.jobs), so there's no employer link to save. |
+| Supabase 400 on import with `opportunities_type_check` | Run `sql/009_internship_type.sql`. |
 | `processing` after terminal closes | Lease expires after 10 minutes. Another worker run can reclaim it; three interrupted claims move it to failed. |
 | Same email changed but old tags appear | The new submission must reach this table. Check its `revision` and `submitted_at`. Completed-query examples exclude pending rows. |
 
@@ -259,6 +380,9 @@ not verified identity; public profile updates need authentication before product
 - `alumni_tagger/clients.py`: OpenAI Responses and Supabase REST calls.
 - `alumni_tagger/worker.py`: background job processing.
 - `alumni_tagger/__main__.py`: command-line entry point.
+- `alumni_tagger/job_import.py`: imports listings from GitHub job-list repos.
+- `alumni_tagger/opportunities.py`: tags opportunities with Claude.
+- `.github/workflows/`: daily import and hourly opportunity tagging.
 - `data/`: taxonomy, full form question mapping, sample/edge-case inputs.
 - `sql/`: additive migration, search examples, explicit retry.
 - `apps_script/`: updated-form intake adapter.
