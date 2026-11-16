@@ -56,6 +56,10 @@ class RowTests(unittest.TestCase):
         self.assertIn('Summary: Analyze mission data with Python.', text)
         self.assertNotIn('(National Aeronautics', text)       # department same as org: not repeated
 
+    def test_default_port_is_removed_from_links(self):
+        row = uj.to_row(item(desc={'PositionURI': 'https://www.usajobs.gov:443/job/854458300'}), 'student')
+        self.assertEqual(row['url'], 'https://www.usajobs.gov/job/854458300')
+
     def test_graduates_are_jobs(self):
         self.assertEqual(uj.to_row(item(), 'graduates')['type'], 'job')
 

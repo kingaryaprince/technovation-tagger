@@ -125,10 +125,12 @@ def describe(desc, places, path):
 
 
 def listing_url(desc):
+    """The announcement link, without the ':443' USAJOBS puts in some of them."""
     for url in [desc.get('PositionURI'), *(desc.get('ApplyURI') or [])]:
         parts = parse.urlsplit(text(url))
         if parts.scheme == 'https' and parts.hostname:
-            return text(url)
+            netloc = parts.netloc[:-4] if parts.netloc.endswith(':443') else parts.netloc
+            return parse.urlunsplit(parts._replace(netloc=netloc))
     return ''
 
 
