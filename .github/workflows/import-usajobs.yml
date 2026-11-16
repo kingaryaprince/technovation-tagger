@@ -1,0 +1,51 @@
+# Adds federal student internships and Recent Graduates jobs from the USAJOBS API to the
+# opportunities table, on the 1st and 15th of each month (about every two weeks).
+# New rows are pending with empty tags; the hourly "Autotag opportunities" run tags them.
+# Re-running never duplicates rows; closed or past-deadline listings are set to expired.
+#
+# Needs repository secrets (Settings > Secrets and variables > Actions):
+#   USAJOBS_API_KEY  the key USAJOBS emailed you
+#   USAJOBS_EMAIL    the exact email the key was requested with
+#   SUPABASE_URL, SUPABASE_KEY
+# To run it right away: Actions tab > "Import USAJOBS" > "Run workflow".
+# Turn the schedule off with the repository variable USAJOBS_IMPORT_ENABLED = false.
+name: Import USAJOBS
+
+on:
+  schedule:
+    - cron: '25 13 1,15 * *'   # 13:25 UTC on the 1st and 15th
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Most new listings to add (blank = all)'
+        required: false
+        default: '25'
+      dry_run:
+        description: 'Preview only, write nothing'
+        type: boolean
+        default: true
+
+jobs:
+  import:
+    if: github.event_name != 'schedule' || vars.USAJOBS_IMPORT_ENABLED != 'false'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Import listings
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          USAJOBS_API_KEY: ${{ secrets.USAJOBS_API_KEY }}
+          USAJOBS_EMAIL: ${{ secrets.USAJOBS_EMAIL }}
+          LIMIT: ${{ inputs.limit }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          args=()
+          if [ -n "$LIMIT" ]; then args+=(--limit "$LIMIT"); fi
+          if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run); fi
+          python3 -m alumni_tagger.usajobs "${args[@]}"
