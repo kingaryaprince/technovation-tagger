@@ -30,6 +30,8 @@ Rows are matched on (source, source_id). New listings are inserted newest first 
 --status (default pending). Existing rows keep their status and tags; only their listing
 text is refreshed. Listings the repo marks closed, or that drop off a README, are expired.
 """
+from __future__ import annotations
+
 import argparse
 import hashlib
 import re
