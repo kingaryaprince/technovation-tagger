@@ -315,6 +315,28 @@ Lists checked in November 2026:
 | zapplyjobs/* | No: every link goes through zapply.jobs, which hides the employer's link |
 | northwesternfintech/2027QuantInternships | No: not a Company/Role table; the run stops without changing anything |
 
+### Import federal internships from USAJOBS
+
+`alumni_tagger/usajobs.py` adds federal **Pathways internships** (hiring path `student`,
+type `internship`) and **Recent Graduates** jobs (`graduates`, type `job`) from the free
+USAJOBS Search API. Get a key at developer.usajobs.gov, then add two values to `.env.local`
+or `config.local.json` (and as repository secrets for the workflow):
+
+| Setting | Value |
+| --- | --- |
+| `USAJOBS_API_KEY` | The key USAJOBS emailed you |
+| `USAJOBS_EMAIL` | The exact email you requested it with (USAJOBS checks it) |
+
+```bash
+python3 -m alumni_tagger.usajobs --dry-run          # preview, no writes
+python3 -m alumni_tagger.usajobs --limit 20         # add 20 as pending
+python3 -m alumni_tagger.usajobs                    # add all open listings
+```
+
+Rows use `source = usajobs` and the announcement id, so re-runs never duplicate. Each row
+gets its closing date as `deadline`; listings that close or disappear are expired. Blank
+fields are listed in `missing_fields` for an admin to fill in.
+
 ### Tag opportunities
 
 ```bash
@@ -328,11 +350,12 @@ fails stays untagged and is retried on the next run. Alumni tagging still uses O
 
 ### Run it automatically on GitHub
 
-Two workflows in `.github/workflows/` run from the `main` branch once merged:
+These workflows in `.github/workflows/` run from the `main` branch once merged:
 
 | Workflow | When | Needs these repository secrets |
 | --- | --- | --- |
 | Import job listings (`import-job-listings.yml`) | Daily at 13:05 UTC, adding every new listing as `pending`. Also manual: Actions → Run workflow (default 50, with repo and status options). | `SUPABASE_URL`, `SUPABASE_KEY` |
+| Import USAJOBS (`import-usajobs.yml`) | 1st and 15th of each month at 13:25 UTC (about every two weeks). Manual runs default to a 25-row dry run. `USAJOBS_IMPORT_ENABLED = false` turns the schedule off. | `SUPABASE_URL`, `SUPABASE_KEY`, `USAJOBS_API_KEY`, `USAJOBS_EMAIL` |
 | Autotag opportunities (`autotag-opportunities.yml`) | Hourly, 25 rows per run | `SUPABASE_URL`, `SUPABASE_KEY`, `ANTHROPIC_API_KEY`, plus `ANTHROPIC_WORKSPACE_ID` for a user-level key; optional `ANTHROPIC_MODEL` |
 
 Daily import settings are repository **variables** (Settings → Secrets and variables →
