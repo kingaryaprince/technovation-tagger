@@ -290,6 +290,7 @@ def plan_readme(text, feed=DEFAULT_FEED):
         tables += 1
         c_company, c_role = column(headers, 'company'), column(headers, 'role', 'title', 'position')
         c_location = column(headers, 'location')
+        c_posted = column(headers, 'date posted', 'posted', 'date added', 'age')
         c_link = column(headers, 'apply', 'application', 'link')
         company = ''
         for cells in table:
@@ -312,6 +313,9 @@ def plan_readme(text, feed=DEFAULT_FEED):
             description = '\n'.join([f'{title} at {company}.',
                                      f'Location: {"; ".join(locations) or "Not listed"}.',
                                      f'Listed in: github.com/{feed.repo}.'])
+            posted = cell_text(get(c_posted))
+            if posted:
+                description += '\nPosted (as listed): ' + posted + '.'
             source_id = hashlib.sha1(url.encode()).hexdigest()[:20]
             rows.setdefault(source_id, make_row(feed, source_id, title, company, locations,
                                                 description, url))

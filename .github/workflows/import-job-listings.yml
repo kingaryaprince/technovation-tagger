@@ -1,19 +1,17 @@
 # Adds listings from a GitHub job-list repo (default SimplifyJobs/Summer2027-Internships)
 # to the opportunities table. Reads the repo's listings.json if it has one, else the job
 # table in its README. Re-running never duplicates rows; closed listings are set to expired.
-#   Daily (scheduled): adds every listing not imported yet, as pending.
+#   Scheduled collection is controlled by collect-opportunities.yml every 14 days.
 #   Manual: Actions tab > "Import job listings" > "Run workflow" (default 50).
 #
 # Settings (Settings > Secrets and variables > Actions > Variables tab):
-#   JOB_IMPORT_ENABLED = false   turns the daily run off (manual runs still work).
+#   JOB_IMPORT_ENABLED = false   pauses scheduled Simplify collection (manual runs still work).
 #                                Set to true or delete it to turn it back on.
 #   JOB_LIST_REPO = owner/name   which repo the daily run imports,
 #                                e.g. vanshb03/Summer2027-Internships
 name: Import job listings
 
 on:
-  schedule:
-    - cron: '5 13 * * *'   # daily at 13:05 UTC, ahead of the hourly autotag run
   workflow_dispatch:
     inputs:
       repo:
@@ -30,6 +28,11 @@ on:
         options: [pending, active]
         default: pending
 
+permissions:
+  contents: read
+concurrency:
+  group: opportunity-collection
+  cancel-in-progress: false
 jobs:
   import:
     # Scheduled runs are skipped while the JOB_IMPORT_ENABLED variable is 'false'.

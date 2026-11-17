@@ -1,5 +1,5 @@
 # Adds federal student internships and Recent Graduates jobs from the USAJOBS API to the
-# opportunities table, on the 1st and 15th of each month (about every two weeks).
+# opportunities table, scheduled by collect-opportunities.yml every 14 days.
 # New rows are pending with empty tags; the hourly "Autotag opportunities" run tags them.
 # Re-running never duplicates rows; closed or past-deadline listings are set to expired.
 #
@@ -12,8 +12,6 @@
 name: Import USAJOBS
 
 on:
-  schedule:
-    - cron: '25 13 1,15 * *'   # 13:25 UTC on the 1st and 15th
   workflow_dispatch:
     inputs:
       limit:
@@ -25,6 +23,11 @@ on:
         type: boolean
         default: true
 
+permissions:
+  contents: read
+concurrency:
+  group: opportunity-collection
+  cancel-in-progress: false
 jobs:
   import:
     if: github.event_name != 'schedule' || vars.USAJOBS_IMPORT_ENABLED != 'false'

@@ -405,7 +405,7 @@ not verified identity; public profile updates need authentication before product
 - `alumni_tagger/__main__.py`: command-line entry point.
 - `alumni_tagger/job_import.py`: imports listings from GitHub job-list repos.
 - `alumni_tagger/opportunities.py`: tags opportunities with Claude.
-- `.github/workflows/`: daily import and hourly opportunity tagging.
+- `.github/workflows/`: alternate-Monday collection and hourly opportunity tagging.
 - `data/`: taxonomy, full form question mapping, sample/edge-case inputs.
 - `sql/`: additive migration, search examples, explicit retry.
 - `apps_script/`: updated-form intake adapter.
@@ -420,3 +420,29 @@ Official references checked during implementation:
 - [GPT-4.1 mini model](https://developers.openai.com/api/docs/models/gpt-4.1-mini)
 - [Supabase row-level security](https://supabase.com/docs/guides/database/postgres/row-level-security)
 - [Google Forms ItemResponse, including grid response ordering](https://developers.google.com/apps-script/reference/forms/item-response)
+
+
+## Integrated source collection
+
+`python3 -m alumni_tagger.pathways --limit 3` previews Pathways HTML listings.
+Add `--write` to insert eligible, non-expired candidates as pending with empty tags.
+`alumni_tagger.opportunities` remains the team's Claude auto-tagger. The collector's
+keyword suggestions stay in the local preview; they do not block Claude processing.
+See [Pathways details](docs/PATHWAYS_SCRAPER.md).
+
+The **Collect opportunities every two weeks** workflow runs all three sources
+(Simplify, Pathways, USAJOBS) on alternate Mondays at 13:05 UTC, starting Nov 16, 2026.
+A weekly cron plus an anchored 14-day check gives Nov 16, Nov 30, Dec 14, Dec 28,
+and Jan 11, rather than the uneven first/fifteenth-of-month interval.
+Manual workflow runs bypass the date gate; they default to preview mode. The old
+source-specific workflows are manual-only to avoid duplicate schedules.
+Existing JOB_IMPORT_ENABLED and USAJOBS_IMPORT_ENABLED pause variables still apply;
+PATHWAYS_IMPORT_ENABLED=false pauses Pathways scheduled collection.
+
+Collection needs SUPABASE_URL and SUPABASE_KEY in repository Actions secrets;
+USAJOBS additionally needs USAJOBS_API_KEY and USAJOBS_EMAIL. Hourly tagging needs
+ANTHROPIC_API_KEY and, for a user-level key, ANTHROPIC_WORKSPACE_ID. Missing model
+credentials block tagging, not collection. Never paste secrets into source or logs.
+Simplify JSON preserves the posted date in description; the README fallback now
+also preserves the source's Date Posted/Age cell verbatim without inventing a year.
+All new rows remain pending for staff to review before activation.
