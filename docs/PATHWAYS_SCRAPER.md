@@ -15,7 +15,7 @@ The first command saves `output/pathways-preview.json`. The second imports quali
 - Uses robots checks, normal TLS, a two-second minimum interval and a 24-hour HTML cache. Rejects redirects, external source-fetch URLs, oversized responses and broken detail markup.
 - Extracts title, description, lead/first listed institution, application URL, explicit deadline and program end when parseable. Does not follow original institution links automatically.
 - Suggests explicit topic tags in the local report, but writes empty tags so the shared Claude worker can process the listing. This is a free rules baseline, not the existing LLM alumni tagger. Research pages do not fit the alumni questionnaire prompt, so no fake alumni profiles are generated.
-- Flags unknown location, remote status, deadlines, tags and provisional type. Requires both payment and work-related language to provisionally classify a job; ambiguous programs stay in local preview. Staff must confirm type and current application details.
+- Flags unknown location, remote status, deadlines, tags and provisional type. Recognizes explicit internships, or both payment and work-related language for a provisional job; ambiguous programs stay in local preview. Staff must confirm type and current application details.
 - Writes only non-expired candidates with a provisional supported type, always pending. Expired and unknown-type candidates are skipped. Duplicate URL/source conflicts are checked and leave the existing row untouched; reviewed status is not reset.
 - Remote is only true for explicit fully-remote language. No inferred rolling deadlines. Does not automatically activate opportunities.
 

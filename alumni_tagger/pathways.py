@@ -192,7 +192,8 @@ def normalize(html, url, today):
     paid = bool(re.search(r'\b(stipend|paid internship|paid research|salary)\b', text, re.I))
     work = bool(re.search(r'\b(internship|postdoctoral|research fellowship|paid research)\b', text, re.I))
     degree = bool(re.search(r'\b(master[’\']?s degree|graduate degree|tuition|scholarship)\b', title, re.I))
-    kind = 'job' if paid and work and not degree else None
+    kind = ('internship' if re.search(r'\binternships?\b', text, re.I)
+            else 'job' if paid and work else None) if not degree else None
     remote = True if re.search(r'\b(fully remote|entirely remote|fully virtual)\b', text, re.I) else None
     missing = [key for key, absent in [('type', kind is None), ('organization', organization is None),
                ('deadline', deadline is None), ('location', True), ('remote', remote is None)] if absent]
