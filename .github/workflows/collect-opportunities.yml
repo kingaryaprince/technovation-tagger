@@ -1,0 +1,75 @@
+name: Collect opportunities every two weeks
+on:
+  schedule:
+    - cron: '5 13 * * 1'
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: Maximum new candidates per source
+        default: '25'
+      dry_run:
+        description: Preview only, no database writes
+        type: boolean
+        default: true
+permissions:
+  contents: read
+concurrency:
+  group: opportunity-collection
+  cancel-in-progress: false
+jobs:
+  cadence:
+    runs-on: ubuntu-latest
+    outputs:
+      enabled: ${{ steps.cadence.outputs.enabled }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - id: cadence
+        run: python3 -m alumni_tagger.collection_schedule
+  collect:
+    needs: cadence
+    if: needs.cadence.outputs.enabled == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        source: [simplify, pathways, usajobs]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect source
+        if: >-
+          github.event_name != 'schedule' ||
+          ((matrix.source != 'simplify' || vars.JOB_IMPORT_ENABLED != 'false') &&
+           (matrix.source != 'usajobs' || vars.USAJOBS_IMPORT_ENABLED != 'false') &&
+           (matrix.source != 'pathways' || vars.PATHWAYS_IMPORT_ENABLED != 'false'))
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          USAJOBS_API_KEY: ${{ secrets.USAJOBS_API_KEY }}
+          USAJOBS_EMAIL: ${{ secrets.USAJOBS_EMAIL }}
+          SOURCE: ${{ matrix.source }}
+          LIMIT: ${{ inputs.limit || '25' }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: |
+          args=(--limit "$LIMIT")
+          if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run); fi
+          case "$SOURCE" in
+            simplify) python3 -m alumni_tagger.job_import "${args[@]}" ;;
+            usajobs) python3 -m alumni_tagger.usajobs "${args[@]}" ;;
+            pathways)
+              if [ "$DRY_RUN" != "true" ]; then args+=(--write); fi
+              python3 -m alumni_tagger.pathways "${args[@]}" ;;
+          esac
+      - name: Keep Pathways preview
+        if: always() && matrix.source == 'pathways'
+        uses: actions/upload-artifact@v4
+        with:
+          name: pathways-preview
+          path: output/pathways-preview.json
+          retention-days: 7
