@@ -21,6 +21,9 @@ class OpportunityTests(unittest.TestCase):
  def test_degree_not_job(self):
   h=HTML.replace('Summer Public Health Research','STEM Degree Scholarship').replace('Paid research with a stipend','Paid research internship with a stipend')
   self.assertIsNone(normalize(h,URL,date(2026,11,12))['row']['type'])
+ def test_explicit_internship_does_not_require_salary_details(self):
+  h=HTML.replace('Paid research with a stipend','Research internships')
+  self.assertEqual(normalize(h,URL,date(2026,11,16))['row']['type'],'internship')
  def test_expired(self):
   self.assertEqual(normalize(HTML,URL,date(2028,1,1))['row']['status'],'expired')
  def test_unknown_not_rolling(self):
