@@ -96,6 +96,9 @@ class ListingsPlanTests(unittest.TestCase):
         self.assertFalse(row['remote'])
         self.assertIn('Software Engineer Intern at Visa.', row['description'])
         self.assertIn('Posted: 2027-01-14.', row['description'])
+        self.assertEqual(row['date_posted'], '2027-01-14')
+        self.assertIsNone(imp.to_row(listing(date_posted=None))['date_posted'])
+        self.assertNotIn('Posted:', imp.to_row(listing(date_posted=0))['description'])
         self.assertNotIn('Sponsorship', row['description'])
         self.assertTrue(imp.to_row(listing(locations=['Remote in USA']))['remote'])
 
@@ -154,6 +157,7 @@ class ReadmeTests(unittest.TestCase):
         self.assertEqual(len(first['source_id']), 20)
         self.assertIn('Listed in: github.com/negarprh/Canadian-Tech-Internships-2027.',
                       first['description'])
+        self.assertIsNone(first['date_posted'])                  # README dates aren't reliable
         data = by_title['Data Intern']
         self.assertEqual(data['organization'], 'Botpress')               # ↳ repeats company
         self.assertEqual(data['location'], 'Montreal, QC; Remote in Canada')
@@ -189,6 +193,12 @@ class ChangesTests(unittest.TestCase):
         self.assertEqual(new, [])
         self.assertEqual([r['source_id'] for r in changed], ['a'])
         self.assertEqual(expire, ['gone'])
+
+    def test_fills_missing_date_on_existing_rows(self):
+        row = imp.to_row(listing(id='a'))
+        existing = {'a': {**row, 'date_posted': None, 'status': 'active'}}
+        _, changed, _, _ = imp.changes([row], [], existing)
+        self.assertEqual([r['date_posted'] for r in changed], ['2027-01-14'])
 
     def test_readme_expires_rows_no_longer_open(self):
         row = imp.to_row(listing(id='still'))
