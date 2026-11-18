@@ -349,7 +349,15 @@ python3 -m alumni_tagger.opportunities --limit 50
 
 It tags rows whose `tags` are empty and whose `status` isn't `expired`, newest first.
 Tags must come from `data/taxonomy.json` and quote the listing word for word; a row that
-fails stays untagged and is retried on the next run. Alumni tagging still uses OpenAI.
+fails stays untagged and is retried on the next run.
+
+It uses OpenAI by default, with the same `OPENAI_API_KEY` as alumni tagging:
+
+| Setting | Effect |
+| --- | --- |
+| `OPENAI_API_KEY` | Required for the default OpenAI tagger |
+| `OPPORTUNITY_MODEL` | Optional. Default `gpt-4.1-nano`, OpenAI's cheapest model with structured outputs. Try `gpt-4.1-mini` if tags look sloppy. |
+| `OPPORTUNITY_PROVIDER` | Optional. `claude` switches to Claude: then `pip install anthropic` and set `ANTHROPIC_API_KEY` (plus `ANTHROPIC_WORKSPACE_ID` for a user-level key). |
 
 ### Run it automatically on GitHub
 
@@ -359,7 +367,7 @@ These workflows in `.github/workflows/` run from the `main` branch once merged:
 | --- | --- | --- |
 | Import job listings (`import-job-listings.yml`) | Daily at 13:05 UTC, adding every new listing as `pending`. Also manual: Actions → Run workflow (default 50, with repo and status options). | `SUPABASE_URL`, `SUPABASE_KEY` |
 | Import USAJOBS (`import-usajobs.yml`) | 1st and 15th of each month at 13:25 UTC (about every two weeks). Manual runs default to a 25-row dry run. `USAJOBS_IMPORT_ENABLED = false` turns the schedule off. | `SUPABASE_URL`, `SUPABASE_KEY`, `USAJOBS_API_KEY`, `USAJOBS_EMAIL` |
-| Autotag opportunities (`autotag-opportunities.yml`) | Hourly, 25 rows per run | `SUPABASE_URL`, `SUPABASE_KEY`, `ANTHROPIC_API_KEY`, plus `ANTHROPIC_WORKSPACE_ID` for a user-level key; optional `ANTHROPIC_MODEL` |
+| Autotag opportunities (`autotag-opportunities.yml`) | Hourly, 25 rows per run | `SUPABASE_URL`, `SUPABASE_KEY`, `OPENAI_API_KEY`; optional `OPPORTUNITY_MODEL`. For Claude instead: `OPPORTUNITY_PROVIDER` = `claude` plus `ANTHROPIC_API_KEY` (and `ANTHROPIC_WORKSPACE_ID` for a user-level key) |
 
 Daily import settings are repository **variables** (Settings → Secrets and variables →
 Actions → Variables tab). None exist by default, and none are needed:

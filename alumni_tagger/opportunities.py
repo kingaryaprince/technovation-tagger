@@ -4,10 +4,13 @@ output schema and evidence checks.
 Run:  python3 -m alumni_tagger.opportunities            (tags up to 25 opportunities)
       python3 -m alumni_tagger.opportunities --limit 5
 
-Uses Claude (pip install anthropic; ANTHROPIC_API_KEY, optional ANTHROPIC_MODEL, default
-claude-opus-5-5). Alumni tagging still uses OpenAI.
+Provider (OPPORTUNITY_PROVIDER):
+  openai (default)  OPENAI_API_KEY; model OPPORTUNITY_MODEL, default gpt-4.1-nano, OpenAI's
+                    cheapest model with structured outputs. No extra package needed.
+  claude            pip install anthropic; ANTHROPIC_API_KEY (+ ANTHROPIC_WORKSPACE_ID for a
+                    user-level key); model OPPORTUNITY_MODEL, else ANTHROPIC_MODEL.
 Reads opportunities whose tags are still empty (expired ones are skipped), newest first,
-asks Claude for tags, keeps only tags that pass the same checks as alumni tagging
+asks the model for tags, keeps only tags that pass the same checks as alumni tagging
 (allowed label, verbatim quote from the listing), then saves tags and taxonomy_version.
 A row that fails, or gets no usable tags, stays empty and is tried again on the next run.
 """
@@ -15,8 +18,12 @@ import argparse
 import json
 from urllib import parse
 
-from .core import ValidationError, load_taxonomy, schema, select_inputs, validate
-from .clients import ServiceError, SupabaseClient, json_request, require, settings
+from .core import (ValidationError, load_taxonomy, schema, select_inputs, supports_temperature,
+                   validate)
+from .clients import OpenAIClient, ServiceError, SupabaseClient, json_request, require, settings
+
+PROVIDERS = ('openai', 'claude')
+DEFAULT_OPENAI_MODEL = 'gpt-4.1-nano'
 
 # Which taxonomy categories describe an opportunity. Names must match data/taxonomy.json.
 OPPORTUNITY_CATEGORIES = ['interests', 'skills', 'industry']
@@ -85,6 +92,55 @@ def claude_asker(client, model, taxonomy):
     return ask
 
 
+def openai_asker(api_call, model, taxonomy):
+    """Return ask(inputs) -> the model's evidence object, using OpenAI structured output
+    (the same Responses API request the alumni tagger sends)."""
+    instructions = PROMPT + '\nTaxonomy:\n' + json.dumps(taxonomy, ensure_ascii=False)
+    fmt = {'type': 'json_schema', 'name': 'opportunity_tags', 'strict': True,
+           'schema': schema(taxonomy)}
+
+    def ask(inputs):
+        payload = {'model': model, 'store': False, 'max_output_tokens': 4000,
+                   'instructions': instructions,
+                   'input': json.dumps(inputs, ensure_ascii=False),
+                   'text': {'format': fmt}}
+        if supports_temperature(model):
+            payload['temperature'] = 0
+        response = api_call(payload) or {}
+        if response.get('status') != 'completed':
+            raise ValidationError('Model response incomplete; no tags saved')
+        chunks = []
+        for output in response.get('output', []):
+            if output.get('type') != 'message':
+                continue
+            for content in output.get('content', []):
+                if content.get('type') == 'refusal':
+                    raise ValidationError('Model declined; no tags saved')
+                if content.get('type') == 'output_text':
+                    chunks.append(content.get('text', ''))
+        try:
+            return json.loads(''.join(chunks))
+        except (ValueError, TypeError) as exc:
+            raise ValidationError('Model did not return valid JSON') from exc
+    return ask
+
+
+def provider_and_model(config):
+    provider = (config.get('OPPORTUNITY_PROVIDER') or 'openai').strip().lower()
+    if provider not in PROVIDERS:
+        raise ValueError('OPPORTUNITY_PROVIDER must be openai or claude')
+    model = config.get('OPPORTUNITY_MODEL') or (
+        DEFAULT_OPENAI_MODEL if provider == 'openai' else config.get('ANTHROPIC_MODEL'))
+    return provider, model
+
+
+def make_asker(config, taxonomy):
+    provider, model = provider_and_model(config)
+    if provider == 'openai':
+        return openai_asker(OpenAIClient(config), model, taxonomy), provider, model
+    return claude_asker(claude_client(config), model, taxonomy), provider, model
+
+
 def tag_opportunity(row, ask, taxonomy):
     inputs = select_inputs({f: row.get(f) or '' for f in SOURCE_FIELDS}, taxonomy)
     if not any(inputs.values()):
@@ -115,9 +171,9 @@ def run(limit=25):
     config = settings()
     db = SupabaseClient(config)
     taxonomy = opportunity_taxonomy(load_taxonomy())
-    ask = claude_asker(claude_client(config), config['ANTHROPIC_MODEL'], taxonomy)
+    ask, provider, model = make_asker(config, taxonomy)
     rows = db.select(UNTAGGED + f'&limit={int(limit)}') or []
-    print(f'{len(rows)} opportunit{"y" if len(rows) == 1 else "ies"} to tag')
+    print(f'{len(rows)} opportunit{"y" if len(rows) == 1 else "ies"} to tag ({provider}, {model})')
     tagged = failed = 0
     for row in rows:
         title = (row.get('title') or '')[:60]

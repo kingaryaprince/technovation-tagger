@@ -64,7 +64,7 @@ def settings():
     local.update(read_env_file(ROOT / '.env.local'))
     names = ['OPENAI_API_KEY', 'OPENAI_MODEL', 'SUPABASE_URL', 'SUPABASE_KEY',
              'ANTHROPIC_API_KEY', 'ANTHROPIC_MODEL', 'ANTHROPIC_WORKSPACE_ID',
-             'USAJOBS_API_KEY', 'USAJOBS_EMAIL']
+             'USAJOBS_API_KEY', 'USAJOBS_EMAIL', 'OPPORTUNITY_PROVIDER', 'OPPORTUNITY_MODEL']
     values = {k: os.environ.get(k, local.get(k, '')).strip() for k in names}
     values['OPENAI_MODEL'] = values['OPENAI_MODEL'] or 'gpt-4.1-mini'
     values['ANTHROPIC_MODEL'] = values['ANTHROPIC_MODEL'] or 'claude-opus-5-5'
