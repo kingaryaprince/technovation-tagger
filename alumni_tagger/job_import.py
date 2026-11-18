@@ -26,6 +26,9 @@ and a name without a season and year keeps every listing), type (internship if t
 contains "Intern", else job) and source (simplify_summer2027 for SimplifyJobs, otherwise
 <owner>_<term or repo name>), so each repo's rows are tracked separately.
 
+date_posted is the day the list says the listing was posted (listings format only; README
+lists have no reliable dates, so it stays null). Needs sql/010_date_posted.sql.
+
 Rows are matched on (source, source_id). New listings are inserted newest first with
 --status (default pending). Existing rows keep their status and tags; only their listing
 text is refreshed. Listings the repo marks closed, or that drop off a README, are expired.
@@ -57,7 +60,9 @@ REDIRECT_HOSTS = ('go.vansh.nyc', 'redirect.cvrve.me', 'bit.ly', 'tinyurl.com', 
 TRACKING_PARAMS = {'ref', 'source', 'src'}
 TRACKING_VALUES = {'simplify'}
 # Listing columns the importer owns; refreshed on existing rows when the list changes them.
-CONTENT_FIELDS = ['type', 'title', 'organization', 'location', 'remote', 'description', 'url']
+# date_posted needs sql/010_date_posted.sql.
+CONTENT_FIELDS = ['type', 'title', 'organization', 'location', 'remote', 'description', 'url',
+                  'date_posted']
 BATCH_SIZE = 500
 PAGE_SIZE = 1000
 
@@ -173,12 +178,19 @@ def describe(listing):
         lines.append(f'Degrees: {", ".join(listing["degrees"])}.')
     if listing.get('sponsorship') and listing['sponsorship'] != 'Other':
         lines.append(f"Sponsorship: {listing['sponsorship']}.")
-    if listing.get('date_posted'):
-        lines.append('Posted: ' + time.strftime('%Y-%m-%d', time.gmtime(listing['date_posted'])) + '.')
+    if posted_day(listing.get('date_posted')):
+        lines.append(f"Posted: {posted_day(listing['date_posted'])}.")
     return '\n'.join(lines)
 
 
-def make_row(feed, source_id, title, company, locations, description, url):
+def posted_day(timestamp):
+    """'YYYY-MM-DD' (UTC) for a listing's date_posted Unix time, or None if it has none."""
+    if not isinstance(timestamp, (int, float)) or timestamp <= 0:
+        return None
+    return time.strftime('%Y-%m-%d', time.gmtime(timestamp))
+
+
+def make_row(feed, source_id, title, company, locations, description, url, date_posted=None):
     return {
         'source': feed.source,
         'source_id': source_id,
@@ -189,6 +201,7 @@ def make_row(feed, source_id, title, company, locations, description, url):
         'remote': any('remote' in loc.lower() for loc in locations),
         'description': description,
         'url': url,
+        'date_posted': date_posted,
     }
 
 
@@ -199,7 +212,7 @@ def to_row(listing, feed=DEFAULT_FEED):
         return None
     return make_row(feed, str(listing['id']), listing['title'].strip(),
                     (listing.get('company_name') or '').strip(), listing.get('locations') or [],
-                    describe(listing), url)
+                    describe(listing), url, posted_day(listing.get('date_posted')))
 
 
 def plan(listings, max_age_days=None, now=None, feed=DEFAULT_FEED):

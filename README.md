@@ -261,6 +261,9 @@ Two tools fill the Supabase `opportunities` table with internships and keep it c
    version), or `export SSL_CERT_FILE=/etc/ssl/cert.pem` in each terminal.
 4. Run `sql/009_internship_type.sql` once in the Supabase SQL editor. It adds
    `internship` to the table's allowed `type` values without dropping existing ones.
+5. Run `sql/010_date_posted.sql` once. It adds a `date_posted` column (the day the list
+   says the job was posted) and fills it in for rows already imported from SimplifyJobs and
+   other `listings.json` lists. README-table lists have no reliable dates, so theirs stay empty.
 
 ### Import listings
 
@@ -360,6 +363,7 @@ commits to a public repo; turn it back on from the Actions tab.
 | Import says "No job table found" | That repo's README has no table with Company and Role columns. It isn't supported; nothing was changed. |
 | Import finds 0 open, all skipped | The list's links all go through its own site (like zapply.jobs), so there's no employer link to save. |
 | Supabase 400 on import with `opportunities_type_check` | Run `sql/009_internship_type.sql`. |
+| Supabase 400 on import mentioning `date_posted` | Run `sql/010_date_posted.sql`. |
 | `processing` after terminal closes | Lease expires after 10 minutes. Another worker run can reclaim it; three interrupted claims move it to failed. |
 | Same email changed but old tags appear | The new submission must reach this table. Check its `revision` and `submitted_at`. Completed-query examples exclude pending rows. |
 
