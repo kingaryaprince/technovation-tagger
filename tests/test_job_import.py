@@ -3,6 +3,7 @@ import unittest
 from unittest import mock
 
 from alumni_tagger import job_import as imp
+from alumni_tagger.job_import import EXPIRED
 
 NOW = 1_800_000_000
 
@@ -179,9 +180,10 @@ class ReadmeTests(unittest.TestCase):
 
 class ChangesTests(unittest.TestCase):
     def test_insert_only_new_respecting_limit(self):
-        rows, _, _ = imp.plan([listing(id=str(i), date_posted=NOW - i) for i in range(5)], now=NOW)
+        rows, _, _ = imp.plan([listing(id=str(i), title=f'Intern {i}', date_posted=NOW - i)
+                               for i in range(5)], now=NOW)
         existing = {'0': {**rows[0], 'status': 'active'}}
-        new, changed, expire, unresolved = imp.changes(rows, [], existing, limit=2)
+        new, changed, expire, unresolved, _ = imp.changes(rows, [], existing, limit=2)
         self.assertEqual([r['source_id'] for r in new], ['1', '2'])
         self.assertEqual((changed, expire, unresolved), ([], [], 0))
 
@@ -189,7 +191,7 @@ class ChangesTests(unittest.TestCase):
         row = imp.to_row(listing(id='a'))
         existing = {'a': {**row, 'title': 'Old title', 'status': 'active'},
                     'gone': {'status': 'active'}, 'done': {'status': 'expired'}}
-        new, changed, expire, _ = imp.changes([row], ['gone', 'done', 'never-saved'], existing)
+        new, changed, expire, _, _ = imp.changes([row], ['gone', 'done', 'never-saved'], existing)
         self.assertEqual(new, [])
         self.assertEqual([r['source_id'] for r in changed], ['a'])
         self.assertEqual(expire, ['gone'])
@@ -197,18 +199,38 @@ class ChangesTests(unittest.TestCase):
     def test_fills_missing_date_on_existing_rows(self):
         row = imp.to_row(listing(id='a'))
         existing = {'a': {**row, 'date_posted': None, 'status': 'active'}}
-        _, changed, _, _ = imp.changes([row], [], existing)
+        _, changed, _, _, _ = imp.changes([row], [], existing)
         self.assertEqual([r['date_posted'] for r in changed], ['2027-01-14'])
+
+    def test_skips_repeats_of_an_open_job(self):
+        careers = 'https://careers.publicisgroupe.com/jobs/182898?icims=1'
+        ats = 'https://publicisgroupe.jibeapply.com/jobs/182898?icims=1'
+        base = dict(company_name='Publicis Groupe', title='PhD Data Science Intern',
+                    locations=['Chicago, IL'])
+        rows, _, _ = imp.plan([listing(id='a', url=careers, date_posted=NOW, **base),
+                               listing(id='b', url=ats, date_posted=NOW - 1, **base),
+                               listing(id='c', url=ats + '&x=1', date_posted=NOW - 2,
+                                       **{**base, 'locations': ['New York, NY']})], now=NOW)
+        new, _, _, _, duplicates = imp.changes(rows, [], {}, limit=2)
+        self.assertEqual([r['source_id'] for r in new], ['a', 'c'])   # other city is kept
+        self.assertEqual(duplicates, 1)
+        # A repeat of a saved open job is skipped; a repeat of an expired or closing one isn't.
+        saved = {**rows[0], 'title': 'PHD data-science intern', 'status': 'active'}
+        new, _, _, _, duplicates = imp.changes(rows[1:], [], {'old': saved})
+        self.assertEqual(([r['source_id'] for r in new], duplicates), (['c'], 1))
+        for existing, closed in (({'old': {**saved, 'status': EXPIRED}}, []), ({'old': saved}, ['old'])):
+            new, _, _, _, duplicates = imp.changes(rows[1:], closed, existing)
+            self.assertEqual(([r['source_id'] for r in new], duplicates), (['b', 'c'], 0))
 
     def test_readme_expires_rows_no_longer_open(self):
         row = imp.to_row(listing(id='still'))
         existing = {'still': {**row, 'status': 'active'}, 'dropped': {'status': 'pending'}}
-        _, _, expire, _ = imp.changes([row], None, existing)
+        _, _, expire, _, _ = imp.changes([row], None, existing)
         self.assertEqual(expire, ['dropped'])
 
     def test_shortener_links(self):
         short = 'https://go.vansh.nyc/1xy?s=y'
-        rows = [imp.to_row(listing(id=i, url=short)) for i in ('kept', 'new', 'dead')]
+        rows = [imp.to_row(listing(id=i, url=short, title=i)) for i in ('kept', 'new', 'dead')]
         existing = {'kept': {**rows[0], 'url': 'https://jobs.ashbyhq.com/a/1', 'status': 'active'}}
         resolved = {'new': 'https://jobs.ashbyhq.com/a/2'}
         calls = []
@@ -216,7 +238,7 @@ class ChangesTests(unittest.TestCase):
         def resolve(url):
             calls.append(url)
             return resolved.pop('new', None)
-        new, changed, _, unresolved = imp.changes(rows, [], existing, resolve=resolve)
+        new, changed, _, unresolved, _ = imp.changes(rows, [], existing, resolve=resolve)
         self.assertEqual([(r['source_id'], r['url']) for r in new],
                          [('new', 'https://jobs.ashbyhq.com/a/2')])
         self.assertEqual(unresolved, 1)                     # 'dead' didn't resolve: skipped

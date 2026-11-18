@@ -31,7 +31,8 @@ lists have no reliable dates, so it stays null). Needs sql/010_date_posted.sql.
 
 Rows are matched on (source, source_id). New listings are inserted newest first with
 --status (default pending). Existing rows keep their status and tags; only their listing
-text is refreshed. Listings the repo marks closed, or that drop off a README, are expired.
+text is refreshed. A new listing with the same company, title and location as a job that's
+already open (saved earlier, or earlier in this run) is skipped as a repeat. Listings the repo marks closed, or that drop off a README, are expired.
 """
 import argparse
 import hashlib
@@ -387,16 +388,36 @@ def existing_rows(db, feed=DEFAULT_FEED):
         offset += PAGE_SIZE
 
 
+def same_job(row):
+    """Company, title and location, ignoring case and punctuation. Lists sometimes repeat a job
+    under a second id with another link (e.g. a company's careers site and its ATS);
+    the same title in another city is a different job, so location is part of the key."""
+    return tuple(slug(row.get(f) or '') for f in ('organization', 'title', 'location'))
+
+
 def changes(rows, closed, existing, limit=None, resolve=resolve_link):
     """New rows to insert (links resolved), existing rows whose text changed, ids to expire,
-    and how many new listings were dropped because their link didn't lead to the employer."""
+    how many new listings were dropped because their link didn't lead to the employer,
+    and how many were dropped as repeats of a job that's already open."""
     for row in rows:
         old = existing.get(row['source_id'])
         if old and needs_resolving(row['url']):
             row['url'] = old['url']               # resolved when it was first imported
-    new, unresolved = [], 0
+    open_ids = {r['source_id'] for r in rows}
+    if closed is None:
+        closed = [i for i in existing if i not in open_ids]
+    expire = sorted(i for i in closed if i in existing and existing[i].get('status') != EXPIRED)
+    # Jobs that stay open after this run: saved rows still on the list (with their current
+    # text), and saved rows the list didn't mention (e.g. outside --max-age-days).
+    seen = {same_job(r) for r in rows if r['source_id'] in existing}
+    seen |= {same_job(r) for i, r in existing.items() if i not in open_ids
+             and r.get('status') != EXPIRED and i not in expire}
+    new, unresolved, duplicates = [], 0, 0
     for row in rows:
         if row['source_id'] in existing:
+            continue
+        if same_job(row) in seen:
+            duplicates += 1
             continue
         if limit is not None and len(new) >= limit:
             break
@@ -406,14 +427,11 @@ def changes(rows, closed, existing, limit=None, resolve=resolve_link):
                 unresolved += 1
                 continue
             row['url'] = final
+        seen.add(same_job(row))
         new.append(row)
     changed = [r for r in rows if r['source_id'] in existing
                and any(existing[r['source_id']].get(f) != r[f] for f in CONTENT_FIELDS)]
-    if closed is None:
-        open_ids = {r['source_id'] for r in rows}
-        closed = [i for i in existing if i not in open_ids]
-    expire = sorted(i for i in closed if i in existing and existing[i].get('status') != EXPIRED)
-    return new, changed, expire, unresolved
+    return new, changed, expire, unresolved, duplicates
 
 
 def row_filter(source_ids, feed=DEFAULT_FEED):
@@ -441,11 +459,12 @@ def run(max_age_days=None, limit=None, status='pending', dry_run=False, feed=DEF
     fmt, rows, closed, skipped, total = load(feed, max_age_days)
     if fmt == 'readme' and max_age_days is not None:
         print('Note: --max-age-days is ignored for README lists (they have no reliable dates).')
-    new, changed, expire, unresolved = changes(rows, closed, existing_rows(db, feed), limit)
+    new, changed, expire, unresolved, duplicates = changes(rows, closed, existing_rows(db, feed), limit)
     print(f'{feed.repo} ({fmt}): {total} listings; {len(rows)} open {feed.label}, '
           f'{skipped} skipped (no usable link). Source: {feed.source}, type: {feed.type}')
     print(f'To add: {len(new)} (status {status}); to update: {len(changed)}; '
-          f'to expire: {len(expire)}; links that did not lead to the employer: {unresolved}')
+          f'to expire: {len(expire)}; links that did not lead to the employer: {unresolved}; '
+          f'repeats of an open job: {duplicates}')
     if dry_run:
         for row in new[:5]:
             print(f"  {row['organization']} | {row['title']} | {row['url']}")
