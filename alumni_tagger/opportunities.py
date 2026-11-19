@@ -15,6 +15,7 @@ asks the model for tags, keeps only tags that pass the same checks as alumni tag
 A row that fails, or gets no usable tags, stays empty and is tried again on the next run.
 """
 import argparse
+import os
 import json
 from urllib import parse
 
@@ -187,7 +188,18 @@ def run(limit=25):
         tagged += 1
         print(f'  TAGGED   {title}: {", ".join(tags) or "(no tags)"}')
     print(f'Done: {tagged} tagged, {failed} skipped')
+    # A full batch means more rows may be waiting; GitHub Actions uses this to start another run.
+    more = len(rows) >= int(limit)
+    write_outputs({'tagged': tagged, 'skipped': failed, 'more': str(more).lower()})
     return 1 if failed and not tagged else 0
+
+
+def write_outputs(values):
+    """Step outputs for GitHub Actions (only when running there)."""
+    path = os.environ.get('GITHUB_OUTPUT')
+    if path:
+        with open(path, 'a', encoding='utf-8') as stream:
+            stream.writelines(f'{k}={v}\n' for k, v in values.items())
 
 
 def main():

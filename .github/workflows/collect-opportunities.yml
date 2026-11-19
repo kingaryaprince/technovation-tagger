@@ -75,3 +75,21 @@ jobs:
           name: pathways-preview
           path: output/pathways-preview.json
           retention-days: 7
+  # New listings arrive with empty tags. Start tagging right away instead of waiting for an
+  # hourly run (GitHub often skips those); the tagging run keeps going until they're all done.
+  tag-new-listings:
+    needs: [cadence, collect]
+    if: >-
+      always() && needs.cadence.outputs.enabled == 'true' &&
+      !(github.event_name == 'workflow_dispatch' && inputs.dry_run)
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Start "Autotag opportunities"
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run autotag-opportunities.yml --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME" \
+            -f limit=200 -f chain=15
+          echo "Started tagging. Follow it under Actions > Autotag opportunities."

@@ -7,21 +7,39 @@
 #   (and ANTHROPIC_WORKSPACE_ID for a user-level key, ANTHROPIC_MODEL optional).
 # To run it right away: open the repo's Actions tab, pick "Autotag opportunities",
 # click "Run workflow".
+#
+# Backlog: GitHub often skips hourly scheduled runs. So when a run fills its whole batch
+# (more rows may be waiting) and tagged at least one, it starts the next run itself, 200 rows
+# at a time, until the backlog is gone or `chain` runs are used up. A run that tags nothing
+# (only rows that keep failing are left) stops the chain, so it can't loop forever.
 name: Autotag opportunities
 
 on:
   schedule:
-    - cron: '17 * * * *'   # every hour, at 17 minutes past (UTC)
+    - cron: '17 * * * *'   # every hour, at 17 minutes past (UTC), when GitHub isn't busy
   workflow_dispatch:
     inputs:
       limit:
         description: 'Most opportunities to tag in this run'
         required: false
         default: '25'
+      chain:
+        description: 'If rows are still waiting afterwards, start up to this many more runs of 200'
+        required: false
+        default: '15'
+
+permissions:
+  contents: read
+  actions: write      # lets a run start the next one while there's a backlog
+
+concurrency:
+  group: autotag-opportunities   # one tagging run at a time; others wait their turn
+  cancel-in-progress: false
 
 jobs:
   tag:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
@@ -45,4 +63,20 @@ jobs:
           ANTHROPIC_WORKSPACE_ID: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
           ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL }}
           LIMIT: ${{ inputs.limit || '25' }}
+        id: tag
         run: python3 -m alumni_tagger.opportunities --limit "$LIMIT"
+
+      - name: Keep going while there's a backlog
+        if: steps.tag.outputs.more == 'true' && steps.tag.outputs.tagged != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          # Scheduled runs start a fresh chain of 15; manual/chained runs count down.
+          CHAIN: ${{ github.event_name == 'schedule' && '15' || inputs.chain || '0' }}
+        run: |
+          if [ "$CHAIN" -gt 0 ]; then
+            echo "More rows are waiting: starting another run of 200 ($((CHAIN - 1)) more allowed after it)."
+            gh workflow run autotag-opportunities.yml --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME" \
+              -f limit=200 -f chain=$((CHAIN - 1))
+          else
+            echo "Rows are still waiting, but this chain is used up. The next hourly run continues."
+          fi
