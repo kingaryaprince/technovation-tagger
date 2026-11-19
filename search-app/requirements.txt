@@ -1,0 +1,1 @@
+# The search app uses only Python's built-in libraries, so nothing needs installing.
