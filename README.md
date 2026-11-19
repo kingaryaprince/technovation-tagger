@@ -357,6 +357,14 @@ It searches Technology and Education by default (about 650 listings). It waits a
 between requests, so a full first import takes about 15 minutes. Listings that say they
 accept applications until a far-off year (some say 4046) are saved as rolling, with no deadline.
 
+### How alumni are matched to opportunities
+
+`sql/012_top_opportunities.sql` defines `top_opportunities_for_alum(alum_id)`, which the digest
+uses. An opportunity's score is how many of the alum's interests, skills and industry tags it
+shares. Expired listings and passed deadlines are skipped; listings with no deadline (like
+Simplify internships) count as open. Higher scores come first; within the same score, sources
+take turns so one board can't fill a whole digest. `rank()` in `digest.py` is the Python copy.
+
 ### Send the digest emails
 
 `alumni_tagger/send_digest.py` emails each alum their top opportunities (the same email as the
