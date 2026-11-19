@@ -414,7 +414,7 @@ These workflows in `.github/workflows/` run from the `main` branch once merged:
 | --- | --- | --- |
 | Import job listings (`import-job-listings.yml`) | Daily at 13:05 UTC, adding every new listing as `pending`. Also manual: Actions → Run workflow (default 50, with repo and status options). | `SUPABASE_URL`, `SUPABASE_KEY` |
 | Import USAJOBS (`import-usajobs.yml`) | 1st and 15th of each month at 13:25 UTC (about every two weeks). Manual runs default to a 25-row dry run. `USAJOBS_IMPORT_ENABLED = false` turns the schedule off. | `SUPABASE_URL`, `SUPABASE_KEY`, `USAJOBS_API_KEY`, `USAJOBS_EMAIL` |
-| Import AmeriCorps (`import-americorps.yml`) | 2nd and 16th of each month at 13:35 UTC. Manual runs default to a 25-row dry run of Technology and Education. `AMERICORPS_IMPORT_ENABLED = false` turns the schedule off. | `SUPABASE_URL`, `SUPABASE_KEY` |
+| Import AmeriCorps (`import-americorps.yml`) | Manual runs only (scheduled collection is in `collect-opportunities.yml`). Defaults to a 25-row dry run of Technology and Education. `AMERICORPS_IMPORT_ENABLED = false` pauses the scheduled collection. | `SUPABASE_URL`, `SUPABASE_KEY` |
 | Send digests (`send-digests.yml`) | 3rd and 17th at 16:45 UTC, **only when the repository variable `DIGEST_SENDING` is `on`**. Manual runs choose preview, test (copies to `test_to`) or send. | `SUPABASE_URL`, `SUPABASE_KEY`, `DIGEST_FROM_EMAIL`, `DIGEST_EMAIL_PASSWORD` |
 | Autotag opportunities (`autotag-opportunities.yml`) | Hourly, 25 rows per run | `SUPABASE_URL`, `SUPABASE_KEY`, `OPENAI_API_KEY`; optional `OPPORTUNITY_MODEL`. For Claude instead: `OPPORTUNITY_PROVIDER` = `claude` plus `ANTHROPIC_API_KEY` (and `ANTHROPIC_WORKSPACE_ID` for a user-level key) |
 
@@ -491,14 +491,15 @@ Add `--write` to insert eligible, non-expired candidates as pending with empty t
 keyword suggestions stay in the local preview; they do not block Claude processing.
 See [Pathways details](docs/PATHWAYS_SCRAPER.md).
 
-The **Collect opportunities every two weeks** workflow runs all three sources
-(Simplify, Pathways, USAJOBS) on alternate Mondays at 13:05 UTC, starting Nov 16, 2026.
+The **Collect opportunities every two weeks** workflow runs all four sources
+(Simplify, Pathways, USAJOBS, AmeriCorps) on alternate Mondays at 13:05 UTC, starting Nov 16, 2026.
 A weekly cron plus an anchored 14-day check gives Nov 16, Nov 30, Dec 14, Dec 28,
 and Jan 11, rather than the uneven first/fifteenth-of-month interval.
 Manual workflow runs bypass the date gate; they default to preview mode. The old
 source-specific workflows are manual-only to avoid duplicate schedules.
 Existing JOB_IMPORT_ENABLED and USAJOBS_IMPORT_ENABLED pause variables still apply;
-PATHWAYS_IMPORT_ENABLED=false pauses Pathways scheduled collection.
+PATHWAYS_IMPORT_ENABLED=false pauses Pathways scheduled collection, and
+AMERICORPS_IMPORT_ENABLED=false pauses AmeriCorps.
 
 Collection needs SUPABASE_URL and SUPABASE_KEY in repository Actions secrets;
 USAJOBS additionally needs USAJOBS_API_KEY and USAJOBS_EMAIL. Hourly tagging needs
