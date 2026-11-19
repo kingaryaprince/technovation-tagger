@@ -122,5 +122,5 @@ If you don't have the key, use Option A.
 
 ## Questions or problems
 
-Contact the student team: Pragya Thakur and Kayden Walton (admin pilot).
+Contact the student team. 
 Please describe what you clicked and what you saw, and include a screenshot if you can.
