@@ -155,6 +155,24 @@ class RunTests(unittest.TestCase):
             self.assertEqual(opp.run(limit=5), 0)
         self.assertEqual(sent[0][0][2]['tags'], ['Job Searching'])
 
+    def test_reports_backlog_to_github_actions(self):
+        import os, tempfile
+        db = mock.Mock(url='https://x.supabase.co', headers={'apikey': 'k'})
+        db.select.return_value = [ROW, {**ROW, 'id': 'r2'}]
+        answer = json.dumps(evidence({'interests': [('Job Searching', 'type', 'internship')]}))
+        with tempfile.NamedTemporaryFile('r', suffix='.txt') as out:
+            for limit, more in ((2, 'true'), (5, 'false')):
+                open(out.name, 'w').close()
+                with mock.patch.dict(os.environ, {'GITHUB_OUTPUT': out.name}), \
+                        mock.patch.object(opp, 'settings', return_value={'OPENAI_API_KEY': 'sk-test'}), \
+                        mock.patch.object(opp, 'SupabaseClient', return_value=db), \
+                        mock.patch.object(opp, 'OpenAIClient',
+                                          return_value=lambda payload: openai_reply(answer)), \
+                        mock.patch.object(opp, 'json_request', lambda *a, **k: None), \
+                        mock.patch('builtins.print'):
+                    opp.run(limit=limit)
+                self.assertEqual(open(out.name).read(), f'tagged=2\nskipped=0\nmore={more}\n')
+
     def test_missing_key_is_reported(self):
         with self.assertRaises(ValueError) as ctx:
             opp.claude_client({'ANTHROPIC_API_KEY': ''})
