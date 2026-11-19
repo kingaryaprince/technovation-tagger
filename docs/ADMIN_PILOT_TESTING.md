@@ -46,7 +46,7 @@ Please try **each of these tasks**, then **2–3 searches you'd actually need** 
    Then click **Students** under Audience.
    *People who work in health, such as Jasmine Park, Lerato Mokoena and Rebecca Castillo, should
    come first with "2 of 2 filters matched".*
-2. **A panel near an event.** Click **Clear all**. Type *New York, NY, USA* in **Location and
+2. **A panel near an event.** Click **Clear all** on the filters tab on the left side. Type *New York, NY, USA* in **Location and
    travel** and press Enter, then click **Speak as a panelist** (Speaking experience). Turn
    **Include virtual speakers** off to see only people within the radius, then try a larger radius.
 3. **Language.** Click **Clear all**, then find someone who can speak to a **Spanish**-speaking audience.
