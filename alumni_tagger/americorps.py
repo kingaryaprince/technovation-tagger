@@ -201,7 +201,17 @@ class Site:
         self.opener = opener or request.build_opener(request.HTTPCookieProcessor(CookieJar()))
         self.calls = 0
 
-    def get(self, url, form=None):
+    def get(self, url, form=None, tries=3):
+        """One page. Results pages are retried here, since a missing page means a partial search."""
+        for attempt in range(tries):
+            try:
+                return self._get(url, form)
+            except ServiceError:
+                if attempt == tries - 1 or url != SEARCH_URL:
+                    raise
+                self.sleep(5 * (attempt + 1))
+
+    def _get(self, url, form=None):
         if self.calls:
             self.sleep(DELAY)
         self.calls += 1
@@ -212,6 +222,19 @@ class Site:
                 return response.read().decode('utf-8', 'replace')
         except Exception as exc:     # network, HTTP or decoding problem: stop, don't half-import
             raise ServiceError('AmeriCorps', getattr(exc, 'code', None)) from None
+
+
+def listing_page(site, listing_id, tries=3):
+    """A listing's own page, trying a few times; None if the site keeps failing, so one slow
+    page never stops the whole import."""
+    for attempt in range(tries):
+        try:
+            return site.get(LISTING_URL.format(listing_id))
+        except ServiceError:
+            if attempt == tries - 1:
+                return None
+            site.sleep(5 * (attempt + 1))
+    return None
 
 
 def search_form(areas, page):
@@ -335,10 +358,17 @@ def run(areas=DEFAULT_AREAS, limit=None, status='pending', dry_run=False, detail
     if dry_run:
         new_order = new_order[:5]       # a preview only opens the pages it prints
     new_ids = set(new_order)
-    rows = []
+    rows, failed_pages, opened = [], 0, 0
     for item, row in zip(open_items, plain):
         if details and item['id'] in new_ids:
-            row = to_row(item, parse_listing(site.get(LISTING_URL.format(item['id']))), today)
+            page = listing_page(site, item['id'])
+            opened += 1
+            if page is None:
+                failed_pages += 1      # keep the short summary; the row is still added
+            else:
+                row = to_row(item, parse_listing(page), today)
+            if opened % 50 == 0:
+                print(f'  read {opened} of {len(new_ids)} listing pages')
         elif item['id'] in existing:
             old = existing[item['id']]   # keep the detailed text saved the first time
             row = {**row, 'description': old.get('description') or row['description'],
@@ -351,6 +381,8 @@ def run(areas=DEFAULT_AREAS, limit=None, status='pending', dry_run=False, detail
     print(f'To add: {len(new)} (status {status}); to update: {len(changed)}; to expire: {len(expire)}')
     if not complete:
         print('Not every results page was read, so nothing is expired for being missing.')
+    if failed_pages:
+        print(f'{failed_pages} listing page(s) could not be read; those rows use the short summary.')
     if dry_run:
         for row in new[:5]:
             print(f"  {row['organization']} | {row['title']} | {row['location'] or '?'} | "

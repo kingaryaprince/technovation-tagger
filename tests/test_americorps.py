@@ -118,6 +118,42 @@ class FetchTests(unittest.TestCase):
         self.assertEqual(waits, [ac.DELAY])
 
 
+class ResilienceTests(unittest.TestCase):
+    def test_failed_listing_page_keeps_the_row(self):
+        class Flaky(FakeSite):
+            def get(self, url, form=None):
+                if 'viewListing' in url:
+                    raise ServiceError('AmeriCorps')
+                return super().get(url, form)
+        site = Flaky({1: RESULTS.replace('returned 23', 'returned 3')})
+        site.sleep = lambda s: None
+        db = mock.Mock(url='https://x.supabase.co', headers={'apikey': 'k'})
+        db.select.return_value = []
+        with mock.patch.object(ac, 'settings', return_value={}), \
+                mock.patch.object(ac, 'SupabaseClient', return_value=db), \
+                mock.patch.object(ac, 'json_request') as req, \
+                mock.patch('builtins.print') as out:
+            ac.run(['T'], today=TODAY, site=site)
+        batch = req.call_args_list[0][0][2]
+        self.assertEqual(len(batch), 2)                       # both open listings still added
+        self.assertNotIn('Member duties', batch[0]['description'])
+        printed = '\n'.join(str(c.args[0]) for c in out.call_args_list)
+        self.assertIn('2 listing page(s) could not be read', printed)
+
+    def test_results_page_is_retried(self):
+        calls = []
+        def opener_open(req, timeout):
+            calls.append(req.full_url)
+            if len(calls) == 1:
+                raise OSError('timeout')
+            response = mock.MagicMock()
+            response.__enter__.return_value.read.return_value = b'ok'
+            return response
+        site = ac.Site(sleep=lambda s: None, opener=mock.Mock(open=opener_open))
+        self.assertEqual(site.get(ac.SEARCH_URL, {'curPage': '1'}), 'ok')
+        self.assertEqual(len(calls), 2)
+
+
 class ChangesTests(unittest.TestCase):
     def setUp(self):
         self.row = ac.to_row(ac.parse_results(RESULTS)[0], {}, TODAY)
