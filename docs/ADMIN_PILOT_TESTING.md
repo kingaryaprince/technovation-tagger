@@ -3,7 +3,7 @@
 Thank you for helping test the Technovation Alumni Speaker Bureau. This tool helps staff find
 alumni to speak at events, sit on panels, or share their stories. Testing takes about **20 minutes**.
 
-Once you're done, please fill out the feedback form: **[feedback form link]**
+Once you're done, please fill out the feedback form: **[Speaker Bureau pilot feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdk93mOd7htTrDB7XnIyCn3WoN1GeQ748NPdPPgaQtDCT-ICw/viewform)**
 
 > **About the profiles:** During the pilot, most profiles in the search are **fictional sample
 > alumni** that the student team wrote for testing. They have names, stories and answers that
@@ -62,7 +62,7 @@ While you test, notice:
 - Was anything confusing, slow, or missing? Which filter did you look for and not find?
 - How does this compare to how you find speakers today?
 
-Then please fill out the **feedback form**: **[feedback form link]**
+Then please fill out the **feedback form**: **[Speaker Bureau pilot feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdk93mOd7htTrDB7XnIyCn3WoN1GeQ748NPdPPgaQtDCT-ICw/viewform)**
 
 ### Known pilot quirks (not bugs)
 
