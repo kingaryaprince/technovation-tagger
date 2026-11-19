@@ -33,6 +33,7 @@ HUB_NAME = 'Technovation Alumni Hub'
 FROM_ADDRESS = 'alumni-hub@example.org'   # placeholder until a real sending address exists
 BROWSE_URL = ''            # page listing every opportunity, once one exists
 PREFERENCES_URL = ''       # where alumni update their interests (e.g. the intake form)
+UNSUBSCRIBE_EMAIL = ''     # set by send_digest to the sending address; adds an unsubscribe link
 # Technovation brand colors (from the speaker search mockup).
 NAVY = '#1C1248'
 PURPLE = '#8C71DF'
@@ -212,13 +213,31 @@ def render_html(alum, opps, today):
     <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;">
       <tr><td style="padding:18px 32px 0 32px;font-family:{SANS};font-size:12px;line-height:18px;color:{MUTED};">
         You're getting this because you joined the Technovation alumni community. We pick these
-        from the interests and skills in your intake answers. Want different picks? You can {prefs_html}.
+        from the interests and skills in your intake answers. Want different picks? You can {prefs_html}.{unsubscribe_html(alum)}
       </td></tr>
     </table>
   </td></tr>
 </table>
 </body></html>
 '''
+
+
+def unsubscribe_link(alum):
+    """mailto: link that asks to stop the digest. Empty when no sending address is set."""
+    if not UNSUBSCRIBE_EMAIL:
+        return ''
+    query = parse.urlencode({'subject': 'unsubscribe',
+                             'body': f'Please stop sending the alumni digest to {alum.get("email") or "me"}.'},
+                            quote_via=parse.quote)
+    return f'mailto:{UNSUBSCRIBE_EMAIL}?{query}'
+
+
+def unsubscribe_html(alum):
+    link = unsubscribe_link(alum)
+    if not link:
+        return ''
+    return (f'<br><br>Don\'t want these emails? <a href="{escape(link)}" style="color:{MUTED};">Unsubscribe</a> '
+            f'(or email {escape(UNSUBSCRIBE_EMAIL)} with the subject "unsubscribe").')
 
 
 def render_text(alum, opps, today):
@@ -241,17 +260,22 @@ def render_text(alum, opps, today):
               "You're getting this because you joined the Technovation alumni community."]
     if safe_url(PREFERENCES_URL):
         lines.append(f'Update your interests: {safe_url(PREFERENCES_URL)}')
+    if UNSUBSCRIBE_EMAIL:
+        lines.append(f'Unsubscribe: email {UNSUBSCRIBE_EMAIL} with the subject "unsubscribe"')
     return '\n'.join(lines) + '\n'
 
 
-def build_email(alum, opps, today):
+def build_email(alum, opps, today, from_address=None, to=None, subject_prefix=''):
     """The complete email: To/From/Subject plus plain-text and HTML versions in one message."""
+    sender = from_address or FROM_ADDRESS
     msg = EmailMessage()
-    msg['From'] = f'{HUB_NAME} <{FROM_ADDRESS}>'
-    msg['To'] = alum.get('email') or ''
-    msg['Subject'] = subject_line(alum, opps)
+    msg['From'] = f'{HUB_NAME} <{sender}>'
+    msg['To'] = to or alum.get('email') or ''
+    msg['Subject'] = subject_prefix + subject_line(alum, opps)
     msg['Date'] = formatdate(localtime=True)
-    msg['Message-ID'] = make_msgid(domain=FROM_ADDRESS.split('@')[-1])
+    msg['Message-ID'] = make_msgid(domain=sender.split('@')[-1])
+    if unsubscribe_link(alum):
+        msg['List-Unsubscribe'] = f'<{unsubscribe_link(alum)}>'
     msg.set_content(render_text(alum, opps, today))
     msg.add_alternative(render_html(alum, opps, today), subtype='html')
     return msg
