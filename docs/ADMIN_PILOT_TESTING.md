@@ -28,12 +28,12 @@ Five wrong passwords in 15 minutes lock sign-in for 15 minutes.
 
 | Part | What it does |
 | --- | --- |
-| **Search box** | Type a name, a topic (like "Healthcare") or any word from a bio. Suggested tags appear as you type. |
-| **Filters** (left side) | Pick tags in five groups: **Topic**, **Audience**, **Language**, **Speaking experience** and **Skills**. |
-| **Location and travel** | Enter the event's city and a **travel radius** to find alumni nearby. **Include virtual speakers** also keeps people who can join online. |
+| **Search box** | Type a topic (like "Healthcare") and pick it from the suggestions to add it as a filter. You can also type a name or any word from a bio, which narrows the results of the filters you've picked. |
+| **Filters** (left side) | Click tags in five groups: **Topic**, **Audience**, **Language**, **Speaking experience** and **Skills**. Only the most common tags are listed; find others by typing in the search box. Each tag a person has adds a point, and people with the most points come first. |
+| **Location and travel** | Enter the event's city, press Enter, and set a **travel radius**. Living within the radius counts as one extra point. Turn **Include virtual speakers** off to list only people inside the radius. |
 | **Strict match** | Shows only people who have *every* tag you picked. When it's off, people matching the most tags come first. |
 | **Sort** | Most matches, nearest, or name A to Z. |
-| **Result cards** | Each card shows what the person speaks about, their skills, and any of your picked tags they're **missing**. |
+| **Result cards** | Each card shows what the person speaks about, their skills, audiences, languages and speaking types, highlights the tags you picked, and says how many of your filters they match (for example, "2 of 2 filters matched"). |
 | **View profile** | Full details: role, location, languages, their Technovation project, and what they've done since. |
 | **Compare** | Pick two speakers and view them side by side. |
 | **Shortlist** | Save people while you search. The shortlist is kept only in the open tab and is cleared when you close it, so no contact details are saved on your computer. |
@@ -42,14 +42,19 @@ Five wrong passwords in 15 minutes lock sign-in for 15 minutes.
 
 Please try **each of these tasks**, then **2–3 searches you'd actually need** for a real event.
 
-1. **Topic + audience.** Under Filters, pick **Healthcare** (Topic) and **Students** (Audience).
-   *You should see people who work in health first, such as Lerato Mokoena.*
-2. **A panel near an event.** Type a city (for example *San Francisco, CA, USA*) in
-   **Location and travel**, set a radius, and pick **Speak as a panelist**
-   (Speaking experience). Try it with **Include virtual speakers** on and off.
-3. **Language.** Find someone who can speak to a **Spanish**-speaking audience.
-4. **Keyword.** Type a word you'd expect in someone's story, like *robotics* or *scholarship*.
-5. **Narrow down.** Pick 3–4 tags, then turn on **Strict match**. Did the list get too short?
+1. **Topic + audience.** Type **Healthcare** in the search box and pick it from the suggestions.
+   Then click **Students** under Audience.
+   *People who work in health, such as Jasmine Park, Lerato Mokoena and Rebecca Castillo, should
+   come first with "2 of 2 filters matched".*
+2. **A panel near an event.** Click **Clear all**. Type *New York, NY, USA* in **Location and
+   travel** and press Enter, then click **Speak as a panelist** (Speaking experience). Turn
+   **Include virtual speakers** off to see only people within the radius, then try a larger radius.
+3. **Language.** Click **Clear all**, then find someone who can speak to a **Spanish**-speaking audience.
+4. **Keyword.** Click **Clear all** and pick **Students**. Then type a word you'd expect in someone's
+   story, like *robotics* or *scholarship*, and press Enter. The keyword narrows the list to people
+   whose profiles mention it. (A keyword on its own, with no filter picked, shows no one.)
+5. **Narrow down.** Pick 3–4 tags (for example Students, Speak as a panelist, Python and Women in
+   STEM), then turn on **Strict match**. Did the list get too short?
 6. **Decide.** Open two profiles, **Compare** them, and add your favorite to the **Shortlist**.
 
 While you test, notice:
