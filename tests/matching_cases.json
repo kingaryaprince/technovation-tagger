@@ -1,0 +1,54 @@
+{
+  "_note": "Shared by tests/test_matching.py (digest.rank) and tests/test_matching_sql.cjs (top_opportunities_for_alum), so the Python and SQL matching stay identical.",
+  "alumni": {
+    "student": {"career_stage": ["Student"], "skills": ["Python", "SQL"],
+                "interests": ["Job Searching", "Leadership"], "industry": []},
+    "working_student": {"career_stage": ["Student + Working"], "skills": ["Python", "SQL"],
+                        "interests": ["Job Searching", "Leadership"]},
+    "experienced": {"career_stage": ["Experienced (5+ yrs)"], "skills": ["Python", "SQL"],
+                    "interests": ["Job Searching", "Leadership"]},
+    "no_stage": {"skills": ["Python", "SQL"], "interests": ["Job Searching", "Leadership"]},
+    "project_tags_only": {"career_stage": ["Student"], "project_built_with": ["Python"]}
+  },
+  "opportunities": [
+    {"title": "Python intern", "type": "internship", "source": "simplify",
+     "tags": ["Job Searching", "Python"], "deadline": null, "created": 1},
+    {"title": "Generic intern", "type": "internship", "source": "simplify",
+     "tags": ["Job Searching", "Leadership"], "deadline": null, "created": 2},
+    {"title": "Leadership only", "type": "volunteer", "source": "americorps",
+     "tags": ["Leadership"], "deadline": null, "created": 3},
+    {"title": "SQL volunteer", "type": "volunteer", "source": "americorps",
+     "tags": ["Leadership", "SQL"], "deadline": "2099-01-01", "created": 4},
+    {"title": "Python and SQL job", "type": "job", "source": "usajobs",
+     "tags": ["Python", "SQL"], "deadline": "2099-06-01", "created": 5},
+    {"title": "Expired intern", "type": "internship", "source": "simplify", "status": "expired",
+     "tags": ["Python", "SQL"], "deadline": null, "created": 6},
+    {"title": "Past deadline", "type": "job", "source": "usajobs",
+     "tags": ["Python", "SQL"], "deadline": "2020-01-01", "created": 7}
+  ],
+  "expected": {
+    "student": [
+      ["Python and SQL job", 4, ["Python", "SQL"]],
+      ["SQL volunteer", 3, ["SQL", "Leadership"]],
+      ["Python intern", 3, ["Python", "Job Searching"]],
+      ["Generic intern", 2, ["Job Searching", "Leadership"]]
+    ],
+    "working_student": [
+      ["Python and SQL job", 4, ["Python", "SQL"]],
+      ["SQL volunteer", 3, ["SQL", "Leadership"]],
+      ["Python intern", 3, ["Python", "Job Searching"]],
+      ["Generic intern", 2, ["Job Searching", "Leadership"]]
+    ],
+    "experienced": [
+      ["Python and SQL job", 4, ["Python", "SQL"]],
+      ["SQL volunteer", 3, ["SQL", "Leadership"]]
+    ],
+    "no_stage": [
+      ["Python and SQL job", 4, ["Python", "SQL"]],
+      ["SQL volunteer", 3, ["SQL", "Leadership"]],
+      ["Python intern", 3, ["Python", "Job Searching"]],
+      ["Generic intern", 2, ["Job Searching", "Leadership"]]
+    ],
+    "project_tags_only": []
+  }
+}

@@ -29,6 +29,11 @@ contains "Intern", else job) and source (simplify_summer2027 for SimplifyJobs, o
 date_posted is the day the list says the listing was posted (listings format only; README
 lists have no reliable dates, so it stays null). Needs sql/010_date_posted.sql.
 
+posting_text is the employer's full job posting, fetched from Workday, Greenhouse, Ashby, Lever
+and SmartRecruiters links (alumni_tagger/postings.py) so the tagger has requirements to quote.
+New rows get it when added; each run also fills up to --fill-postings saved open rows that
+don't have it yet. Needs sql/013_posting_text.sql.
+
 Rows are matched on (source, source_id). New listings are inserted newest first with
 --status (default pending). Existing rows keep their status and tags; only their listing
 text is refreshed. A new listing with the same company, title and location as a job that's
@@ -43,6 +48,7 @@ import unicodedata
 from dataclasses import dataclass
 from urllib import error, parse, request
 
+from . import postings
 from .clients import NoRedirect, ServiceError, SupabaseClient, json_request, settings
 
 DEFAULT_REPO = 'SimplifyJobs/Summer2027-Internships'
@@ -65,6 +71,9 @@ TRACKING_VALUES = {'simplify'}
 CONTENT_FIELDS = ['type', 'title', 'organization', 'location', 'remote', 'description', 'url',
                   'date_posted']
 BATCH_SIZE = 500
+# Saved rows whose full posting is fetched per run (new rows are always fetched). Workday
+# allows about one request a second, so 200 rows take a few minutes.
+FILL_POSTINGS = 200
 PAGE_SIZE = 1000
 
 
@@ -378,7 +387,7 @@ def load(feed, max_age_days=None):
 def existing_rows(db, feed=DEFAULT_FEED):
     """Rows this importer saved before for this repo, keyed by source_id."""
     found, offset = {}, 0
-    columns = ','.join(['source_id', 'status'] + CONTENT_FIELDS)
+    columns = ','.join(['source_id', 'status', 'posting_text'] + CONTENT_FIELDS)
     while True:
         page = db.select(f'opportunities?select={columns}&source=eq.{feed.source}'
                          f'&order=source_id&limit={PAGE_SIZE}&offset={offset}') or []
@@ -434,12 +443,38 @@ def changes(rows, closed, existing, limit=None, resolve=resolve_link):
     return new, changed, expire, unresolved, duplicates
 
 
+def postings_to_fill(existing, expire, limit=FILL_POSTINGS):
+    """source_ids of saved open rows on a supported hiring site whose posting isn't fetched yet."""
+    expire = set(expire)
+    ids = sorted(i for i, r in existing.items()
+                 if r.get('status') != EXPIRED and i not in expire
+                 and r.get('posting_text') is None and postings.supported(r.get('url') or ''))
+    return ids[:max(0, limit)]
+
+
+def fetch_postings(new, fill_ids, existing, fetch):
+    """Set posting_text on new rows (None when not fetched) and return {source_id: text}
+    for saved rows. Rows whose site couldn't be reached are left for the next run."""
+    todo = [(r['url'], r) for r in new] + [(existing[i]['url'], i) for i in fill_ids]
+    filled, done = {}, 0
+    for url, target in todo:
+        text = fetch(url) if postings.supported(url) else None
+        if isinstance(target, dict):
+            target['posting_text'] = text
+        elif text is not None:
+            filled[target] = text
+        done += 1
+        if done % 50 == 0:
+            print(f'  fetched {done}/{len(todo)} postings', flush=True)
+    return filled
+
+
 def row_filter(source_ids, feed=DEFAULT_FEED):
     ids = ','.join('"' + i.replace('"', '') + '"' for i in source_ids)
     return 'source=eq.' + feed.source + '&source_id=in.(' + parse.quote(ids, safe=',-') + ')'
 
 
-def write(db, new, changed, expire, status, feed=DEFAULT_FEED):
+def write(db, new, changed, expire, status, feed=DEFAULT_FEED, filled=None):
     headers = {**db.headers, 'Prefer': 'return=minimal'}
     table = db.url + '/rest/v1/opportunities'
     for i in range(0, len(new), BATCH_SIZE):
@@ -452,25 +487,43 @@ def write(db, new, changed, expire, status, feed=DEFAULT_FEED):
     for i in range(0, len(expire), 100):
         json_request(table + '?' + row_filter(expire[i:i + 100], feed), headers,
                      {'status': EXPIRED}, method='PATCH', service='Supabase')
+    for source_id, text in (filled or {}).items():
+        json_request(table + '?' + row_filter([source_id], feed), headers,
+                     {'posting_text': text}, method='PATCH', service='Supabase')
 
 
-def run(max_age_days=None, limit=None, status='pending', dry_run=False, feed=DEFAULT_FEED):
+def run(max_age_days=None, limit=None, status='pending', dry_run=False, feed=DEFAULT_FEED,
+        fill_postings=FILL_POSTINGS):
     db = SupabaseClient(settings())
     fmt, rows, closed, skipped, total = load(feed, max_age_days)
     if fmt == 'readme' and max_age_days is not None:
         print('Note: --max-age-days is ignored for README lists (they have no reliable dates).')
-    new, changed, expire, unresolved, duplicates = changes(rows, closed, existing_rows(db, feed), limit)
+    existing = existing_rows(db, feed)
+    new, changed, expire, unresolved, duplicates = changes(rows, closed, existing, limit)
+    fill_ids = postings_to_fill(existing, expire, fill_postings)
+    waiting = len(postings_to_fill(existing, expire, len(existing)))
     print(f'{feed.repo} ({fmt}): {total} listings; {len(rows)} open {feed.label}, '
           f'{skipped} skipped (no usable link). Source: {feed.source}, type: {feed.type}')
     print(f'To add: {len(new)} (status {status}); to update: {len(changed)}; '
           f'to expire: {len(expire)}; links that did not lead to the employer: {unresolved}; '
           f'repeats of an open job: {duplicates}')
+    new_supported = sum(postings.supported(r['url']) for r in new)
+    print(f'Full postings to fetch: {new_supported} new rows, {len(fill_ids)} saved rows '
+          f'({waiting} saved rows still need one)')
     if dry_run:
         for row in new[:5]:
             print(f"  {row['organization']} | {row['title']} | {row['url']}")
         print('Dry run: nothing written.')
         return 0
-    write(db, new, changed, expire, status, feed)
+    getter, cache = postings.PoliteGetter(), {}
+    filled = fetch_postings(new, fill_ids, existing,
+                            lambda url: postings.fetch_posting(url, getter, cache))
+    results = [r['posting_text'] for r in new if postings.supported(r['url'])] + [
+        filled.get(i) for i in fill_ids]
+    print(f'Postings with text: {sum(1 for t in results if t)}; '
+          f'job gone or no text: {results.count("")}; '
+          f'site unreachable (tried again next run): {results.count(None)}')
+    write(db, new, changed, expire, status, feed, filled)
     print('Done.')
     return 0
 
@@ -488,11 +541,15 @@ def main():
                         help='Only listings posted in the last N days (listings format only)')
     parser.add_argument('--status', choices=STATUSES, default='pending',
                         help='Status for newly added rows (default pending)')
+    parser.add_argument('--fill-postings', type=int, default=FILL_POSTINGS,
+                        help='Saved rows to fetch the full job posting for this run '
+                             f'(default {FILL_POSTINGS}; 0 = only new rows)')
     parser.add_argument('--dry-run', action='store_true', help='Preview without writing')
     args = parser.parse_args()
     try:
         feed = feed_for(args.repo, args.term, args.format)
-        raise SystemExit(run(args.max_age_days, args.limit, args.status, args.dry_run, feed))
+        raise SystemExit(run(args.max_age_days, args.limit, args.status, args.dry_run, feed,
+                             args.fill_postings))
     except (ServiceError, ValueError) as exc:
         raise SystemExit(f'Stopped: {exc}')
 

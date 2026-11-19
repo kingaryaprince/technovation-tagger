@@ -22,10 +22,19 @@ from urllib import parse
 from .clients import ServiceError
 from .core import ROOT
 
-# Same rules as the top_opportunities_for_alum SQL function.
+# Same rules as the top_opportunities_for_alum SQL function (sql/014_better_matching.sql).
 MATCH_CATEGORIES = ('interests', 'skills', 'industry')
 TOP_N = 5
-MIN_SCORE = 1
+# A shared tag scores 2, or 1 if it's generic: soft-skill and career labels that fit almost
+# any listing. A match needs MIN_SCORE: one specific tag, or two generic ones.
+GENERIC_TAGS = frozenset({
+    'Career Development', 'Cross-Cultural Communication', 'Facilitation', 'Job Searching',
+    'Leadership', 'Mentorship', 'Networking', 'Organization', 'Problem Solving',
+    'Public Speaking', 'Teamwork/Collaboration', 'Technical Communication', 'Time Management',
+    'Writing/Content Creation'})
+MIN_SCORE = 2
+# Internships go only to alumni with one of these career stages (or none recorded yet).
+INTERNSHIP_STAGES = frozenset({'Student', 'Student + Working'})
 SOON_DAYS = 7              # deadlines this close get a "Closes soon" label
 
 # Wording and links. Leave a URL empty to leave that link out.
@@ -58,6 +67,19 @@ def alum_match_tags(tags):
     return {t for c in MATCH_CATEGORIES for t in (tags.get(c) or []) if isinstance(t, str)}
 
 
+def tag_points(tag):
+    return 1 if tag in GENERIC_TAGS else 2
+
+
+def eligible(alum, opp):
+    """Internships only for students (or alumni whose career stage isn't recorded yet)."""
+    if opp.get('type') != 'internship':
+        return True
+    tags = alum.get('tags') if isinstance(alum.get('tags'), dict) else {}
+    stages = [s for s in (tags.get('career_stage') or []) if isinstance(s, str)]
+    return not stages or bool(INTERNSHIP_STAGES & set(stages))
+
+
 def is_open(opp, today):
     """Rolling, no deadline listed, or a deadline that hasn't passed; never expired."""
     if opp.get('status') == 'expired':
@@ -71,13 +93,15 @@ def rank(alum, opportunities, today, limit=TOP_N, min_score=MIN_SCORE):
     mine = alum_match_tags(alum.get('tags'))
     candidates = []
     for order, opp in enumerate(opportunities):
-        if not is_open(opp, today):
+        if not is_open(opp, today) or not eligible(alum, opp):
             continue
-        matched = sorted(set(opp.get('tags') or []) & mine)
-        if len(matched) >= min_score:
+        # Specific tags first, so "Why we picked it" leads with the real reason.
+        matched = sorted(set(opp.get('tags') or []) & mine, key=lambda t: (t in GENERIC_TAGS, t))
+        score = sum(map(tag_points, matched))
+        if score >= min_score:
             deadline = opp.get('deadline')
-            candidates.append(((-len(matched), deadline is None, deadline or date.max, order),
-                               {**opp, 'score': len(matched), 'matched_tags': matched}))
+            candidates.append(((-score, deadline is None, deadline or date.max, order),
+                               {**opp, 'score': score, 'matched_tags': matched}))
     candidates.sort(key=lambda pair: pair[0])
     # Within the same score, take turns between sources so one board can't fill the digest.
     turns = {}

@@ -264,6 +264,8 @@ Two tools fill the Supabase `opportunities` table with internships and keep it c
 5. Run `sql/010_date_posted.sql` once. It adds a `date_posted` column (the day the list
    says the job was posted) and fills it in for rows already imported from SimplifyJobs and
    other `listings.json` lists. README-table lists have no reliable dates, so theirs stay empty.
+6. Run `sql/013_posting_text.sql` once. It adds a `posting_text` column for the employer's
+   full job posting (see [Full job postings](#full-job-postings)).
 
 ### Import listings
 
@@ -283,6 +285,31 @@ To make pending imports live, run in the Supabase SQL editor (change the source 
 ```sql
 update opportunities set status = 'active'
 where source = 'simplify_summer2027' and status = 'pending';
+```
+
+### Full job postings
+
+Job lists only give a title, company, location and category, which leaves the tagger little
+to quote (usually just "Job Searching" and an industry). So the importer also saves the
+employer's full posting in `posting_text`, for links on these hiring sites, which publish
+postings as public JSON: Workday, Greenhouse, Ashby, Lever and SmartRecruiters (about 55% of
+Simplify's listings). Other sites (iCIMS, Oracle, company career pages) keep the short text.
+
+New listings get their posting when they're added. Each run also fetches up to 200 saved
+open rows that don't have one yet, so a site that was down is tried again the next day.
+Workday allows about one request a second, so 200 take a few minutes. To catch up at once:
+
+```bash
+python3 -m alumni_tagger.job_import --fill-postings 2000   # ~25 minutes for every saved row
+```
+
+In `posting_text`, empty means the site says the job is gone; `null` means not fetched yet.
+Rows tagged before they had a posting keep their old tags. To retag them, clear their tags
+and the tagger picks them up again:
+
+```sql
+update opportunities set tags = '{}'
+where source = 'simplify_summer2027' and status <> 'expired' and posting_text <> '';
 ```
 
 ### Switch to a different job list
@@ -359,11 +386,25 @@ accept applications until a far-off year (some say 4046) are saved as rolling, w
 
 ### How alumni are matched to opportunities
 
-`sql/012_top_opportunities.sql` defines `top_opportunities_for_alum(alum_id)`, which the digest
-uses. An opportunity's score is how many of the alum's interests, skills and industry tags it
-shares. Expired listings and passed deadlines are skipped; listings with no deadline (like
-Simplify internships) count as open. Higher scores come first; within the same score, sources
-take turns so one board can't fill a whole digest. `rank()` in `digest.py` is the Python copy.
+`top_opportunities_for_alum(alum_id)` picks each digest's opportunities. It was first defined
+in `sql/012_top_opportunities.sql`; `sql/014_better_matching.sql` replaces it (run it once in
+the SQL editor). `rank()` in `digest.py` is the Python copy, used for `--sample`.
+
+- **Score:** each interests, skills or industry tag the alum and the opportunity share scores
+  2 points, or 1 if it's generic: soft-skill and career labels that fit almost any listing
+  (`GENERIC_TAGS` in `digest.py`: Teamwork/Collaboration, Leadership, Writing/Content Creation,
+  Job Searching...). A match needs at least 2 points: one specific tag, or two generic ones.
+- **Internships** only go to alumni whose `career_stage` is Student or Student + Working (or
+  not recorded yet).
+- Expired listings and passed deadlines are skipped; listings with no deadline (like Simplify
+  internships) count as open. Higher scores come first; within the same score, sources take
+  turns so one board can't fill a whole digest. "Why we picked it" lists specific tags first.
+
+To change the generic list or the student-only rule, edit both `digest.py` and
+`sql/014_better_matching.sql`, then run the SQL again. `tests/matching_cases.json` holds
+cases both must agree on: `python3 -m unittest tests.test_matching` checks the Python, and
+`node tests/test_matching_sql.cjs` (after `npm install --no-save @electric-sql/pglite`)
+checks the SQL.
 
 ### Send the digest emails
 
@@ -395,8 +436,10 @@ python3 -m alumni_tagger.opportunities --limit 50
 ```
 
 It tags rows whose `tags` are empty and whose `status` isn't `expired`, newest first.
-Tags must come from `data/taxonomy.json` and quote the listing word for word; a row that
-fails stays untagged and is retried on the next run.
+Tags must come from `data/taxonomy.json` and quote the listing (title, description, or the
+full posting in `posting_text`) word for word. A tag whose quote isn't word for word is
+dropped and the row's other tags are kept; a row whose output is malformed stays untagged
+and is retried on the next run.
 
 It uses OpenAI by default, with the same `OPENAI_API_KEY` as alumni tagging:
 
@@ -444,6 +487,8 @@ commits to a public repo; turn it back on from the Actions tab.
 | Import finds 0 open, all skipped | The list's links all go through its own site (like zapply.jobs), so there's no employer link to save. |
 | Supabase 400 on import with `opportunities_type_check` | Run `sql/009_internship_type.sql`. |
 | Supabase 400 on import mentioning `date_posted` | Run `sql/010_date_posted.sql`. |
+| Supabase 400 on import or tagging mentioning `posting_text` | Run `sql/013_posting_text.sql`. |
+| OpenAI 404 when tagging | The key can't use that model. Set `OPPORTUNITY_MODEL`, e.g. `gpt-4.1-mini`. |
 | `processing` after terminal closes | Lease expires after 10 minutes. Another worker run can reclaim it; three interrupted claims move it to failed. |
 | Same email changed but old tags appear | The new submission must reach this table. Check its `revision` and `submitted_at`. Completed-query examples exclude pending rows. |
 

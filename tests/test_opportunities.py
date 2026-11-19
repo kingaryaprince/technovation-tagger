@@ -90,8 +90,15 @@ class TagTests(unittest.TestCase):
                                        'industry': [('Other', 'title', 'Intern')]})
         self.assertEqual(opp.tag_opportunity(ROW, ask, TAX), ['Job Searching'])
 
-    def test_quote_not_in_listing_is_rejected(self):
+    def test_tag_with_quote_not_in_listing_is_dropped(self):
         ask = lambda inputs: evidence({'interests': [('Job Searching', 'type', 'full-time role')]})
+        self.assertEqual(opp.tag_opportunity(ROW, ask, TAX), [])
+        ask = lambda inputs: evidence({'interests': [('Job Searching', 'type', 'internship'),
+                                                     ('Networking', 'title', 'not in title')]})
+        self.assertEqual(opp.tag_opportunity(ROW, ask, TAX), ['Job Searching'])
+
+    def test_malformed_output_still_rejected(self):
+        ask = lambda inputs: {'interests': [{'tag': 'Job Searching'}]}
         with self.assertRaises(opp.ValidationError):
             opp.tag_opportunity(ROW, ask, TAX)
 
