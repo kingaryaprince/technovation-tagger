@@ -340,6 +340,23 @@ Rows use `source = usajobs` and the announcement id, so re-runs never duplicate.
 gets its closing date as `deadline`; listings that close or disappear are expired. Blank
 fields are listed in `missing_fields` for an admin to fill in.
 
+### Import AmeriCorps national service positions
+
+`alumni_tagger/americorps.py` reads the public My AmeriCorps listing search
+(my.americorps.gov). No key or account is needed. It saves each position as type
+`volunteer` with `source = americorps`, opens each new listing's page for its duties, benefits
+and skills, and never saves the contact name, email or phone shown there.
+
+```bash
+python3 -m alumni_tagger.americorps --dry-run           # preview, no writes
+python3 -m alumni_tagger.americorps --limit 20          # add 20 as pending
+python3 -m alumni_tagger.americorps --areas T,E,EB      # Technology, Education, Business
+```
+
+It searches Technology and Education by default (about 650 listings). It waits a second
+between requests, so a full first import takes about 15 minutes. Listings that say they
+accept applications until a far-off year (some say 4046) are saved as rolling, with no deadline.
+
 ### Tag opportunities
 
 ```bash
@@ -367,6 +384,7 @@ These workflows in `.github/workflows/` run from the `main` branch once merged:
 | --- | --- | --- |
 | Import job listings (`import-job-listings.yml`) | Daily at 13:05 UTC, adding every new listing as `pending`. Also manual: Actions → Run workflow (default 50, with repo and status options). | `SUPABASE_URL`, `SUPABASE_KEY` |
 | Import USAJOBS (`import-usajobs.yml`) | 1st and 15th of each month at 13:25 UTC (about every two weeks). Manual runs default to a 25-row dry run. `USAJOBS_IMPORT_ENABLED = false` turns the schedule off. | `SUPABASE_URL`, `SUPABASE_KEY`, `USAJOBS_API_KEY`, `USAJOBS_EMAIL` |
+| Import AmeriCorps (`import-americorps.yml`) | 2nd and 16th of each month at 13:35 UTC. Manual runs default to a 25-row dry run of Technology and Education. `AMERICORPS_IMPORT_ENABLED = false` turns the schedule off. | `SUPABASE_URL`, `SUPABASE_KEY` |
 | Autotag opportunities (`autotag-opportunities.yml`) | Hourly, 25 rows per run | `SUPABASE_URL`, `SUPABASE_KEY`, `OPENAI_API_KEY`; optional `OPPORTUNITY_MODEL`. For Claude instead: `OPPORTUNITY_PROVIDER` = `claude` plus `ANTHROPIC_API_KEY` (and `ANTHROPIC_WORKSPACE_ID` for a user-level key) |
 
 Daily import settings are repository **variables** (Settings → Secrets and variables →

@@ -1,0 +1,53 @@
+# Adds AmeriCorps national service positions (Technology and Education by default) from the
+# public My AmeriCorps listing search to the opportunities table, on the 2nd and 16th of each
+# month (about every two weeks). No API key is needed. New rows are pending with empty tags;
+# the hourly "Autotag opportunities" run tags them. Re-running never duplicates rows; closed
+# or missing listings are set to expired. Contact details on listing pages are never saved.
+#
+# Needs repository secrets: SUPABASE_URL, SUPABASE_KEY
+# To run it right away: Actions tab > "Import AmeriCorps" > "Run workflow".
+# Turn the schedule off with the repository variable AMERICORPS_IMPORT_ENABLED = false.
+name: Import AmeriCorps
+
+on:
+  schedule:
+    - cron: '35 13 2,16 * *'   # 13:35 UTC on the 2nd and 16th
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Most new listings to add (blank = all)'
+        required: false
+        default: '25'
+      areas:
+        description: 'Service areas, e.g. T,E (T=Technology, E=Education, EB=Business, CY=Youth)'
+        required: false
+        default: 'T,E'
+      dry_run:
+        description: 'Preview only, write nothing'
+        type: boolean
+        default: true
+
+jobs:
+  import:
+    if: github.event_name != 'schedule' || vars.AMERICORPS_IMPORT_ENABLED != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Import listings
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          LIMIT: ${{ inputs.limit }}
+          AREAS: ${{ inputs.areas || 'T,E' }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          args=(--areas "$AREAS")
+          if [ -n "$LIMIT" ]; then args+=(--limit "$LIMIT"); fi
+          if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run); fi
+          python3 -m alumni_tagger.americorps "${args[@]}"
