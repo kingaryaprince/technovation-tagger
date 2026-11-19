@@ -7,7 +7,7 @@ Once you're done, please fill out the feedback form: **[feedback form link]**
 
 > **About the profiles:** During the pilot, most profiles in the search are **fictional sample
 > alumni** that the student team wrote for testing. They have names, stories and answers that
-> look real, but none of them are real people, so please don't contact them. Real alumni will
+> look real, but none of them are real people. Real alumni will
 > appear as they complete the intake form, and after the pilot we will delete all of the fictional
 > profiles.
 
