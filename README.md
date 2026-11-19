@@ -357,6 +357,28 @@ It searches Technology and Education by default (about 650 listings). It waits a
 between requests, so a full first import takes about 15 minutes. Listings that say they
 accept applications until a far-off year (some say 4046) are saved as rolling, with no deadline.
 
+### Send the digest emails
+
+`alumni_tagger/send_digest.py` emails each alum their top opportunities (the same email as the
+digest preview) through a Gmail account. Run `sql/011_digest_sending.sql` once first. Settings:
+
+| Setting | Value |
+| --- | --- |
+| `DIGEST_FROM_EMAIL` | The Gmail address, e.g. `technovationpilot@gmail.com` |
+| `DIGEST_EMAIL_PASSWORD` | That account's 16-character **app password**, no spaces |
+
+```bash
+python3 -m alumni_tagger.send_digest                          # preview: who would get what
+python3 -m alumni_tagger.send_digest --test-to you@x.com --max 3   # copies to you only
+python3 -m alumni_tagger.send_digest --send --only alum@x.com      # one real alum
+python3 -m alumni_tagger.send_digest --send                        # everyone due
+```
+
+Nothing is emailed without `--send` or `--test-to`. Real sends are saved in `digest_deliveries`,
+so nobody gets a second digest within 13 days or an opportunity they were already sent. Every
+email has an unsubscribe link; before each run the inbox is checked for emails with
+"unsubscribe" in the subject, and those people are added to `digest_unsubscribes` and skipped.
+
 ### Tag opportunities
 
 ```bash
@@ -385,6 +407,7 @@ These workflows in `.github/workflows/` run from the `main` branch once merged:
 | Import job listings (`import-job-listings.yml`) | Daily at 13:05 UTC, adding every new listing as `pending`. Also manual: Actions → Run workflow (default 50, with repo and status options). | `SUPABASE_URL`, `SUPABASE_KEY` |
 | Import USAJOBS (`import-usajobs.yml`) | 1st and 15th of each month at 13:25 UTC (about every two weeks). Manual runs default to a 25-row dry run. `USAJOBS_IMPORT_ENABLED = false` turns the schedule off. | `SUPABASE_URL`, `SUPABASE_KEY`, `USAJOBS_API_KEY`, `USAJOBS_EMAIL` |
 | Import AmeriCorps (`import-americorps.yml`) | 2nd and 16th of each month at 13:35 UTC. Manual runs default to a 25-row dry run of Technology and Education. `AMERICORPS_IMPORT_ENABLED = false` turns the schedule off. | `SUPABASE_URL`, `SUPABASE_KEY` |
+| Send digests (`send-digests.yml`) | 3rd and 17th at 16:45 UTC, **only when the repository variable `DIGEST_SENDING` is `on`**. Manual runs choose preview, test (copies to `test_to`) or send. | `SUPABASE_URL`, `SUPABASE_KEY`, `DIGEST_FROM_EMAIL`, `DIGEST_EMAIL_PASSWORD` |
 | Autotag opportunities (`autotag-opportunities.yml`) | Hourly, 25 rows per run | `SUPABASE_URL`, `SUPABASE_KEY`, `OPENAI_API_KEY`; optional `OPPORTUNITY_MODEL`. For Claude instead: `OPPORTUNITY_PROVIDER` = `claude` plus `ANTHROPIC_API_KEY` (and `ANTHROPIC_WORKSPACE_ID` for a user-level key) |
 
 Daily import settings are repository **variables** (Settings → Secrets and variables →

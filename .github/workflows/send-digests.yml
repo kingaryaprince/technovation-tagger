@@ -1,0 +1,67 @@
+# Emails each alum their opportunity digest through the team Gmail account.
+# Scheduled on the 3rd and 17th (after the job-board imports and tagging), but the schedule
+# only sends when the repository variable DIGEST_SENDING is set to "on". It is off until then.
+# Manual runs: Actions tab > "Send digests" > "Run workflow", then pick a mode:
+#   preview  shows who would get what; sends nothing
+#   test     sends copies of the digests to the addresses in "test_to" only
+#   send     really emails alumni (limit with "only" and "max")
+#
+# Needs repository secrets: SUPABASE_URL, SUPABASE_KEY, DIGEST_FROM_EMAIL, DIGEST_EMAIL_PASSWORD
+# and sql/011_digest_sending.sql run once in Supabase.
+name: Send digests
+
+on:
+  schedule:
+    - cron: '45 16 3,17 * *'   # 16:45 UTC (morning in California) on the 3rd and 17th
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'preview, test or send'
+        type: choice
+        options: [preview, test, send]
+        default: preview
+      test_to:
+        description: 'test mode: send copies to these emails (comma-separated)'
+        required: false
+        default: ''
+      only:
+        description: 'send mode: only these alumni emails (blank = everyone due)'
+        required: false
+        default: ''
+      max:
+        description: 'Most emails this run'
+        required: false
+        default: '50'
+
+concurrency:
+  group: send-digests       # never two sends at once
+
+jobs:
+  send:
+    if: github.event_name != 'schedule' || vars.DIGEST_SENDING == 'on'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Send digests
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          DIGEST_FROM_EMAIL: ${{ secrets.DIGEST_FROM_EMAIL }}
+          DIGEST_EMAIL_PASSWORD: ${{ secrets.DIGEST_EMAIL_PASSWORD }}
+          MODE: ${{ github.event_name == 'schedule' && 'send' || inputs.mode }}
+          TEST_TO: ${{ inputs.test_to }}
+          ONLY: ${{ inputs.only }}
+          MAX: ${{ inputs.max || '50' }}
+        run: |
+          args=(--max "$MAX")
+          case "$MODE" in
+            send) args+=(--send); if [ -n "$ONLY" ]; then args+=(--only "$ONLY"); fi ;;
+            test) if [ -z "$TEST_TO" ]; then echo "test mode needs test_to"; exit 1; fi
+                  args+=(--test-to "$TEST_TO") ;;
+          esac
+          python3 -m alumni_tagger.send_digest "${args[@]}"
