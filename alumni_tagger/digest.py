@@ -59,23 +59,34 @@ def alum_match_tags(tags):
 
 
 def is_open(opp, today):
+    """Rolling, no deadline listed, or a deadline that hasn't passed; never expired."""
+    if opp.get('status') == 'expired':
+        return False
     deadline = opp.get('deadline')
-    return bool(opp.get('rolling')) or (deadline is not None and deadline >= today)
+    return bool(opp.get('rolling')) or deadline is None or deadline >= today
 
 
 def rank(alum, opportunities, today, limit=TOP_N, min_score=MIN_SCORE):
     """Python copy of top_opportunities_for_alum, for sample data."""
     mine = alum_match_tags(alum.get('tags'))
-    scored = []
+    candidates = []
     for order, opp in enumerate(opportunities):
         if not is_open(opp, today):
             continue
         matched = sorted(set(opp.get('tags') or []) & mine)
         if len(matched) >= min_score:
             deadline = opp.get('deadline')
-            scored.append(((-len(matched), deadline is None, deadline or date.max, order),
-                           {**opp, 'score': len(matched), 'matched_tags': matched}))
-    return [opp for _, opp in sorted(scored, key=lambda pair: pair[0])][:limit]
+            candidates.append(((-len(matched), deadline is None, deadline or date.max, order),
+                               {**opp, 'score': len(matched), 'matched_tags': matched}))
+    candidates.sort(key=lambda pair: pair[0])
+    # Within the same score, take turns between sources so one board can't fill the digest.
+    turns = {}
+    keyed = []
+    for key, opp in candidates:
+        slot = (opp['score'], opp.get('source'))
+        turns[slot] = turns.get(slot, 0) + 1
+        keyed.append(((key[0], turns[slot]) + key[1:], opp))
+    return [opp for _, opp in sorted(keyed, key=lambda pair: pair[0])][:limit]
 
 
 # ---------- formatting helpers ----------
