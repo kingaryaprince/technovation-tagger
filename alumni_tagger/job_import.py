@@ -43,8 +43,10 @@ import argparse
 import hashlib
 import re
 import socket
+import threading
 import time
 import unicodedata
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from urllib import error, parse, request
 
@@ -452,26 +454,55 @@ def postings_to_fill(existing, expire, limit=FILL_POSTINGS):
     return ids[:max(0, limit)]
 
 
-def fetch_postings(new, fill_ids, existing, fetch):
+def fetch_postings(new, fill_ids, existing, fetch, save=None):
     """Set posting_text on new rows (None when not fetched) and return {source_id: text}
-    for saved rows. Rows whose site couldn't be reached are left for the next run."""
-    todo = [(r['url'], r) for r in new] + [(existing[i]['url'], i) for i in fill_ids]
-    filled, done = {}, 0
-    for url, target in todo:
-        text = fetch(url) if postings.supported(url) else None
-        if isinstance(target, dict):
-            target['posting_text'] = text
-        elif text is not None:
-            filled[target] = text
-        done += 1
-        if done % 50 == 0:
-            print(f'  fetched {done}/{len(todo)} postings', flush=True)
+    for saved rows. Rows whose site couldn't be reached are left for the next run.
+    Each hiring site gets its own thread, so a slow site (Workday) doesn't hold up the rest.
+    save(source_id, text), if given, is called as each saved row's posting arrives, so an
+    interrupted run keeps what it fetched."""
+    by_site = {}
+    for row in new:
+        row['posting_text'] = None
+        if postings.supported(row['url']):
+            by_site.setdefault(postings.site_of(row['url']), []).append((row['url'], row))
+    for i in fill_ids:
+        url = existing[i]['url']
+        if postings.supported(url):
+            by_site.setdefault(postings.site_of(url), []).append((url, i))
+    total = sum(map(len, by_site.values()))
+    filled, lock, done = {}, threading.Lock(), [0]
+
+    def work(jobs):
+        for url, target in jobs:
+            text = fetch(url)
+            if isinstance(target, dict):
+                target['posting_text'] = text
+            elif text is not None:
+                if save:
+                    save(target, text)
+                with lock:
+                    filled[target] = text
+            with lock:
+                done[0] += 1
+                if done[0] % 10 == 0 or done[0] == total:
+                    print(f'  fetched {done[0]}/{total} postings', flush=True)
+    if by_site:
+        print('  postings to fetch by site: ' + ', '.join(
+            f'{site} {len(jobs)}' for site, jobs in sorted(by_site.items())), flush=True)
+        with ThreadPoolExecutor(max_workers=len(by_site)) as pool:
+            list(pool.map(work, by_site.values()))
     return filled
 
 
 def row_filter(source_ids, feed=DEFAULT_FEED):
     ids = ','.join('"' + i.replace('"', '') + '"' for i in source_ids)
     return 'source=eq.' + feed.source + '&source_id=in.(' + parse.quote(ids, safe=',-') + ')'
+
+
+def save_posting(db, source_id, text, feed=DEFAULT_FEED):
+    json_request(db.url + '/rest/v1/opportunities?' + row_filter([source_id], feed),
+                 {**db.headers, 'Prefer': 'return=minimal'}, {'posting_text': text},
+                 method='PATCH', service='Supabase')
 
 
 def write(db, new, changed, expire, status, feed=DEFAULT_FEED, filled=None):
@@ -517,13 +548,14 @@ def run(max_age_days=None, limit=None, status='pending', dry_run=False, feed=DEF
         return 0
     getter, cache = postings.PoliteGetter(), {}
     filled = fetch_postings(new, fill_ids, existing,
-                            lambda url: postings.fetch_posting(url, getter, cache))
+                            lambda url: postings.fetch_posting(url, getter, cache),
+                            save=lambda source_id, text: save_posting(db, source_id, text, feed))
     results = [r['posting_text'] for r in new if postings.supported(r['url'])] + [
         filled.get(i) for i in fill_ids]
     print(f'Postings with text: {sum(1 for t in results if t)}; '
           f'job gone or no text: {results.count("")}; '
           f'site unreachable (tried again next run): {results.count(None)}')
-    write(db, new, changed, expire, status, feed, filled)
+    write(db, new, changed, expire, status, feed)          # saved rows' postings already saved
     print('Done.')
     return 0
 

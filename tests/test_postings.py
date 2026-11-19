@@ -123,6 +123,17 @@ class PoliteGetterTests(unittest.TestCase):
             answers.extend([429] * 4)
             with self.assertRaises(ServiceError):               # gives up after the last wait
                 get('https://c', 'workday')
+            # A site that keeps refusing is skipped for the rest of the run, without waiting.
+            answers.extend([429] * 3 * (postings.GIVE_UP_AFTER - 1))
+            for _ in range(postings.GIVE_UP_AFTER - 1):
+                with self.assertRaises(ServiceError):
+                    get('https://d', 'workday')
+            slept.clear()
+            with self.assertRaises(ServiceError):
+                get('https://e', 'workday')
+            self.assertEqual(slept, [])
+            answers.append('ok')
+            self.assertEqual(get('https://f', 'lever'), {'ok': True})   # other sites still work
         finally:
             postings.json_request = original
 
@@ -148,6 +159,15 @@ class ImporterTests(unittest.TestCase):
         filled = imp.fetch_postings(new, ['a', 'b'], existing, answers.get)
         self.assertEqual([r['posting_text'] for r in new], ['Lever text', None, None])
         self.assertEqual(filled, {'a': ''})                    # 'b' unreachable: next run
+
+    def test_saved_rows_are_saved_as_they_arrive(self):
+        existing = {'a': {'url': WORKDAY}, 'b': {'url': LEVER}, 'c': {'url': SMART}}
+        saved = []
+        answers = {WORKDAY: 'W', LEVER: 'L', SMART: None}
+        filled = imp.fetch_postings([], ['a', 'b', 'c'], existing, answers.get,
+                                    save=lambda i, text: saved.append((i, text)))
+        self.assertEqual(sorted(saved), [('a', 'W'), ('b', 'L')])
+        self.assertEqual(filled, {'a': 'W', 'b': 'L'})
 
 
 if __name__ == '__main__':

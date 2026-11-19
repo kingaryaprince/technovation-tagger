@@ -30,7 +30,10 @@ GONE = {404, 410}
 # about one request a second, across all employers, so it gets the widest gap.
 GAP = {'workday': 1.5}
 DEFAULT_GAP = 0.2
-BACKOFF = (5, 15, 30)                  # waits after each 429 before giving up until next run
+BACKOFF = (5, 15)                      # waits after each 429 before giving up on that job
+# After this many jobs in a row on one site end in 429, stop asking that site for the rest of
+# the run (its rows are tried again next run) instead of waiting on every job.
+GIVE_UP_AFTER = 3
 
 
 # ---------- HTML to text ----------
@@ -182,22 +185,41 @@ def supported(url):
     return posting_api(url) is not None
 
 
+def site_of(url):
+    found = posting_api(url)
+    return found[0] if found else None
+
+
 class PoliteGetter:
-    """GET JSON with a gap between requests to the same site, waiting and retrying on 429."""
+    """GET JSON with a gap between requests to the same site, waiting and retrying on 429.
+    A site that keeps answering 429 is skipped for the rest of the run. Each site is meant to
+    be used from one thread at a time (job_import runs one thread per site)."""
 
     def __init__(self, sleep=time.sleep, clock=time.monotonic):
         self.sleep, self.clock, self.last = sleep, clock, {}
+        self.refusals, self.gave_up = {}, set()
 
     def __call__(self, api, site):
+        if site in self.gave_up:
+            raise ServiceError('Hiring site', 429)
         for wait in (*BACKOFF, None):
             gap = GAP.get(site, DEFAULT_GAP) - (self.clock() - self.last.get(site, -1e9))
             if gap > 0:
                 self.sleep(gap)
             self.last[site] = self.clock()
             try:
-                return json_request(api, HEADERS, method='GET', service='Hiring site')
+                data = json_request(api, HEADERS, method='GET', service='Hiring site')
+                self.refusals[site] = 0
+                return data
             except ServiceError as exc:
-                if exc.status != 429 or wait is None:
+                if exc.status != 429:
+                    raise
+                if wait is None:
+                    self.refusals[site] = self.refusals.get(site, 0) + 1
+                    if self.refusals[site] >= GIVE_UP_AFTER:
+                        self.gave_up.add(site)
+                        print(f'  {site}: still refusing (too many requests); '
+                              'its rows are tried again next run', flush=True)
                     raise
                 self.sleep(wait)
 
