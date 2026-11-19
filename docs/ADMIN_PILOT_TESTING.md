@@ -64,6 +64,16 @@ While you test, notice:
 
 Then please fill out the **feedback form**: **[feedback form link]**
 
+### Known pilot quirks (not bugs)
+
+- **The first visit is slow.** The site sleeps when no one has used it for a while and takes up to a minute to wake up.
+- **Most profiles are fictional samples** (see the note at the top).
+- **A keyword needs a filter.** Typing a word with no filter or location picked shows no one. Pick a tag first, then add the keyword.
+- **A few filter tags return no speakers.** The filter list includes every alum who filled out the form, but the search only shows people who said they're interested in speaking. A tag like **German** can belong only to someone who isn't a speaker, so it finds no one.
+- **The shortlist is cleared when you close the tab.** Copy anything you want to keep first.
+
+If anything else looks wrong, reply to the email this guide came with and include a screenshot.
+
 ---
 
 ## Option B: Run it on your own computer (optional, for technical testers)
