@@ -83,6 +83,13 @@ class QueryTests(unittest.TestCase):
         self.assertIn('tags=eq.%7B%7D', opp.UNTAGGED)
         self.assertIn('status=neq.expired', opp.UNTAGGED)
 
+    def test_source_and_posting_filters(self):
+        self.assertEqual(opp.untagged_query(5), opp.UNTAGGED + '&limit=5')
+        q = opp.untagged_query(100, 'simplify_summer2027', with_posting=True)
+        self.assertIn('&source=eq.simplify_summer2027', q)
+        self.assertIn('&posting_text=not.is.null&posting_text=neq.', q)
+        self.assertTrue(q.endswith('&limit=100'))
+
 
 class TagTests(unittest.TestCase):
     def test_tags_with_quotes_and_drops_catchalls(self):

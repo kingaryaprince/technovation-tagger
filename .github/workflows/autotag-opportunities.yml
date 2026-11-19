@@ -6,7 +6,9 @@
 # To use Claude instead: OPPORTUNITY_PROVIDER = claude, plus ANTHROPIC_API_KEY
 #   (and ANTHROPIC_WORKSPACE_ID for a user-level key, ANTHROPIC_MODEL optional).
 # To run it right away: open the repo's Actions tab, pick "Autotag opportunities",
-# click "Run workflow".
+# click "Run workflow". To tag a fixed number from one source only, e.g. 100 Simplify rows
+# that have their full posting:
+#   gh workflow run autotag-opportunities.yml -f limit=100 -f source=simplify_summer2027 -f with_posting=true
 #
 # Backlog: GitHub often skips hourly scheduled runs. So when a run fills its whole batch
 # (more rows may be waiting) and tagged at least one, it starts the next run itself, 200 rows
@@ -27,13 +29,23 @@ on:
         description: 'If rows are still waiting afterwards, start up to this many more runs of 200'
         required: false
         default: '15'
+      source:
+        description: 'Only this source, e.g. simplify_summer2027 (blank = every source). A run for one source never starts more runs.'
+        required: false
+        default: ''
+      with_posting:
+        description: "Only rows whose employer's full posting has been fetched"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
   actions: write      # lets a run start the next one while there's a backlog
 
 concurrency:
-  group: autotag-opportunities   # one tagging run at a time; others wait their turn
+  # One full tagging run at a time; others wait their turn. A run for one source gets its own
+  # queue, so it neither waits behind nor cancels a backlog chain.
+  group: autotag-opportunities-${{ inputs.source || 'all' }}
   cancel-in-progress: false
 
 jobs:
@@ -63,11 +75,18 @@ jobs:
           ANTHROPIC_WORKSPACE_ID: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
           ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL }}
           LIMIT: ${{ inputs.limit || '25' }}
+          SOURCE: ${{ inputs.source }}
+          WITH_POSTING: ${{ inputs.with_posting }}
         id: tag
-        run: python3 -m alumni_tagger.opportunities --limit "$LIMIT"
+        run: |
+          args=(--limit "$LIMIT")
+          if [ -n "$SOURCE" ]; then args+=(--source "$SOURCE"); fi
+          if [ "$WITH_POSTING" = "true" ]; then args+=(--with-posting); fi
+          python3 -m alumni_tagger.opportunities "${args[@]}"
 
       - name: Keep going while there's a backlog
-        if: steps.tag.outputs.more == 'true' && steps.tag.outputs.tagged != '0'
+        # Runs for one source (inputs.source) tag exactly their limit and stop.
+        if: steps.tag.outputs.more == 'true' && steps.tag.outputs.tagged != '0' && !inputs.source
         env:
           GH_TOKEN: ${{ github.token }}
           # Scheduled runs start a fresh chain of 15; manual/chained runs count down.

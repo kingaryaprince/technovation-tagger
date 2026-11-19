@@ -3,6 +3,7 @@ output schema and evidence checks.
 
 Run:  python3 -m alumni_tagger.opportunities            (tags up to 25 opportunities)
       python3 -m alumni_tagger.opportunities --limit 5
+      python3 -m alumni_tagger.opportunities --source simplify_summer2027 --with-posting --limit 100
 
 Provider (OPPORTUNITY_PROVIDER):
   openai (default)  OPENAI_API_KEY; model OPPORTUNITY_MODEL, default gpt-4.1-nano, OpenAI's
@@ -191,12 +192,23 @@ def claude_client(config):
                                default_headers=headers)
 
 
-def run(limit=25):
+def untagged_query(limit, source=None, with_posting=False):
+    """Rows to tag: optionally only one source (e.g. simplify_summer2027), and optionally only
+    rows whose full posting has been fetched (so job-list rows aren't tagged from a few lines)."""
+    query = UNTAGGED
+    if source:
+        query += '&source=eq.' + parse.quote(source, safe='')
+    if with_posting:
+        query += '&posting_text=not.is.null&posting_text=neq.'
+    return query + f'&limit={int(limit)}'
+
+
+def run(limit=25, source=None, with_posting=False):
     config = settings()
     db = SupabaseClient(config)
     taxonomy = opportunity_taxonomy(load_taxonomy())
     ask, provider, model = make_asker(config, taxonomy)
-    rows = db.select(UNTAGGED + f'&limit={int(limit)}') or []
+    rows = db.select(untagged_query(limit, source, with_posting)) or []
     print(f'{len(rows)} opportunit{"y" if len(rows) == 1 else "ies"} to tag ({provider}, {model})')
     tagged = failed = 0
     for row in rows:
@@ -228,9 +240,13 @@ def write_outputs(values):
 def main():
     parser = argparse.ArgumentParser(description='Autotag opportunities that need tags.')
     parser.add_argument('--limit', type=int, default=25, help='Most opportunities to tag in one run')
+    parser.add_argument('--source', default=None,
+                        help='Only this source, e.g. simplify_summer2027 (default: every source)')
+    parser.add_argument('--with-posting', action='store_true',
+                        help="Only rows whose employer's full posting has been fetched")
     args = parser.parse_args()
     try:
-        raise SystemExit(run(args.limit))
+        raise SystemExit(run(args.limit, args.source, args.with_posting))
     except (ServiceError, ValueError) as exc:
         raise SystemExit(f'Stopped: {exc}')
     except ImportError:
