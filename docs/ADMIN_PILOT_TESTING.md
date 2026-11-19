@@ -19,7 +19,7 @@ You only need a web browser.
 
 1. Open **https://technovation-alumni-search-bureau.onrender.com/**
    - The first visit can take **up to a minute** to load while the server wakes up. That's normal.
-2. Enter the **staff password**. The team sends it separately; it isn't in this guide.
+2. Enter the **staff password**: technovation_search. 
 3. You'll stay signed in for 12 hours. Click **Sign out** at the top when you're done.
 
 Five wrong passwords in 15 minutes lock sign-in for 15 minutes.
