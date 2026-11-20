@@ -152,6 +152,45 @@ class ImporterTests(unittest.TestCase):
         self.assertEqual(imp.postings_to_fill(existing, ['expiring']), ['needs', 'needs2'])
         self.assertEqual(imp.postings_to_fill(existing, [], limit=1), ['expiring'])
 
+    def test_untagged_and_newest_filled_first(self):
+        existing = {
+            'thin-new': {'url': LEVER, 'status': 'pending', 'posting_text': None,
+                         'tags': ['Python'], 'date_posted': '2026-11-10'},
+            'untagged-old': {'url': LEVER, 'status': 'pending', 'posting_text': None,
+                             'tags': [], 'date_posted': '2026-09-01'},
+            'untagged-new': {'url': LEVER, 'status': 'pending', 'posting_text': None,
+                             'tags': [], 'date_posted': '2026-11-01'},
+            'untagged-nodate': {'url': LEVER, 'status': 'pending', 'posting_text': None,
+                                'tags': None, 'date_posted': None},
+            'thin-old': {'url': LEVER, 'status': 'pending', 'posting_text': None,
+                         'tags': ['SQL'], 'date_posted': '2026-08-01'},
+        }
+        self.assertEqual(imp.postings_to_fill(existing, []),
+                         ['untagged-new', 'untagged-old', 'untagged-nodate',
+                          'thin-new', 'thin-old'])
+
+    def test_short_text_tags_cleared_when_posting_arrives(self):
+        thin = {'tags': ['Python'], 'status': 'pending'}
+        self.assertTrue(imp.retag_after_posting(thin, 'Full posting'))
+        self.assertTrue(imp.retag_after_posting({'tags': ['Python']}, 'Full posting'))
+        self.assertFalse(imp.retag_after_posting(thin, ''))            # job gone: keep tags
+        self.assertFalse(imp.retag_after_posting(thin, None))          # unreachable
+        self.assertFalse(imp.retag_after_posting({'tags': []}, 'Full posting'))
+        self.assertFalse(imp.retag_after_posting({'tags': ['Python'], 'status': 'approved'},
+                                                 'Full posting'))      # reviewed: keep
+
+    def test_save_posting_clears_tags_only_when_asked(self):
+        sent = []
+        original = imp.json_request
+        imp.json_request = lambda url, headers, payload, **kw: sent.append(payload)
+        try:
+            db = type('DB', (), {'url': 'https://x', 'headers': {}})()
+            imp.save_posting(db, 'a', 'text')
+            imp.save_posting(db, 'b', 'text', retag=True)
+        finally:
+            imp.json_request = original
+        self.assertEqual(sent, [{'posting_text': 'text'}, {'posting_text': 'text', 'tags': []}])
+
     def test_fetch_for_new_and_saved_rows(self):
         new = [{'url': LEVER}, {'url': 'https://example.com/1'}, {'url': GREENHOUSE}]
         existing = {'a': {'url': WORKDAY}, 'b': {'url': SMART}}

@@ -391,7 +391,7 @@ def load(feed, max_age_days=None):
 def existing_rows(db, feed=DEFAULT_FEED):
     """Rows this importer saved before for this repo, keyed by source_id."""
     found, offset = {}, 0
-    columns = ','.join(['source_id', 'status', 'posting_text'] + CONTENT_FIELDS)
+    columns = ','.join(['source_id', 'status', 'posting_text', 'tags'] + CONTENT_FIELDS)
     while True:
         page = db.select(f'opportunities?select={columns}&source=eq.{feed.source}'
                          f'&order=source_id&limit={PAGE_SIZE}&offset={offset}') or []
@@ -448,12 +448,26 @@ def changes(rows, closed, existing, limit=None, resolve=resolve_link):
 
 
 def postings_to_fill(existing, expire, limit=FILL_POSTINGS):
-    """source_ids of saved open rows on a supported hiring site whose posting isn't fetched yet."""
+    """source_ids of saved open rows on a supported hiring site whose posting isn't fetched yet.
+    Untagged rows come first, so their posting arrives before the tagger reaches them; then
+    rows tagged from the short text (they get retagged, see retag_after_posting). Newest
+    posted first within each group."""
     expire = set(expire)
-    ids = sorted(i for i, r in existing.items()
-                 if r.get('status') != EXPIRED and i not in expire
-                 and r.get('posting_text') is None and postings.supported(r.get('url') or ''))
+    ids = [i for i, r in existing.items()
+           if r.get('status') != EXPIRED and i not in expire
+           and r.get('posting_text') is None and postings.supported(r.get('url') or '')]
+    ids.sort()
+    ids.sort(key=lambda i: str(existing[i].get('date_posted') or ''), reverse=True)
+    ids.sort(key=lambda i: bool(existing[i].get('tags')))
     return ids[:max(0, limit)]
+
+
+def retag_after_posting(row, text):
+    """Clear a row's tags when its full posting arrives after it was tagged from the short
+    listing text, so the tagger redoes it with the posting. Only rows still pending review:
+    an admin's approved tags are kept."""
+    return bool(text) and bool(row.get('tags')) and (row.get('status') or 'pending') == 'pending'
+
 
 
 def fetch_postings(new, fill_ids, existing, fetch, save=None):
@@ -501,9 +515,10 @@ def row_filter(source_ids, feed=DEFAULT_FEED):
     return 'source=eq.' + feed.source + '&source_id=in.(' + parse.quote(ids, safe=',-') + ')'
 
 
-def save_posting(db, source_id, text, feed=DEFAULT_FEED):
+def save_posting(db, source_id, text, feed=DEFAULT_FEED, retag=False):
+    fields = {'posting_text': text, **({'tags': []} if retag else {})}
     json_request(db.url + '/rest/v1/opportunities?' + row_filter([source_id], feed),
-                 {**db.headers, 'Prefer': 'return=minimal'}, {'posting_text': text},
+                 {**db.headers, 'Prefer': 'return=minimal'}, fields,
                  method='PATCH', service='Supabase')
 
 
@@ -551,10 +566,14 @@ def run(max_age_days=None, limit=None, status='pending', dry_run=False, feed=DEF
     getter, cache = postings.PoliteGetter(), {}
     filled = fetch_postings(new, fill_ids, existing,
                             lambda url: postings.fetch_posting(url, getter, cache),
-                            save=lambda source_id, text: save_posting(db, source_id, text, feed))
+                            save=lambda source_id, text: save_posting(
+                                db, source_id, text, feed,
+                                retag_after_posting(existing[source_id], text)))
     results = [r['posting_text'] for r in new if postings.supported(r['url'])] + [
         filled.get(i) for i in fill_ids]
-    print(f'Postings with text: {sum(1 for t in results if t)}; '
+    retagged = sum(retag_after_posting(existing[i], filled.get(i)) for i in fill_ids)
+    print(f'Postings with text: {sum(1 for t in results if t)} '
+          f'({retagged} short-text tags cleared for retagging); '
           f'job gone or no text: {results.count("")}; '
           f'site unreachable (tried again next run): {results.count(None)}')
     write(db, new, changed, expire, status, feed)          # saved rows' postings already saved
