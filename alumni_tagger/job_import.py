@@ -39,6 +39,8 @@ Rows are matched on (source, source_id). New listings are inserted newest first 
 text is refreshed. A new listing with the same company, title and location as a job that's
 already open (saved earlier, or earlier in this run) is skipped as a repeat. Listings the repo marks closed, or that drop off a README, are expired.
 """
+from __future__ import annotations
+
 import argparse
 import hashlib
 import re
