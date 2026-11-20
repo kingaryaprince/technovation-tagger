@@ -97,51 +97,6 @@ Then please fill out the **feedback form**: **[Speaker Bureau pilot feedback for
 
 If anything else looks wrong, reply to the email this guide came with and include a screenshot.
 
----
-
-## Option B: Run it on your own computer (optional, for technical testers)
-
-This runs the same website on your laptop. You only need it if the team asks you to test
-changes before they go live. It needs **Python 3**, **git**, and the project's **Supabase
-secret key**, which a team member gives you through a secure channel (never by email or chat).
-If you don't have the key, use Option A.
-
-1. Open **Terminal** (Mac) and download the project:
-   ```bash
-   git clone https://github.com/kingaryaprince/technovation-tagger.git
-   cd technovation-tagger/search-app
-   ```
-   If you already have it, update it instead:
-   ```bash
-   cd technovation-tagger && git pull && cd search-app
-   ```
-2. Set the three settings for this Terminal window. Replace the parts in `<...>`, and keep the quotes:
-   ```bash
-   export STAFF_PASSWORD='<pick any password for your local copy>'
-   export SUPABASE_URL='<the project URL from the team>'
-   export SUPABASE_SERVICE_KEY='<the secret key from the team>'
-   ```
-   These last only until you close the window, so nothing is saved to a file.
-3. Start the site:
-   ```bash
-   python3 server.py
-   ```
-   No extra packages are needed. Leave this window open while you test.
-4. In your browser, go to **http://localhost:8000** and sign in with the password from step 2.
-   Then follow **Things to try** above.
-5. To stop, click the Terminal window and press **Control + C**.
-
-### If something goes wrong
-
-| What you see | What to do |
-| --- | --- |
-| `command not found: python3` | Install Python 3 from python.org, or run `xcode-select --install` on a Mac. |
-| `Address already in use` | Another copy is running. Close it, or start on another port: `PORT=8001 python3 server.py`, then open http://localhost:8001. |
-| Sign-in works but searches show an error | The Supabase URL or key is wrong or has a typo. Set them again (step 2) and restart. |
-| The travel radius finds no one | The place wasn't found. Try a fuller name, like *Austin, TX, USA*. |
-| `certificate verify failed` | On a Mac, run `/Applications/Python\ 3*/Install\ Certificates.command` once, then try again. |
-
----
 
 ## Questions or problems
 
