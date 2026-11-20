@@ -25,6 +25,7 @@ You only need a web browser.
 
 1. Open **https://technovation-alumni-search-bureau.onrender.com/**
    - The first visit can take **up to a minute** to load while the server wakes up. That's normal.
+   - If the page says **"Not Found"**, the site is still waking up. Wait a few seconds and refresh the page.
 2. Enter the **staff password**: technovation_search
 3. You'll stay signed in for 12 hours. Click **Sign out** at the top when you're done.
 
@@ -90,6 +91,7 @@ Then please fill out the **feedback form**: **[Speaker Bureau pilot feedback for
 ### Known pilot quirks (not bugs)
 
 - **The first visit is slow.** The site sleeps when no one has used it for a while and takes up to a minute to wake up.
+- **"Not Found" when the page first loads.** This can happen while the site is waking up. Wait a few seconds and refresh the page; if it keeps happening after a couple of minutes, let us know.
 - **Most profiles are fictional samples** (see the note at the top).
 - **A keyword needs a filter.** Typing a word with no filter or location picked shows no one. Pick a tag first, then add the keyword.
 - **A few Speaker Bureau filter tags return no speakers.** The filter list includes every alum who filled out the form, but the Speaker Bureau only shows people who said they're open to speaking. A tag like **German** can belong only to someone who isn't a speaker, so it finds no one there. Search **All Alumni** to find them.
