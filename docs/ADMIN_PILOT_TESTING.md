@@ -1,7 +1,13 @@
 # Speaker Bureau pilot: testing guide for admins
 
 Thank you for helping test the Technovation Alumni Speaker Bureau. This tool helps staff find
-alumni to speak at events, sit on panels, or share their stories. Testing takes about **20 minutes**.
+alumni to speak at events, sit on panels, or share their stories. It has two pages:
+
+- **Speaker Bureau**: finds alumni who said they're open to speaking, ranked by how well they fit your event.
+- **All Alumni**: a keyword search across *every* alum who filled out the intake form, whether or
+  not they want to speak (for example, to find a mentor or someone to feature in a story).
+
+Testing takes about **25 minutes**.
 
 Once you're done, please fill out the feedback form: **[Speaker Bureau pilot feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdk93mOd7htTrDB7XnIyCn3WoN1GeQ748NPdPPgaQtDCT-ICw/viewform)**
 
@@ -19,12 +25,14 @@ You only need a web browser.
 
 1. Open **https://technovation-alumni-search-bureau.onrender.com/**
    - The first visit can take **up to a minute** to load while the server wakes up. That's normal.
-2. Enter the **staff password**: technovation_search
+2. Enter the **staff password**. The team sends it to you separately; it isn't in this guide.
 3. You'll stay signed in for 12 hours. Click **Sign out** at the top when you're done.
 
 Five wrong passwords in 15 minutes lock sign-in for 15 minutes.
 
-### What's on the page
+### What's on the Speaker Bureau page
+
+Switch between the two pages with **Speaker Bureau** and **All Alumni** at the top right.
 
 | Part | What it does |
 | --- | --- |
@@ -37,6 +45,16 @@ Five wrong passwords in 15 minutes lock sign-in for 15 minutes.
 | **View profile** | Full details: role, location, languages, their Technovation project, and what they've done since. |
 | **Compare** | Pick two speakers and view them side by side. |
 | **Shortlist** | Save people while you search. The shortlist is kept only in the open tab and is cleared when you close it, so no contact details are saved on your computer. |
+
+### What's on the All Alumni page
+
+| Part | What it does |
+| --- | --- |
+| **Keyword search** | Type words and press Enter. Each word can match a name, role, place, project, answer or tag. More words find more people; put a phrase in quotes to match it exactly, such as `"women in stem"`. |
+| **Try** buttons | Example searches: *python*, *nonprofit education* and *"women in stem"*. |
+| **The list** | Everyone, A to Z, with role, location, Technovation year and email. With no search, it shows all alumni. |
+| **Show profile** | Opens the full profile in place, including whether they're **willing to speak**, their availability, topics, skills and languages. |
+| **Shortlist** | Works like the Speaker Bureau shortlist. |
 
 ### Things to try (about 15 minutes)
 
@@ -56,10 +74,15 @@ Please try **each of these tasks**, then **2–3 searches you'd actually need** 
 5. **Narrow down.** Pick 3–4 tags (for example Students, Speak as a panelist, Python and Women in
    STEM), then turn on **Strict match**. Did the list get too short?
 6. **Decide.** Open two profiles, **Compare** them, and add your favorite to the **Shortlist**.
+7. **All Alumni.** Click **All Alumni** at the top right. Click the **python** example, then
+   search *German*. *Dilnoza Karimova should appear for German, even though she doesn't show up
+   for German on the Speaker Bureau page, because she isn't open to speaking.* Click **Show
+   profile** on someone to see their full answers.
 
 While you test, notice:
 - Did the people at the top seem like good choices? Was it clear *why* each one matched?
 - Was anything confusing, slow, or missing? Which filter did you look for and not find?
+- When would you use **All Alumni** instead of the Speaker Bureau?
 - How does this compare to how you find speakers today?
 
 Then please fill out the **feedback form**: **[Speaker Bureau pilot feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdk93mOd7htTrDB7XnIyCn3WoN1GeQ748NPdPPgaQtDCT-ICw/viewform)**
@@ -69,7 +92,7 @@ Then please fill out the **feedback form**: **[Speaker Bureau pilot feedback for
 - **The first visit is slow.** The site sleeps when no one has used it for a while and takes up to a minute to wake up.
 - **Most profiles are fictional samples** (see the note at the top).
 - **A keyword needs a filter.** Typing a word with no filter or location picked shows no one. Pick a tag first, then add the keyword.
-- **A few filter tags return no speakers.** The filter list includes every alum who filled out the form, but the search only shows people who said they're interested in speaking. A tag like **German** can belong only to someone who isn't a speaker, so it finds no one.
+- **A few Speaker Bureau filter tags return no speakers.** The filter list includes every alum who filled out the form, but the Speaker Bureau only shows people who said they're open to speaking. A tag like **German** can belong only to someone who isn't a speaker, so it finds no one there. Search **All Alumni** to find them.
 - **The shortlist is cleared when you close the tab.** Copy anything you want to keep first.
 
 If anything else looks wrong, reply to the email this guide came with and include a screenshot.
