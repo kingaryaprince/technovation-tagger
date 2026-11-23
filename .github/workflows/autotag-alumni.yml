@@ -1,0 +1,39 @@
+name: Autotag alumni
+
+on:
+  schedule:
+    # Offset from the top of the hour, which is often busier on GitHub.
+    - cron: '3-58/5 * * * *'
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Most alumni submissions to tag (1-100)'
+        type: number
+        default: 5
+
+permissions:
+  contents: read
+
+concurrency:
+  group: autotag-alumni
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    if: github.event_name != 'schedule' || vars.ALUMNI_TAGGING_ENABLED != 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      # The worker uses only the Python standard library. No SDK install needed.
+      - name: Tag pending alumni submissions
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.ALUMNI_TAGGING_MODEL || 'gpt-6-luna' }}
+          LIMIT: ${{ inputs.limit || '5' }}
+        run: python3 -m alumni_tagger worker --limit "$LIMIT"

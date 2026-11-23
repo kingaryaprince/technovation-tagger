@@ -177,10 +177,28 @@ For a short demo where the worker waits for new submissions:
 python3 -m alumni_tagger worker --watch --limit 5
 ```
 
-This checks every 15 seconds and stops after **five total claimed jobs**, including
-failed or stale jobs. Ctrl+C stops it early. It runs only while your terminal and
-computer are running. A hosted scheduler/worker is a later deployment step, not
-included or already running. A scheduled execution can use `worker --limit 5`.
+This checks every 15 seconds, claiming up to five jobs per pass. Ctrl+C stops it.
+This local watch mode runs only while your terminal and computer are running.
+
+### Automatic alumni tagging on GitHub
+
+`autotag-alumni.yml` runs the same worker every five minutes, independently of
+your computer. Each run processes up to five pending submissions with `gpt-6-luna`
+and exits. An empty queue makes no OpenAI calls. Runs cannot overlap with other
+runs of this workflow; database leases also protect against a local worker
+claiming the same job. GitHub can delay or skip scheduled runs, so five minutes
+is the requested cadence, not a delivery guarantee. Larger queues take more runs.
+
+Required repository secrets are `SUPABASE_URL`, `SUPABASE_KEY`, and
+`OPENAI_API_KEY`. The repository variable `ALUMNI_TAGGING_MODEL` can override the
+model. Set `ALUMNI_TAGGING_ENABLED=false` to pause scheduled alumni tagging;
+manual runs remain available. Neither variable is required for the default setup.
+
+To check it: open **Actions → Autotag alumni → Run workflow**, set `limit` to 1,
+and inspect the worker's completed/failed/stale counts. Check that a new intake
+submission becomes `completed` and has tags without a terminal running.
+Existing `failed` rows are not automatically retried. This workflow only tags
+alumni; it does not send email or change the existing digest schedule.
 
 The intake script never calls OpenAI. It saves the response first. The Python process
 claims one row, tags it, validates output and writes back. Failed tagging does not
