@@ -30,10 +30,21 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 APP_HTML = (HERE / 'static' / 'app.html').read_text(encoding='utf-8')
+ALUMNI_HTML = (HERE / 'static' / 'alumni.html').read_text(encoding='utf-8')
 
-PASSWORD = os.environ.get('STAFF_PASSWORD', '')
-SUPABASE_URL = os.environ.get('SUPABASE_URL', '').rstrip('/')
-SUPABASE_KEY = os.environ.get('SUPABASE_SERVICE_KEY', '')
+def _setting(name):
+    """Read a setting and tidy it. Spaces, line breaks and quote marks pasted by accident are removed,
+    including ones in the middle (keys and web addresses never contain any). The password is only
+    trimmed at the ends, because a password may contain spaces."""
+    value = os.environ.get(name, '').strip().strip('"\'').strip()
+    return value if name == 'STAFF_PASSWORD' else ''.join(value.split())
+
+
+PASSWORD = _setting('STAFF_PASSWORD')
+SUPABASE_URL = _setting('SUPABASE_URL').rstrip('/')
+if SUPABASE_URL and not SUPABASE_URL.startswith(('http://', 'https://')):
+    SUPABASE_URL = 'https://' + SUPABASE_URL
+SUPABASE_KEY = _setting('SUPABASE_SERVICE_KEY')
 GEOCODER_URL = 'https://nominatim.openstreetmap.org/search'
 GEOCODER_USER_AGENT = os.environ.get('GEOCODER_USER_AGENT') or 'TechnovationAlumniHub-speaker-search/1.0'
 GEOCODER_BASE = os.environ.get('GEOCODER_URL') or GEOCODER_URL  # only changed by the automated tests
@@ -109,18 +120,27 @@ def record_fail(who, now=None):
 def rpc(name, params):
     if not SUPABASE_URL or not SUPABASE_KEY:
         raise ApiError(503, 'The server is missing its Supabase settings')
+    headers = {'apikey': SUPABASE_KEY, 'Content-Type': 'application/json'}
+    if not SUPABASE_KEY.startswith('sb_'):
+        # The older service_role key is a long token starting "eyJ" and is also sent as a Bearer token.
+        # Newer "sb_secret_..." keys must go in the apikey header only.
+        headers['Authorization'] = 'Bearer ' + SUPABASE_KEY
     request = urllib.request.Request(
-        SUPABASE_URL + '/rest/v1/rpc/' + name, data=json.dumps(params).encode(), method='POST',
-        headers={'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json'})
+        SUPABASE_URL + '/rest/v1/rpc/' + name, data=json.dumps(params).encode(), method='POST', headers=headers)
     try:
         with urllib.request.urlopen(request, timeout=25) as response:
             return json.loads(response.read().decode('utf-8'))
     except urllib.error.HTTPError as e:
         print('Supabase error', e.code, name, e.read()[:300].decode('utf-8', 'replace'), file=sys.stderr)
-        raise ApiError(502, 'The database returned an error') from None
-    except (OSError, ValueError):
-        print('Could not reach Supabase for', name, file=sys.stderr)
-        raise ApiError(502, 'Could not reach the database') from None
+        hint = {401: ' - the key was refused, check SUPABASE_SERVICE_KEY', 403: ' - the key was refused, check SUPABASE_SERVICE_KEY',
+                404: ' - the search function was not found, check SUPABASE_URL, and that 005_speaker_search.sql (and alumni_directory.sql for All Alumni) was run'}.get(e.code, '')
+        raise ApiError(502, 'The database returned error %d%s' % (e.code, hint)) from None
+    except OSError as e:  # network problems: wrong address, no connection, certificate trouble
+        print('Could not reach Supabase for', name, '-', type(e).__name__, getattr(e, 'reason', ''), file=sys.stderr)
+        raise ApiError(502, 'Could not reach the database - check SUPABASE_URL') from None
+    except ValueError:  # something in a setting is not allowed in a web request. Never print it: it may hold the key.
+        print('A Supabase setting has an invalid character, so the request was not sent. Re-enter SUPABASE_URL and SUPABASE_SERVICE_KEY.', file=sys.stderr)
+        raise ApiError(502, 'A Supabase setting has an invalid character - re-enter SUPABASE_URL and SUPABASE_SERVICE_KEY') from None
 
 
 _options_cache = {'at': 0, 'rows': None}
@@ -131,6 +151,17 @@ def filter_options():
         _options_cache['rows'] = rpc('speaker_filter_options', {}) or []
         _options_cache['at'] = time.time()
     return _options_cache['rows']
+
+
+_alumni_cache = {'at': 0, 'rows': None}
+
+
+def alumni_directory():
+    # Everyone, not only speakers. Cached for 5 minutes so each page load does not hit the database.
+    if _alumni_cache['rows'] is None or time.time() - _alumni_cache['at'] > 300:
+        _alumni_cache['rows'] = rpc('alumni_directory', {}) or []
+        _alumni_cache['at'] = time.time()
+    return _alumni_cache['rows']
 
 
 _geo_lock = threading.Lock()
@@ -295,6 +326,12 @@ class Handler(BaseHTTPRequestHandler):
             return self.send(204, b'', 'image/x-icon')
         if path == '/api/options':
             return self.api(lambda: {'options': filter_options()})
+        if path == '/api/alumni':
+            return self.api(lambda: {'alumni': alumni_directory()})
+        if path == '/alumni':
+            if self.authed():
+                return self.html(200, ALUMNI_HTML)
+            return self.html(200, LOGIN_PAGE, __ERROR__='')
         if path == '/':
             if self.authed():
                 return self.html(200, APP_HTML)
@@ -361,6 +398,8 @@ def main():
         sys.exit('Set STAFF_PASSWORD to something at least 10 characters long.')
     if not SUPABASE_URL or not SUPABASE_KEY:
         print('Warning: SUPABASE_URL or SUPABASE_SERVICE_KEY is not set, so searches will fail.', file=sys.stderr)
+    else:
+        print('Supabase settings found: URL', SUPABASE_URL, '| key starts', SUPABASE_KEY[:6], '| key length', len(SUPABASE_KEY), file=sys.stderr)
     port = int(os.environ.get('PORT', '8000'))
     print('Speaker Bureau search listening on port', port, file=sys.stderr)
     ThreadingHTTPServer(('0.0.0.0', port), Handler).serve_forever()
