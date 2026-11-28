@@ -61,10 +61,16 @@ header.top { display: flex; flex-wrap: wrap; align-items: center; justify-conten
 .pill-dark { background: var(--hero-bg); color: var(--hero-ink); font-size: 12px; font-weight: 700; letter-spacing: 0.05em; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); }
 nav.primary { display: flex; flex-wrap: wrap; gap: 8px; }
 nav.primary a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; color: var(--ink); font-size: 15px; font-weight: 500; text-decoration: none; }
+nav.primary .soon { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 18px; border-radius: 999px; color: var(--ink-soft); opacity: 0.7; font-size: 15px; font-weight: 500; cursor: default; }
+nav.primary .soon small { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid var(--line-strong); border-radius: 999px; padding: 1px 7px; }
 nav.primary a[aria-current="page"] { background: var(--line); font-weight: 700; }
-.shortlist-btn { display: inline-flex; align-items: stretch; padding: 0; border: 0; border-radius: 12px; overflow: hidden; min-height: 48px; cursor: pointer; background: var(--accent); color: var(--accent-ink); font-size: 15px; font-weight: 600; }
-.shortlist-btn span { display: inline-flex; align-items: center; padding: 0 20px; }
-.shortlist-btn span + span { padding: 0 16px; border-left: 1px solid rgba(255,255,255,0.4); }
+.header-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.shortlist-btn { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 16px 0 18px; border: 0; border-radius: 12px; cursor: pointer; background: var(--accent); color: var(--accent-ink); font-size: 15px; font-weight: 600; }
+.shortlist-btn .count { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; padding: 0 7px; border-radius: 999px; background: rgba(255,255,255,0.22); font-size: 13px; font-weight: 700; }
+.shortlist-btn .chv { transition: transform 0.15s; }
+.shortlist-btn[aria-expanded="true"] .chv { transform: rotate(180deg); }
+.signout-btn { min-height: 48px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--line-strong); background: transparent; color: var(--ink); font-size: 14.5px; font-weight: 600; cursor: pointer; }
+.signout-btn:hover { border-color: var(--ink); }
 
 main { max-width: 1392px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; padding-bottom: 40px; }
 #shortlist-panel { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
@@ -90,15 +96,15 @@ main { max-width: 1392px; margin: 0 auto; display: flex; flex-direction: column;
 .btn-lime { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; padding: 0 28px; border-radius: 14px; border: 0; background: var(--lime); color: var(--lime-ink); font-size: 16px; font-weight: 700; cursor: pointer; }
 
 .cols { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
-aside.filters { flex: 1 1 280px; max-width: 340px; background: var(--surface); border: 1px solid var(--line); border-radius: 28px; padding: 28px; display: flex; flex-direction: column; gap: 26px; }
+aside.filters { flex: 1 1 300px; max-width: 360px; background: var(--surface); border: 1px solid var(--line); border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 26px; }
 .filters-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .display { font-family: var(--font-display); font-weight: 400; }
 .filters-head h2 { font-size: 30px; }
 .link-btn { background: none; border: 0; padding: 8px 0; min-height: 44px; font-size: 14px; font-weight: 600; text-decoration: underline; cursor: pointer; }
 .group { display: flex; flex-direction: column; gap: 12px; }
 .group-label { font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line-strong); background: transparent; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-flex; align-items: center; min-height: 34px; max-width: 100%; padding: 6px 12px; border-radius: 17px; border: 1px solid var(--line-strong); background: transparent; font-size: 13px; line-height: 1.25; font-weight: 600; text-align: left; cursor: pointer; }
 .chip:hover { border-color: var(--ink); }
 .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 select.field { width: 100%; min-height: 48px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--line-strong); background: var(--bg); font-size: 15px; font-weight: 600; }
@@ -118,7 +124,8 @@ section.results { flex: 999 1 460px; min-width: 0; display: flex; flex-direction
 .pill { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 4px 0 14px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-size: 13px; font-weight: 600; }
 .pill button { width: 30px; height: 30px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.25); color: #fff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; }
 
-article.card { background: var(--surface); border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 16px; border: 2px solid var(--line); }
+article.card { cursor: pointer; background: var(--surface); border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 16px; border: 2px solid var(--line); }
+article.card:hover { border-color: var(--line-strong); }
 article.card.selected { border-color: var(--ink); }
 .card-top { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
 .avatar { width: 56px; height: 56px; border-radius: 50%; background: #1c1248; color: #ecf2c1; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-style: italic; font-size: 24px; flex: none; border: 1px solid var(--line); }
@@ -214,9 +221,15 @@ table.cmp tr.diff td { background: transparent; }
 
 <header class="top">
   <div class="brand"><b>TECHNOVATION</b><span class="rule" aria-hidden="true"></span><i>Alumni Hub</i><span class="pill-dark">Staff View</span></div>
-  <nav class="primary" aria-label="Primary"><a href="#" aria-current="page">Speaker Bureau</a><a href="#">Alumni</a><a href="#">Opportunities</a></nav>
-  <button type="button" class="shortlist-btn" id="shortlist-toggle" aria-expanded="false" aria-controls="shortlist-panel"><span id="shortlist-label">Shortlist (0)</span><span aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></button>
-  <button type="button" class="link-btn" id="signout">Sign out</button>
+  <nav class="primary" aria-label="Primary"><a href="/" aria-current="page">Speaker Bureau</a><a href="/alumni">All Alumni</a></nav>
+  <div class="header-actions">
+    <button type="button" class="shortlist-btn" id="shortlist-toggle" aria-expanded="false" aria-controls="shortlist-panel">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4z"></path></svg>
+      <span id="shortlist-label">Shortlist</span><span class="count" id="shortlist-count" aria-label="speakers shortlisted">0</span>
+      <svg class="chv" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+    </button>
+    <button type="button" class="signout-btn" id="signout">Sign out</button>
+  </div>
 </header>
 
 <main>
@@ -285,8 +298,8 @@ table.cmp tr.diff td { background: transparent; }
     audience: { label: 'Audience', cats: ['audiences'] },
     language: { label: 'Language', cats: ['languages'] },
     experience: { label: 'Speaking experience', cats: ['speaking_types', 'interview_experience'] },
-    // Skills are too many for chips, so they are added from the search bar and then show in the sidebar once picked.
-    skill: { label: 'Skills', sidebar: false, cats: ['skills', 'project_built_with'] }
+    // Skills show the most common ones as quick filters; every other skill is found by typing in the search bar.
+    skill: { label: 'Skills', cats: ['skills', 'project_built_with'] }
   };
   var FIELD_KEYS = ['topic', 'audience', 'language', 'experience', 'skill'];
   var SIDEBAR_COUNT = 12; // most common tags shown as chips per group; the rest are found by typing
@@ -304,7 +317,21 @@ table.cmp tr.diff td { background: transparent; }
     Object.keys(best).map(function (id) { return best[id]; })
       .sort(function (x, y) { return y.people - x.people || x.tag.localeCompare(y.tag); })
       .forEach(function (o) { OPTIONS[o.group].tags.push(o.tag); TAGCAT[o.group + '|' + o.tag] = o.category; });
-    FIELD_KEYS.forEach(function (k) { OPTIONS[k].shown = OPTIONS[k].sidebar === false ? [] : OPTIONS[k].tags.slice(0, SIDEBAR_COUNT); });
+    FIELD_KEYS.forEach(function (k) { OPTIONS[k].shown = OPTIONS[k].sidebar === false ? [] : arrangeShown(k, OPTIONS[k].tags.slice(0, SIDEBAR_COUNT)); });
+  }
+  // Order of the quick-filter chips: most common first, with two touches.
+  function arrangeShown(k, list) {
+    var out = list.slice();
+    if (k === 'topic') { // keep Student right after Education
+      var e = out.findIndex(function (t) { return t.toLowerCase() === 'education'; });
+      var st = out.findIndex(function (t) { return t.toLowerCase() === 'student'; });
+      if (e !== -1 && st !== -1 && st !== e + 1) { var item = out.splice(st, 1)[0]; out.splice(out.findIndex(function (t) { return t.toLowerCase() === 'education'; }) + 1, 0, item); }
+    }
+    if (k === 'experience') { // specific experiences first, then the "Yes, ..." answers, then the "No, ..." answers
+      var rank = function (t) { return /^\s*yes\b/i.test(t) ? 1 : (/^\s*no\b/i.test(t) ? 2 : 0); };
+      out = out.map(function (t, i) { return { t: t, i: i }; }).sort(function (a, b) { return rank(a.t) - rank(b.t) || a.i - b.i; }).map(function (x) { return x.t; });
+    }
+    return out;
   }
   function listOf(v) { return Array.isArray(v) ? v.map(String).filter(Boolean) : (typeof v === 'string' && v.trim() ? [v.trim()] : []); }
   function union() {
@@ -342,12 +369,16 @@ table.cmp tr.diff td { background: transparent; }
   var draft = copy(applied);
   var sortMode = 'matches';
   var selected = '';
-  var shortlist = []; // kept in this tab only: real contact details are never saved in the browser
+  // The shortlist is shared by both tabs through this browser tab's sessionStorage. Only the alum IDs are kept (random codes);
+  // names and emails are never saved, and each page looks them up from the server again.
+  function loadShortlistIds() { try { var v = JSON.parse(sessionStorage.getItem('sb_shortlist') || '[]'); return Array.isArray(v) ? v.filter(function (x) { return typeof x === 'string'; }) : []; } catch (e) { return []; } }
+  function storeShortlistIds(list) { try { sessionStorage.setItem('sb_shortlist', JSON.stringify(list)); } catch (e) { /* storage blocked: the list just lasts until you change tabs */ } }
+  var shortlist = loadShortlistIds();
   var focusKey = ''; // keeps keyboard focus on the clicked control after the page re-renders
   var expandedId = ''; // whose profile is open inside the shortlist
 
   function copy(s) { var o = {}; Object.keys(s).forEach(function (k) { o[k] = Array.isArray(s[k]) ? s[k].slice() : s[k]; }); return o; }
-  function saveShortlist() { /* intentionally empty */ }
+  function saveShortlist() { storeShortlistIds(shortlist); }
 
   // ---- DOM helper (text only, never innerHTML) ----
   function el(tag, props) {
@@ -409,7 +440,7 @@ table.cmp tr.diff td { background: transparent; }
   }
   function requestSearch() {
     var picks = picksFor(applied), place = applied.place.trim();
-    if (!picks.length && !place) { searchSeq++; clearTimeout(searchTimer); server = { key: '', rows: [], total: 0, placeFound: true, loading: false, error: '' }; return; }
+    if (!picks.length && !place) { searchSeq++; clearTimeout(searchTimer); selected = ''; server = { key: '', rows: [], total: 0, placeFound: true, loading: false, error: '' }; return; }
     var key = JSON.stringify([picks, place, applied.radius, applied.virtual]);
     if (key === server.key) return;
     server.key = key; server.loading = true; server.error = '';
@@ -425,6 +456,7 @@ table.cmp tr.diff td { background: transparent; }
         .then(function (d) {
           if (seq !== searchSeq) return;
           server.rows = (d.rows || []).map(toRow); server.placeFound = d.placeFound !== false; server.loading = false; server.error = '';
+          var top = search(applied).rows[0]; selected = top ? top.p.id : ''; // a new search shows its top speaker
           renderResults();
         })
         .catch(function (e) {
@@ -560,12 +592,12 @@ table.cmp tr.diff td { background: transparent; }
   }
   function renderCards(result) {
     var host = document.getElementById('cards'); host.textContent = '';
-    if (result.total === 0) {
-      host.appendChild(el('div', { class: 'empty' }, el('h3', { text: 'Pick a filter to start' }), el('p', { class: 'help', text: 'Choose at least one tag or a location. Each match adds a point, and people are listed with the most points first.' })));
-      return;
-    }
     if (server.error) {
       host.appendChild(el('div', { class: 'empty' }, el('h3', { text: 'The search did not work' }), el('p', { class: 'help', text: server.error + '. Try again in a moment. If it keeps happening, check the server settings.' })));
+      return;
+    }
+    if (result.total === 0) {
+      host.appendChild(el('div', { class: 'empty' }, el('h3', { text: 'Pick a filter to start' }), el('p', { class: 'help', text: 'Choose at least one tag or a location. Each match adds a point, and people are listed with the most points first.' })));
       return;
     }
     if (server.loading && !result.rows.length) {
@@ -601,11 +633,17 @@ table.cmp tr.diff td { background: transparent; }
           fact('Speaking types', p.experience.join(', '))),
         el('div', { class: 'card-foot' },
           el('span', { class: 'matchline', text: r.count + ' of ' + result.total + ' filters matched' }),
-          el('div', { class: 'actions' }, el('button', { type: 'button', class: 'ghost', text: 'View profile', on: { click: function () { select(p.id); } } }),
+          el('div', { class: 'actions' },
             (function () { var on = compare.indexOf(p.id) !== -1, full = !on && compare.length >= 2;
               var cb = el('button', { type: 'button', class: 'cmp-btn', 'aria-pressed': String(on), text: on ? 'Comparing' : 'Compare', title: full ? 'Remove one speaker from the comparison first' : '', on: { click: function () { toggleCompare(p.id); } } });
               if (full) cb.disabled = true; cb.dataset.key = 'cmp|' + p.id; return cb; })(),
+            el('button', { type: 'button', class: 'ghost', text: 'View profile', on: { click: function () { select(p.id); } } }),
             addButton(p.id))));
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('button, a, input, select, textarea, label')) return; // the buttons do their own thing
+        if (window.getSelection && String(window.getSelection())) return;          // the person was selecting text
+        select(p.id);
+      });
       host.appendChild(card);
     });
   }
@@ -639,13 +677,14 @@ table.cmp tr.diff td { background: transparent; }
       el('div', { style: 'display:flex;flex-direction:column;gap:10px' }, addButton(p.id), copyBtn, emailLine)));
   }
   function renderShortlist() {
-    document.getElementById('shortlist-label').textContent = 'Shortlist (' + shortlist.length + ')';
+    document.getElementById('shortlist-count').textContent = shortlist.length;
     var panel = document.getElementById('shortlist-panel'); panel.textContent = '';
     panel.appendChild(el('h2', { class: 'display', style: 'font-size:28px', text: 'Shortlist' }));
     if (!shortlist.length) { panel.appendChild(el('p', { class: 'help', text: 'No one yet. Use “Add to shortlist” on a result.' })); return; }
     var ul = el('ul');
     shortlist.forEach(function (id) {
       var p = BY_ID[id], open = expandedId === id;
+      if (!p) return; // still looking this person up
       var nameBtn = el('button', { type: 'button', class: 'name-btn', style: 'font-weight:700', 'aria-expanded': String(open), 'aria-controls': 'sl-' + id,
         title: open ? 'Hide profile' : 'Show profile', on: { click: function () { expandedId = open ? '' : id; if (!open) selected = id; focusKey = 'sl|' + id; refresh(); } } }, el('span', { class: 'chev', 'aria-hidden': 'true' }, icon(CHEV)), p.name);
       nameBtn.dataset.key = 'sl|' + id;
@@ -655,7 +694,7 @@ table.cmp tr.diff td { background: transparent; }
     });
     panel.appendChild(ul);
     var all = el('button', { type: 'button', class: 'btn-solid', text: 'Copy all emails', on: { click: function () {
-      copyText(shortlist.map(function (id) { return BY_ID[id].email; }).join(', '), all, 'Copy all emails'); } } });
+      copyText(shortlist.filter(function (id) { return BY_ID[id]; }).map(function (id) { return BY_ID[id].email; }).join(', '), all, 'Copy all emails'); } } });
     panel.appendChild(all);
   }
   function shortlistProfile(p) {
@@ -684,6 +723,7 @@ table.cmp tr.diff td { background: transparent; }
   function select(id) { selected = id; refresh(); }
   function renderResults() {
     var result = search(applied); lastResult = result;
+    if (!selected && result.rows.length) selected = result.rows[0].p.id; // nothing open yet: show the top speaker
     document.getElementById('count-num').textContent = result.rows.length;
     document.getElementById('count-text').textContent = server.loading ? 'speakers (searching…)' : (result.rows.length === 1 ? 'speaker matches' : 'speakers match');
     renderCards(result); renderProfile(result); centerProfile(); renderShortlist(); renderTray(); renderCompare();
@@ -776,7 +816,32 @@ table.cmp tr.diff td { background: transparent; }
   document.getElementById('signout').addEventListener('click', function () {
     fetch('/logout', { method: 'POST', credentials: 'same-origin' }).then(function () { location.reload(); }, function () { location.reload(); });
   });
+
+  // People shortlisted on the All Alumni tab may not be in the current search results: look them up so the shortlist can show them.
+  function resolveShortlist() {
+    if (!shortlist.some(function (id) { return !BY_ID[id]; })) return;
+    fetch('/api/alumni', { credentials: 'same-origin' })
+      .then(function (res) { return res.ok ? res.json() : { alumni: [] }; })
+      .then(function (d) {
+        (d.alumni || []).forEach(function (row) {
+          if (BY_ID[row.response_id] || shortlist.indexOf(row.response_id) === -1) return;
+          var pr = row.profile || {}, tg = row.tags || {};
+          BY_ID[row.response_id] = {
+            id: row.response_id, name: row.full_name || 'Unnamed', email: row.email || '',
+            role: textOf(pr.current_role), place: textOf(pr.current_location), tz: textOf(pr.timezone),
+            cohort: textOf(pr.participation_years) ? 'Technovation ' + textOf(pr.participation_years) : '',
+            bio: textOf(pr.since_technovation), project: textOf(pr.project), availability: row.availability || '',
+            topic: union(listOf(tg.industry), listOf(tg.project_domain), listOf(tg.interests), listOf(tg.story_angles), listOf(tg.expertise_areas)),
+            audience: listOf(tg.audiences), language: listOf(tg.languages), experience: listOf(tg.speaking_types),
+            skill: union(listOf(tg.skills), listOf(tg.project_built_with))
+          };
+        });
+        refresh();
+      })
+      .catch(function () {});
+  }
   document.getElementById('count-text').textContent = 'Loading…';
+  resolveShortlist();
   fetch('/api/options', { credentials: 'same-origin' })
     .then(function (res) {
       if (res.status === 401) { location.reload(); throw new Error('signed out'); }
